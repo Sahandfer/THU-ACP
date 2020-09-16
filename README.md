@@ -8,13 +8,17 @@ DDL让我开心，DDL是我快乐～
 
 ***Combinatorics and Algorithms Design:***
 
-    1. 9/21 => Homework 1
+    9/21 => Homework 1
 
 ***Upper_intermediate Chinese:***
-    1. 9/22 => Page 6 and review
+    
+    9/22 => Page 6 and review
+    
 ***Chinese Culture and Society:***
-    1. 11/17 => Book review
-    2. 1/4 => Final paper
+
+    11/17 => Book review
+    1/4 => Final paper
+    
 ***Software Project Management:***
     1. 9/18 => Design Personal Homepage
     2. 9/29 => Design Group Homepage
