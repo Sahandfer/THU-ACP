@@ -7,7 +7,9 @@ DDL让我开心，DDL是我快乐～
 > To do or not to do, that is the question.
 
 ***Combinatorics and Algorithms Design:***
+
     1. 9/21 => Homework 1
+
 ***Upper_intermediate Chinese:***
     1. 9/22 => Page 6 and review
 ***Chinese Culture and Society:***
