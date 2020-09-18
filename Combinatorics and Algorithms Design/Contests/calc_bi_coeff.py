@@ -9,7 +9,7 @@ def calc_bi_coeffs(a, b):
             output *= a
             output //= c+1
             a-=1
-    return output
+    return output% (10**9 + 7)
             
 
 if __name__ == "__main__":
