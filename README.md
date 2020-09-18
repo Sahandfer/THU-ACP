@@ -1,14 +1,24 @@
 # :purple_heart: Tsinghua :purple_heart:
 > 自强不息，厚德载物
 
-## :skull: Deadlines
-DDL让我开心，DDL是我快乐～
-### :pushpin: To Do (16)
-> To do or not to do, that is the question.
+## :pushpin: To Do 
+To do or not to do, that is the question.
+
+### :pencil: Thesis
+> Make publishable research!
+
+- [ ] Read COAI papers for Huang ML before 9/25
+- [ ] Meeting with Hu XL (9/21)
+- [ ] Read PHCI papers for YC before 9/27
+
+### :skull: Deadlines(17)
+> DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
 
-- [ ] 9/21 => Homework 1
+- [X] 9/21 => Homework 1-1
+- [ ] 9/21 => Homework 1-2
+- [ ] 10/1 => Contest 1
 
 #### Machine Learning:
 
