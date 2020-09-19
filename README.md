@@ -17,8 +17,8 @@ To do or not to do, that is the question.
 #### Combinatorics and Algorithms Design:
 
 - [X] 9/21 => Homework 1-1
-- [ ] 9/21 => Homework 1-2
-- [ ] 10/1 => Contest 1
+- [X] 9/21 => Homework 1-2
+- [X] 10/1 => Contest 1
 
 #### Machine Learning:
 
