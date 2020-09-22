@@ -11,7 +11,7 @@ To do or not to do, that is the question.
 - [ ] Meeting with Hu XL (9/21)
 - [ ] Read PHCI papers for YC before 9/27
 
-### :skull: Deadlines(18)
+### :skull: Deadlines(20)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -24,7 +24,11 @@ To do or not to do, that is the question.
 
 #### Machine Learning:
 
-- [ ] 9/22 => Homework 0
+- [X] 9/22 => Homework 0
+- [ ] N/A => Project proposal
+- [ ] N/A => Mid-term report
+- [ ] N/A => Final report and code
+
 
 #### Advanced Network Management:
 
@@ -47,6 +51,8 @@ To do or not to do, that is the question.
 #### Upper_intermediate Chinese:
 
 - [X] 9/22 => Page 6 and review
+- [ ] 9/29 => Page 8 and review
+- [ ] 10/5 => Essay about public speech
 
 #### Chinese Culture and Society:
 
