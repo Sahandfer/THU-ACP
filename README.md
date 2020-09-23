@@ -19,7 +19,7 @@ To do or not to do, that is the question.
 - [X] 9/21 => Homework 1-1
 - [X] 9/21 => Homework 1-2
 - [X] 10/1 => Contest 1
-- [ ] 9/28 => Homework 2-1
+- [X ] 9/28 => Homework 2-1
 - [ ] 10/6 => Contest 2
 
 #### Machine Learning:
