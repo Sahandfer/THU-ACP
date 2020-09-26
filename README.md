@@ -10,7 +10,7 @@ To do or not to do, that is the question.
 - [X] Meeting with HML => 9/25 9am
 - [ ] Finish sample Pytorch project => 10/2
 
-### :skull: Deadlines(21)
+### :skull: Deadlines(20)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -40,7 +40,7 @@ To do or not to do, that is the question.
 #### Software Project Management:
 
 - [X] 9/18 => Design Homepage
-- [ ] 9/29 => Design Group Homepage
+- [X] 9/29 => Design Group Homepage
 - [ ] 9/29 => Kick-off Meeting
 - [ ] 10/13 => Design of virtual software product
 - [ ] 11/03 => Triple constraints
