@@ -45,24 +45,6 @@ def find_paths(lockpad, start, end, l, skip, path=[]):
                         paths.append(newpath)
     return paths
 
-def test_method():
-    test_file = open("OJ2TextCases.txt", 'r')
-    lines = test_file.read().splitlines()
-
-    total = 0
-    passed = 0
-    for i in range(0, len(lines), 2):
-        a, b, l = map(int, lines[i].split())
-        ans = int(lines[i+1])
-        num_ways = find_num_ways(a,b,l)
-        total +=1
-        passed+=1
-        print("Passed %d out of %d Test Cases!"%(passed, total))
-
 if __name__ == "__main__":
-    # a, b, l =[1,2,4]
-    # num_ways = find_num_ways(a,b,l)
-    # print(num_ways)
-
-    test_method()
-    
+    a, b, l = map(int, input().split)
+    num_ways = find_num_ways(a,b,l)
