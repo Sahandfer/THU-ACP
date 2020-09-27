@@ -20,7 +20,7 @@ To do or not to do, that is the question.
 - [X] 10/1 => Contest 1
 - [x] 9/28 => homework 2-1
 - [x] 9/28 => homework 2-2
-- [ ] 10/5 => contest 2
+- [x] 10/5 => contest 2
 - [ ] 10/5 => contest 3
 
 #### Machine Learning:
