@@ -1,5 +1,8 @@
-# :purple_heart: Tsinghua :purple_heart:
-> 自强不息，厚德载物
+![ :purple_heart: Tsinghua :purple_heart:](https://user-images.githubusercontent.com/35892312/94643294-0fdadf00-0319-11eb-8d59-9a28042d5720.png?raw=true)
+
+<h3 align="center">
+<p>自强不息，厚德载物
+</h3>
 
 ## :pushpin: To Do 
 To do or not to do, that is the question.
@@ -7,10 +10,12 @@ To do or not to do, that is the question.
 ### :pencil: Thesis
 > Make publishable research!
 
-- [X] Meeting with HML => 9/25 9am
+- [X] Meeting with HML => 9/25 9: 00
+- [X] Meeting for future cooperation => 9/30 10:00
+- [ ] Paper review meeting => 9/30 18:00
 - [ ] Finish sample Pytorch project => 10/2
 
-### :skull: Deadlines(20)
+### :skull: Deadlines(14)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -42,7 +47,7 @@ To do or not to do, that is the question.
 
 - [X] 9/18 => Design Homepage
 - [X] 9/29 => Design Group Homepage
-- [ ] 9/29 => Kick-off Meeting
+- [x] 9/29 => Kick-off Meeting
 - [ ] 10/13 => Design of virtual software product
 - [ ] 11/03 => Triple constraints
 - [ ] 11/04 => Mid-term pre
@@ -53,7 +58,7 @@ To do or not to do, that is the question.
 #### Upper_intermediate Chinese:
 
 - [X] 9/22 => Page 6 and review
-- [ ] 9/29 => Page 8 and review
+- [x] 9/29 => Page 8 and review
 - [ ] 10/5 => Essay about public speech
 
 #### Chinese Culture and Society:
