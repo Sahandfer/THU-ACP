@@ -1,4 +1,4 @@
-![ :purple_heart: Tsinghua :purple_heart:](https://user-images.githubusercontent.com/35892312/94643294-0fdadf00-0319-11eb-8d59-9a28042d5720.png?raw=true)
+![ :purple_heart: Tsinghua :purple_heart:](https://user-images.githubusercontent.com/35892312/94651813-9f898900-032b-11eb-8075-c606c07ad938.png?raw=true)
 
 <h3 align="center">
 <p>自强不息，厚德载物
