@@ -57,7 +57,7 @@ public class OJ3_P2 {
         }
 
         long kth = reverse_perm(seq, k_perm);
-        List<Integer> res = permutation(seq, kth+a);
+        List<Integer> res = permutation(seq, a);
         for (int item:res) {
             System.out.print(item);
             System.out.print(" ");
