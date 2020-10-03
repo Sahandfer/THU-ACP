@@ -13,7 +13,7 @@ To do or not to do, that is the question.
 - [X] Meeting with HML => 9/25 9: 00
 - [X] Meeting for future cooperation => 9/30 10:00
 - [x] Paper review meeting => 9/30 18:00
-- [ ] Finish sample Pytorch project => 10/2
+- [ ] Finish sample Pytorch project => 10/10
 
 ### :skull: Deadlines(12)
 > DDL让我开心，DDL是我快乐～
