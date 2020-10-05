@@ -15,7 +15,7 @@ To do or not to do, that is the question.
 - [x] Paper review meeting => 9/30 18:00
 - [ ] Finish sample Pytorch project => 10/10
 
-### :skull: Deadlines(14)
+### :skull: Deadlines (14)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -28,6 +28,7 @@ To do or not to do, that is the question.
 - [x] 10/5 => contest 2
 - [x] 10/5 => contest 3
 - [x] 10/5 => homework 3-1
+- [ ] 10/12 => homework 3-2
 
 #### Machine Learning:
 
@@ -59,7 +60,7 @@ To do or not to do, that is the question.
 
 - [X] 9/22 => Page 6 and review
 - [x] 9/29 => Page 8 and review
-- [ ] 10/5 => Essay about public speech
+- [x] 10/5 => Essay about public speech
 
 #### Chinese Culture and Society:
 
