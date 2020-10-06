@@ -28,7 +28,7 @@ To do or not to do, that is the question.
 - [x] 10/5 => contest 2
 - [x] 10/5 => contest 3
 - [x] 10/5 => homework 3-1
-- [ ] 10/12 => homework 3-2
+- [x] 10/12 => homework 3-2
 
 #### Machine Learning:
 
@@ -61,6 +61,7 @@ To do or not to do, that is the question.
 - [X] 9/22 => Page 6 and review
 - [x] 9/29 => Page 8 and review
 - [x] 10/5 => Essay about public speech
+- [ ] 10/12 => p23-p28
 
 #### Chinese Culture and Society:
 
