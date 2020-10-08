@@ -13,9 +13,9 @@ To do or not to do, that is the question.
 - [X] Meeting with HML => 9/25 9: 00
 - [X] Meeting for future cooperation => 9/30 10:00
 - [x] Paper review meeting => 9/30 18:00
-- [ ] Finish sample Pytorch project => 10/10
+- [ ] Finish MNIST MLP project => 10/10
 
-### :skull: Deadlines (14)
+### :skull: Deadlines (15)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -32,7 +32,8 @@ To do or not to do, that is the question.
 
 #### Machine Learning:
 
-- [X] 9/22 => Homework 0
+- [x] 9/22 => Homework 0
+- [ ] 10/24 => Homework 1
 - [ ] N/A => Project proposal
 - [ ] N/A => Mid-term report
 - [ ] N/A => Final report and code
