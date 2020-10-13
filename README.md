@@ -31,6 +31,7 @@ To do or not to do, that is the question.
 - [x] 10/12 => homework 3-2
 - [x] 10/12 => homework 4-1
 - [ ] 10/30 => contest 4
+- [ ] 10/19 => homework 5-1
 
 #### Machine Learning:
 
@@ -52,7 +53,7 @@ To do or not to do, that is the question.
 - [X] 9/18 => Design Homepage
 - [X] 9/29 => Design Group Homepage
 - [x] 9/29 => Kick-off Meeting
-- [ ] 10/13 => Design of virtual software product
+- [x] 10/13 => Design of virtual software product
 - [ ] 11/03 => Triple constraints
 - [ ] 11/04 => Mid-term pre
 - [ ] 12/15 => Knowledge areas except for triple constraints
