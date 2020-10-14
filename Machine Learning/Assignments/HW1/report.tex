@@ -1,0 +1,84 @@
+ \documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{inputenc}
+\usepackage{graphicx}
+\usepackage{titletoc} 
+\usepackage{fancyhdr}   
+\usepackage[a4paper,pdftex]{geometry}	
+\usepackage[english]{babel}
+\usepackage{xcolor} 
+\usepackage{enumerate}
+\usepackage{fix-cm} 
+\usepackage[notlof]{tocbibind}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\renewcommand\lstlistingname{Appendix}
+\renewcommand\lstlistlistingname{Appendix}
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+	\edef\@temp{\the\lst@token}%
+	\ifx\@temp\@lbracket \color{black}%
+	\else\ifx\@temp\@rbracket \color{black}%
+	\else\ifx\@temp\@colon \color{black}%
+	\else \color{vorange}%
+	\fi\fi\fi
+}
+\makeatother
+
+\usepackage{trace}
+
+\usepackage{subcaption}
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\bf{ \small{DEPARTMENT OF ELECTRICAL AND ELECTRONIC ENGINEERING} }
+		\end{center}
+		
+		\vspace{4cm}
+		\centering
+		\textbf{\Huge Lab Assignment}
+		
+		\vspace{1cm}
+		
+		{\Large Assignment Title}
+		
+		\vspace{4cm}
+		
+		\textbf{\LARGE Name}
+		
+		\vspace{2cm}
+		
+		\textbf{\large Module code}
+		
+		\vspace{0.5cm}
+		
+		{\large Module title}
+		
+		\vspace{1.5cm}
+		
+		\textbf{\large Student ID}
+		
+		\vspace{0.5cm}
+		
+		{\large 123456}
+		
+		\vfill
+		
+	\end{titlepage}
+	
+	
+	
+\end{document}
