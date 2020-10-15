@@ -15,7 +15,7 @@ To do or not to do, that is the question.
 - [x] Paper review meeting => 9/30 18:00
 - [ ] Finish MNIST MLP project => 10/10
 
-### :skull: Deadlines (15)
+### :skull: Deadlines (14)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -30,8 +30,8 @@ To do or not to do, that is the question.
 - [x] 10/5 => homework 3-1
 - [x] 10/12 => homework 3-2
 - [x] 10/12 => homework 4-1
+- [x] 10/19 => homework 5-1
 - [ ] 10/30 => contest 4
-- [ ] 10/19 => homework 5-1
 
 #### Machine Learning:
 
