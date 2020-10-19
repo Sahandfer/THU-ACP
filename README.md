@@ -7,13 +7,6 @@
 ## :pushpin: To Do 
 To do or not to do, that is the question.
 
-### :pencil: Thesis
-> Make publishable research!
-
-- [X] Meeting with HML => 9/25 9: 00
-- [X] Meeting for future cooperation => 9/30 10:00
-- [x] Paper review meeting => 9/30 18:00
-
 ### :skull: Deadlines (14)
 > DDL让我开心，DDL是我快乐～
 
@@ -32,6 +25,8 @@ To do or not to do, that is the question.
 - [x] 10/19 => homework 5-1
 - [x] 10/19 => homework 5-2
 - [x] 10/30 => contest 4
+- [ ] 10/26 => homework 6-1
+- [ ] 11/7 => contest 5
 
 #### Machine Learning:
 
