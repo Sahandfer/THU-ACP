@@ -44,40 +44,200 @@
 \begin{document}
 	\begin{titlepage}
 		\begin{center}
-			\bf{ \small{DEPARTMENT OF ELECTRICAL AND ELECTRONIC ENGINEERING} }
+			\includegraphics[scale=.4]{Figures/Cover}\\
+			\vspace{1cm}
+			\bf{ \large {Department of Computer Science and Technology} }
 		\end{center}
 		
 		\vspace{4cm}
 		\centering
-		\textbf{\Huge Lab Assignment}
+		\textbf{\Huge Machine Learning}
+		\vspace{.5cm}
 		
-		\vspace{1cm}
-		
-		{\Large Assignment Title}
-		
+		{\Large Homework 1}
+
 		\vspace{4cm}
 		
-		\textbf{\LARGE Name}
+		\textbf{\LARGE Sahand Sabour}
 		
-		\vspace{2cm}
 		
-		\textbf{\large Module code}
 		
 		\vspace{0.5cm}
 		
-		{\large Module title}
+		{\large 2020280401}
 		
-		\vspace{1.5cm}
-		
-		\textbf{\large Student ID}
-		
-		\vspace{0.5cm}
-		
-		{\large 123456}
 		
 		\vfill
 		
 	\end{titlepage}
+
+	\section{Mathematics Basics}
+	\subsection{Optimization}
+	Use the Lagrange multiplier method to solve the following problem:
+	\begin{align*}
+		\underset{x_1, x_2}{\min} \qquad  x_1^2 +x_2^2-1 \\
+		s.t. \quad x_1 +x_2-1=0 \\
+		x_1-2x_2\geq 0
+	\end{align*}
+	\noindent \textbf{Solution:}
+	\vspace{0.2cm}
+	
+	\noindent The Lagrangian equation can be written as $L(x_1, x_2, \lambda_1, \lambda_2)$, where $\lambda_1$ and $\lambda_2$ are the Lagrange multipliers. Therefore, Lagrangian function would be written as:
+	\begin{align*}
+		L(x_1, x_2, \lambda_1, \lambda_2) = x_1^2 +x_2^2-1 - \lambda_1(x_1 +x_2-1)-\lambda_2(x_1-2x_2)
+	\end{align*}
+	Hence, we can have that:
+	\begin{align*}
+		\frac{\partial L}{\partial x_1}=0 \quad => \quad 2x_1-\lambda_1-\lambda_2=0 \quad => \quad x_1^* = \frac{\lambda_1+\lambda_2}{2}\\
+		\frac{\partial L}{\partial x_2}=0 \quad => \quad 2x_2+\lambda_2+2\lambda_2=0 \quad => \quad x_2^* = \frac{\lambda_1-2\lambda_2}{2}
+	\end{align*}
+	
+	\noindent Accordingly, using the above equations, we can expand and rewrite the Lagrangian equation as follows:
+	\begin{align*}
+		L(\lambda_1, \lambda_2) = \frac{1}{4}\lambda_1^2+\frac{1}{2}\lambda_1\lambda_2+\frac{1}{4}\lambda_2^2 
+		+\frac{1}{4}\lambda_1^2-\lambda_1\lambda_2+\lambda_2^2 \\
+		-1 
+		-\lambda_1^2+\frac{1}{2}\lambda_1\lambda_2+\lambda_1
+		+\frac{1}{2}\lambda_1\lambda_2-\frac{5}{2}\lambda_2^2 \\
+		= -\frac{1}{2}\lambda_1^2-\frac{5}{4}\lambda_2^2+\frac{1}{2}\lambda_1\lambda_2+\lambda_1-1 \qquad \quad
+	\end{align*}
+	Therefore, we can have that:
+	\begin{align*}
+	\frac{\partial L}{\partial \lambda_1}=0 \quad => -\lambda_1+\frac{1}{2}\lambda_2+1=0 \\
+	\frac{\partial L}{\partial \lambda_2}=0 \quad => -\frac{5}{2}\lambda_2+\frac{1}{2}\lambda_1=0
+	\end{align*}
+	Solving the above two equations gives $\lambda_1=\frac{10}{9}$ and $\lambda_2 = \frac{2}{9}$. Accordingly, we use these values to obtain $x_1=\frac{2}{3}$ and $x_2=\frac{1}{3}$ based on the initial two derivations. Since (1) both Lagrange multipliers satisfy $\lambda\geq 0$; (2) $g(x)=x_1+x_2-1 = \frac{2}{3}+\frac{1}{3}-1=0$ and $h(x)=x_1-2x_2 = \frac{2}{3}-2(\frac{1}{3})=0\geq 0$; (3) $\lambda_2h(x) = \frac{2}{9}(\frac{2}{3}-2(\frac{1}{3}))=0 $; KKT conditions are satisfied and therefore, the solutions $x_1=\frac{2}{3}$ and $x_2=\frac{1}{3}$ are valid.
+	
+	
+	
+	
+	\subsection{Stochastic Process}
+	\noindent We toss a fair coin for a number of times and use H(head) and T(tail) to denote the two sides of the coin. Please compute the expected number of tosses we need to observe a first time occurrence of the following consecutive pattern
+	\begin{center}
+		H, T, T, ..., T
+	\end{center}
+	\vspace{-0.2cm}
+	
+	\noindent \textbf{Solution:}
+	\vspace{0.2cm}
+	
+	\noindent Let x denote the number of tosses we need to get n consecutive turns of the same side (i.e n heads or n tails). For the first toss, if we get the side we want immediately, then the probability would be $\frac{1}{2}$. Otherwise, this turn is useless and the number of turns would be x+1. In the second toss, the probability of getting the order we want is $\frac{1}{2}\times\frac{1}{2}=\frac{1}{4}$ and the case that we don't get what we want, the number of turns would be x+2. This gives us the following sequence for the expected number of tosses before observing our desired pattern for a coin side:
+	\begin{align*}
+		x=\frac{1}{2}(x+1)+\frac{1}{4}(x+2)+\frac{1}{8}(x+3)+...
+	\end{align*}
+	
+	\noindent Accordingly, solving the above equation gives $x_{S(n)}=2(2^n-1)$, where S is the side we want to observe n times. Hence, if we think of this problem as number of tosses to see one consecutive head and k consecutive tails, we would need $x_{H(1)}+x_{T(k)}=2(2^1-1)+2(2^k-1)= 2+2^{k+1}-2 =2^{k+1}$ tosses to observe this pattern.
+	
+	\section{SVM}
+	Consider the regression problem with training data $\{(x_i, y_i)\}_{i=1}^N (x_i \in R^d, y_i \in R)$. $\epsilon<0$ denotes a fixed small value. Derive the dual problem of the following primal problem of linear SVM:
+	\begin{align*}
+		\underset{w, b, \xi, \hat{\xi}}{min}\quad \frac{1}{2}||w||^2\quad+\quad C\sum_{i=1}^{N}(\xi_i+\hat{\xi}_i)\\
+		s.t.\quad y_i\quad \leq \quad w^Tx_i+b+\epsilon+\xi_i, i=1,...,N \\	
+		y_i\quad \geq\quad w^Tx_i+b-\epsilon-\xi_i, i=1,...,N\\
+		\xi_i\quad\geq\quad 0\quad\forall i=1,...,N\qquad\qquad\quad\quad\\
+		\hat{\xi}_i\quad\geq\quad 0\quad\forall i=1,...,N\qquad\qquad\quad\quad
+	\end{align*}
+	\vspace{-0.8cm}
+	
+	\noindent \textbf{Solution:}
+	\vspace{0.2cm}
+	
+	\noindent Let $a, c, d, \text{and } e \geq 0$ be the Lagrange multipliers. Then, the Lagrangian function would be
+	\begin{align*}
+		L(w, b, \xi, \hat{\xi}, a, c, d, e) = \frac{1}{2}||w||^2 + C\sum_{i}(\xi_i+\hat{\xi}_i)-\sum_{i}a_i(w^Tx_i+b+\epsilon+\xi_i-y_i)\\-\sum_{i}c_i(y_i-w^Tx_i-b+\epsilon+\hat{\xi}_i)-\sum_{i}d_i\xi_i-\sum_{i}e_i\hat{\xi}_i \quad \quad
+	\end{align*}
+	
+	\noindent Therefore, we can have that
+	\begin{align}
+		\frac{\partial L}{\partial w} =\hat{w} -\sum_{i=1}^{N}a_ix_i + \sum_{i=1}^{N}c_ix_i=0 \quad giving \quad \hat{w}=\sum_{i=1}^{N}(a_i-c_i)x_i\\
+		\frac{\partial L}{\partial b} =-\sum_{i=1}^{N}a_ix_i+\sum_{i=1}^{N}c_ix_i = 0 \quad giving \quad \sum_{i}a_i-c_i= 0\quad\\
+		\frac{\partial L}{\partial \xi} = C1-\sum_{i}a_i-\sum_{i}d_i= 0\quad giving 
+		\quad C = a+d\qquad \\
+		\frac{\partial L}{\partial \hat{\xi}} =C1+\sum_{i}c_i-\sum_{i}e_i= 0\quad giving 
+		\quad C = c+e \qquad
+	\end{align}
+	
+	\noindent Therefore, we initially expand the Lagrangian function as below
+	\begin{align*}
+	L(w, b, \xi, \hat{\xi}, a, c, d, e) = 
+	\frac{1}{2}||w||^2
+	+ C\sum_{i}(\xi_i+\hat{\xi}_i)
+	-\sum_{i}a_iw^Tx_i
+	-\sum_{i}a_ib
+	-\sum_{i}a_i\epsilon \\
+	-\sum_{i}a_i\xi_i
+	+\sum_{i}a_iy_i
+	-\sum_{i}c_iy_i
+	+\sum_{i}c_iw^Tx_i
+	+\sum_{i}c_ib \qquad\\
+	-\sum_{i}c_i\epsilon
+	-\sum_{i}c_i\hat{\xi}_i
+	-\sum_{i}d_i\xi_i-\sum_{i}e_i\hat{\xi}_i \qquad\qquad\qquad\qquad \\
+	 = 
+	\frac{1}{2}||w||^2
+	+ C\sum_{i}(\xi_i+\hat{\xi}_i)
+	-\sum_{i}(a_i-c_i)w^Tx_i\qquad\qquad \quad\\
+	-\sum_{i}(a_i-c_i)b
+	-\sum_{i}(a_i+c_i)\epsilon
+	-\sum_{i}(a_i+d_i)\xi_i\qquad\qquad\\
+	+\sum_{i}(a_i-c_i)y_i
+	-\sum_{i}(c_i+e_i)\hat{\xi}_i\qquad\qquad \qquad\qquad\qquad
+	\end{align*}
+	
+	\noindent Then, using equations 5-8 ,we can write the Lagrangian function as 
+	\begin{align*}
+	L(w, b, \xi, \hat{\xi}, a, c, d, e) = 
+	\frac{1}{2}||w||^2-\hat{w}w^T-b(0)-\epsilon\sum_{i}(a_i+c_i)+\sum_{i}(a_i-c_i)y_i\\
+	+ C\sum_{i}(\xi_i+\hat{\xi}_i)
+	-\sum_{i}(a_i+d_i)(\xi_i+\hat{\xi}_i)\qquad\qquad\qquad \quad\\ =-\frac{1}{2}||w||^2-\epsilon\sum_{i}(a_i+c_i)+\sum_{i}(a_i-c_i)y_i\qquad\qquad \quad
+	\end{align*}
+
+	\noindent Hence, the dual optimization problem would be
+	\begin{align*}
+		\underset{a, c}{argmax}-\frac{1}{2}\sum_{i}\sum_{j}(a_i-c_i)(a_j-c_j)x_i^Tx_j-\epsilon\sum_{i}(a_i+c_i)+\sum_{i}(a_i-c_i)y_i \\
+		s.t \qquad \sum_{i}(a_i-c_i)=0\qquad\qquad\qquad\qquad\qquad\qquad\\
+		0 \leq a_i, c_i \leq C\qquad\qquad\qquad\qquad\qquad\qquad
+	\end{align*}
+	
+	\section{Deep Neural Networks}
+	
+	\noindent To make neural networks work well in practice is not easy in general, since there are too many hyper-parameters to tune such as the choice of the number of hidden layers, the activation function, the learning rate and so on. Besides some general guidelines (some standard techniques which are useful at most cases such as dropout, data augmentation), experience is of great importance.
+	
+	\noindent Though a beginner may often be confused with them, luckily, there are some software available on the internet to help you build up a good sense on tuning neural networks. In this problem, you need to train the neural networks with different choices of hyper-parameters from the following link - A Neural Network Playground (you may need a VPN) - and answer the following questions:
+	
+	\begin{enumerate}
+		\item Identify the best configuration you find for different problems and datasets. Here you only need to list you configuration for the bottom-right dataset of the classification problem.
+		
+		\item List your findings that how the learning rate, the activation function, the number of hidden layers and the regularization influence the performance and convergence rate.
+	\end{enumerate}
+
+	\noindent \textbf{Solution:}
+	
+	\begin{enumerate}
+		\item The values for the best configuration are provided respectively below:
+		\begin{center}
+			
+			\begin{tabular}{|c|c|}
+				\hline
+				Parameter& Value \\ \hline
+				Learning rate& 0.01 \\ \hline
+			\end{tabular}
+		\end{center}
+	
+		\item The analyzed parameters and their influence for the performance and convergence rate are discussed respectively below:
+		
+		\noindent \textbf{\small Learning Rate}: as the name suggests, the learning rate relates to the rate at which the model learns; i.e. the amount of correction that is applied to weights with each training example. Hence, smaller values of the learning rate may result in a considerably slow convergence while larger values of learning rate may result in over-shooting as the convergence point may be missed due to large changes in the weights. Therefore, the learning rate should be set to a small enough value to ensure that it does not miss its convergence point, but a large enough value to reach convergence in a reasonable amount of time (i.e. avoid slow convergence). In practice, the learning set is initially rate is set to 0.01 and may be slightly modified depending on the given application.
+		
+		\noindent \textbf{\small Activation Function}: 
+		
+		\noindent \textbf{\small Number of Hidden Layers}:
+		
+		\noindent \textbf{\small Regularization}: 
+		
+	\end{enumerate}
+	
+	
+	\section{IRLS for Logistic Regression}
 	
 	
 	
