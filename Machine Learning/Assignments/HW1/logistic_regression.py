@@ -1,12 +1,18 @@
+import math
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn import metrics, cross_validation
+from sklearn import metrics
+from sklearn.model_selection import KFold
 from sklearn.datasets import load_svmlight_file
 
 # Global variables
+mse_dict = {}
 acc_train = {}
 acc_test = {}
+loss_train = {}
+loss_test = {}
 
 
 def load_dataset():
@@ -36,16 +42,16 @@ def update_weights(x, w, y, _lambda=0):
     # Hessian matrix
     H = - (np.transpose(x)@R@x) - (_lambda*np.identity(124))
     # Gradient loss term
-    G = - np.transpose(x)@(mu - y) - _lambda * w
+    G = np.transpose(x)@(y-mu) - _lambda * w
     # Weight update
     w_new = w - np.linalg.pinv(H) @ G
 
     return w_new
 
 
-def accuracy(x, w, y, epoch, mode):
+def calc_accuracy(x, w, y, _lambda, mode):
     p = sigmoid(x@w)
-    p = [0 if px < 0.5 else 1 for px in p]
+    p = [0 if px <= 0.5 else 1 for px in p]
 
     num_correct = 0
     for i in range(len(p)):
@@ -53,49 +59,212 @@ def accuracy(x, w, y, epoch, mode):
             num_correct += 1
 
     acc = num_correct * 100 / len(p)
-    
+
     print("Accuracy:", acc)
+
     if (mode == "train"):
-        acc_train[epoch] = acc
+        if (_lambda in acc_train.keys()):
+            acc_train[_lambda].append(acc)
+        else:
+            acc_train[_lambda] = [acc]
     else:
-        acc_test[epoch] = acc
+        if (_lambda in acc_test.keys()):
+            acc_test[_lambda].append(acc)
+        else:
+            acc_test[_lambda] = [acc]
+
+    calc_loss(p, y, _lambda, mode)
 
 
-def precision():
-    print("precise")
+def calc_loss(p, y, _lambda, mode):
+    loss = metrics.log_loss(y, p)
+
+    print("Loss:", loss)
+
+    if (mode == "train"):
+        if (_lambda in loss_train.keys()):
+            loss_train[_lambda].append(loss)
+        else:
+            loss_train[_lambda] = [loss]
+    else:
+        if (_lambda in loss_test.keys()):
+            loss_test[_lambda].append(loss)
+        else:
+            loss_test[_lambda] = [loss]
 
 
-def train_model(x_train, w, y_train,_lambda, epoch=0):
+def calc_MSE(x, w, y):
+    p = sigmoid(x@w)
+    p = [0 if px <= 0.5 else 1 for px in p]
+    y = np.array(y)
+
+    mse = (np.square(y - p)).mean(axis=0)
+    print("MSE ", mse)
+    return mse
+
+
+
+def train_model(x_train, w, y_train, _lambda, epoch=0):
     print("Training Epoch ==> %d" % epoch)
 
     if (epoch != 0):
         w = update_weights(x_train, w, y_train, _lambda)
 
-    accuracy(x_train, w, y_train, epoch, "train")
+    calc_accuracy(x_train, w, y_train, _lambda, "train")
 
     return w
 
 
-def test_model(x_test, w, y_test, epoch=0):
+def test_model(x_test, w, y_test, _lambda, epoch=0):
     print("Testing Epoch ==> %d" % epoch)
-    accuracy(x_test, w, y_test, epoch, "")
+    calc_accuracy(x_test, w, y_test, _lambda, "")
+
+
+def find_min_MSE(mse_dict):
+    minimum = 1
+    idx = 0
+    for key, value in mse_dict.items():
+        if (value < minimum):
+            minimum = value
+            idx = key
+
+    return idx
+
+
+def find_best_lambda(x_train, y_train):
+    kf = KFold(n_splits=10)
+    epochs = 10
+    lambdas = [0.01, 0.1, 1, 2, 5, 10, 20, 50, 100]
+    folds_used = 0
+
+    for _lambda in lambdas:
+        mse_average = 0
+        for train_idx, test_idx in kf.split(x_train):
+            folds_used += 1
+            print("Using fold %d" % (folds_used))
+            x_train_cv, y_train_cv = x_train[train_idx], np.array(y_train)[
+                train_idx]
+            x_test_cv, y_test_cv = x_train[test_idx], np.array(y_train)[
+                test_idx]
+
+            w = np.zeros((1, 124), dtype='float64')[0]
+            w = train_model(x_train_cv, w, y_train_cv, _lambda, 0)
+            mse_sum = calc_MSE(x_test_cv, w, y_test_cv)
+
+            for epoch in range(1, epochs):
+                # Train the model based on the train data
+                w = train_model(x_train, w, y_train, _lambda, epoch)
+                # Test the model
+                mse_sum += calc_MSE(x_test_cv, w, y_test_cv)
+
+            mse_average = mse_average + (mse_sum/epochs)
+
+        mse_dict[_lambda] = mse_average / 10
+
+    return find_min_MSE(mse_dict)
 
 
 if __name__ == "__main__":
     x_train, y_train, x_test, y_test = load_dataset()
-    w = np.zeros((1, 124), dtype='float64')[0]
-    
-    epochs = 7
-    _lambda = 20
+    epochs = 10
 
-    w = train_model(x_train, w, y_train, _lambda, 0)
-    test_model(x_test, w, y_test, 0)
-    
-    for epoch in range(1, epochs+1):
-        # Train the model based on the train data
-        w = train_model(x_train, w, y_train, _lambda, epoch)
-        # Test the model
-        test_model(x_test, w, y_test, epoch)
+    _lambda = find_best_lambda(x_train, y_train)
+    lambdas = [0].append(_lambda)
 
-    num_zeros = 0
-    
+    for _lambda in lambdas:
+        w = np.zeros((1, 124), dtype='float64')[0]
+        w = train_model(x_train, w, y_train, _lambda, 0)
+        test_model(x_test, w, y_test, _lambda, 0)
+
+        for epoch in range(1, epochs):
+            # Train the model based on the train data
+            w = train_model(x_train, w, y_train, _lambda, epoch)
+            # Test the model
+            test_model(x_test, w, y_test, _lambda, epoch)
+
+    # MSE chart
+    fig, ax = plt.subplots()
+    ax.plot(mse_dict.keys(), mse_dict.values())
+    ax.set_title("MSE Chart")
+    ax.set_xlabel("Lambda")
+    ax.set_ylabel("MSE")
+    plt.show()
+
+    fig = ax.get_figure()
+    fig.savefig("MSE", dpi=300)
+
+    # Testing accuracy chart
+    acc_test_0 = acc_test[0]
+    acc_test_50 = acc_test[50]
+
+    fig, ax = plt.subplots()
+    ax.plot(acc_test_0, label='Test data [lambda = 0]')
+    ax.plot(acc_test_50, label='Test data [lambda = 50]')
+    ax.set_title("Testing Accuracy Chart")
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("Accuracy (%)")
+    plt.xlim(left=1)
+    plt.ylim(84.5, 85.2)
+    ax.set_xticks(list(range(1, 11)))
+    ax.legend()
+    plt.show()
+
+    fig = ax.get_figure()
+    fig.savefig("Figures/Acc_test", dpi=300)
+
+    # Training accuracy chart
+    acc_train_0 = acc_train[0]
+    acc_train_50 = acc_train[50]
+
+    fig, ax = plt.subplots()
+    ax.plot(acc_train_0, label='Train data [lambda = 0]')
+    ax.plot(acc_train_50, label='Train data [lambda = 50]')
+    ax.set_title("Training Accuracy Chart")
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("Accuracy (%)")
+    plt.xlim(left=1)
+    plt.ylim(84.3, 85)
+    ax.set_xticks(list(range(1, 11)))
+    ax.legend()
+    plt.show()
+
+    fig = ax.get_figure()
+    fig.savefig("Figures/Acc_train", dpi=300)
+
+    # Testing loss chart
+    loss_test_0 = loss_test[0]
+    loss_test_50 = loss_test[50]
+
+    fig, ax = plt.subplots()
+    ax.plot(loss_test_0, label='Test data [lambda = 0]')
+    ax.plot(loss_test_50, label='Test data [lambda = 50]')
+    ax.set_title("Testing Loss Chart")
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("Log Loss")
+    plt.xlim(left=1)
+    plt.ylim(5.1, 5.4)
+    ax.set_xticks(list(range(1, 11)))
+    ax.legend()
+    plt.show()
+
+    fig = ax.get_figure()
+    fig.savefig("Figures/Loss_test", dpi=300)
+
+    # Training loss chart
+    loss_train_0 = loss_train[0]
+    loss_train_50 = loss_train[50]
+
+    fig, ax = plt.subplots()
+    ax.plot(loss_train_0, label='Train data [lambda = 0]')
+    ax.plot(loss_train_50, label='Train data [lambda = 50]')
+    ax.set_title("Training Loss Chart")
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("Log Loss")
+    plt.xlim(left=1)
+    plt.ylim(5.1, 5.5)
+    ax.set_xticks(list(range(1, 11)))
+    ax.legend()
+    plt.show()
+
+    fig = ax.get_figure()
+    fig.savefig("Figures/Loss_train", dpi=300)
