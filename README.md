@@ -19,7 +19,7 @@ To do or not to do, that is the question.
 - [x] 9/22 => Homework 0
 - [x] 10/24 => Homework 1
 - [x] 10/26 => Project proposal
-- [ ] N/A => Mid-term report
+- [ ] 11/22 => Mid-term report
 - [ ] N/A => Final report and code
 
 
