@@ -7,7 +7,7 @@
 ## :pushpin: To Do 
 To do or not to do, that is the question.
 
-### :skull: Deadlines (9)
+### :skull: Deadlines (8)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -50,6 +50,6 @@ To do or not to do, that is the question.
 
 #### Chinese Culture and Society:
 
-- [ ] 11/17 => Book review
+- [x] 11/17 => Book review
 - [ ] 1/4 => Final paper
   
