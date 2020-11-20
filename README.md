@@ -13,7 +13,7 @@ To do or not to do, that is the question.
 #### Combinatorics and Algorithms Design:
 
 - [x] 11/13 => Homework week 9
-- [ ] 11/20 => Homework week 10
+- [x] 11/20 => Homework week 10
 
 #### Machine Learning:
 
