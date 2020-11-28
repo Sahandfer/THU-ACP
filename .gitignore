@@ -2,3 +2,5 @@ desktop.ini
 Further readings
 .ipynb_checkpoints
 dataset
+*.csv
+*.log
