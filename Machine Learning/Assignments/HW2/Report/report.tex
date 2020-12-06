@@ -1,0 +1,119 @@
+ \documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{inputenc}
+\usepackage{graphicx}
+\usepackage{titletoc} 
+\usepackage{fancyhdr}   
+\usepackage[a4paper,pdftex]{geometry}	
+\usepackage[english]{babel}
+\usepackage{xcolor} 
+\usepackage{enumerate}
+\usepackage{fix-cm} 
+\usepackage[notlof]{tocbibind}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\renewcommand\lstlistingname{Appendix}
+\renewcommand\lstlistlistingname{Appendix}
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+	\edef\@temp{\the\lst@token}%
+	\ifx\@temp\@lbracket \color{black}%
+	\else\ifx\@temp\@rbracket \color{black}%
+	\else\ifx\@temp\@colon \color{black}%
+	\else \color{vorange}%
+	\fi\fi\fi
+}
+\makeatother
+
+\usepackage{trace}
+
+\usepackage{subcaption}
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\includegraphics[scale=.4]{Figures/Cover}\\
+			\vspace{1cm}
+			\bf{ \large {Department of Computer Science and Technology} }
+		\end{center}
+		
+		\vspace{4cm}
+		\centering
+		\textbf{\Huge Machine Learning}
+		\vspace{.5cm}
+		
+		{\Large Homework 2}
+
+		\vspace{4cm}
+		
+		\textbf{\LARGE Sahand Sabour}
+		
+		
+		
+		\vspace{0.5cm}
+		
+		{\large 2020280401}
+		
+		
+		\vfill
+		
+	\end{titlepage}
+
+	
+\end{document}
+
+
+
+\section{commands}
+
+\textbf{First}
+
+\noindent (cogdl) ➜  cogdl git:(master) python scripts/train.py --task unsupervised\_node\_classification --dataset wikipedia --model deepwalk
+Failed to import Deep Graph Library (DGL)
+Namespace(cpu=False, dataset=['wikipedia'], device\_id=[0], enhance=None, hidden\_size=128, iteration=10, lr=0.01, max\_epoch=500, model=['deepwalk'], num\_shuffle=5, patience=100, save\_dir='.', seed=[1], task='unsupervised\_node\_classification', walk\_length=80, walk\_num=40, weight\_decay=0.0005, window\_size=5, worker=10)
+Downloading http://snap.stanford.edu/node2vec/POS.mat
+Processing...
+Done!
+node number: 4777
+generating random walks...
+100%|███████████████████████████████████████████| 40/40 [00:59<00:00,  1.48s/it]
+training word2vec...
+| Variant                   | Micro-F1 0.1   | Micro-F1 0.3   | Micro-F1 0.5   | Micro-F1 0.7   | Micro-F1 0.9   |
+|---------------------------|----------------|----------------|----------------|----------------|----------------|
+| ('wikipedia', 'deepwalk') | 0.4253±0.0000  | 0.4720±0.0000  | 0.4951±0.0000  | 0.5056±0.0000  | 0.5214±0.0000  |
+
+
+\textbf{Second}
+
+\noindent (cogdl) ➜  cogdl git:(master) python scripts/train.py --task node_classification --dataset citeseer --model gcn
+Failed to import Deep Graph Library (DGL)
+Namespace(cpu=False, dataset=['citeseer'], device_id=[0], dropout=0.5, enhance=None, hidden_size=64, lr=0.01, max_epoch=500, missing_rate=-1, model=['gcn'], num_classes=None, num_features=None, patience=100, save_dir='.', seed=[1], task='node_classification', weight_decay=0.0005)
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.x
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.tx
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.allx
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.y
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.ty
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.ally
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.graph
+Downloading https://github.com/kimiyoung/planetoid/raw/master/data/ind.citeseer.test.index
+Processing...
+Done!
+Epoch: 440, Train: 1.0000, Val: 0.7000:  88%|████████████████████████████████████████████████▍      | 440/500 [00:05<00:00, 84.81it/s]
+Valid accurracy = 0.73
+Test accuracy = 0.72
+| Variant             | Acc           |
+|---------------------|---------------|
+| ('citeseer', 'gcn') | 0.7200±0.0000 |
+
