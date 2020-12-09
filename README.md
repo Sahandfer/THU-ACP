@@ -32,6 +32,7 @@ To do or not to do, that is the question.
 - [x] 11/20 => Homework week 10
 - [x] 11/27 => Homework week 11
 - [x] 12/04 => Oj-Algo-1
+- [ ] 12/11 => Homework week 13
 
 #### Machine Learning:
 
