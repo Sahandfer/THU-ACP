@@ -1,0 +1,116 @@
+ \documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{inputenc}
+\usepackage{graphicx}
+\usepackage{titletoc} 
+\usepackage{fancyhdr}   
+\usepackage[a4paper,pdftex]{geometry}	
+\usepackage[english]{babel}
+\usepackage{xcolor} 
+\usepackage{enumerate}
+\usepackage{fix-cm} 
+\usepackage[notlof]{tocbibind}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\renewcommand\lstlistingname{Appendix}
+\renewcommand\lstlistlistingname{Appendix}
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+	\edef\@temp{\the\lst@token}%
+	\ifx\@temp\@lbracket \color{black}%
+	\else\ifx\@temp\@rbracket \color{black}%
+	\else\ifx\@temp\@colon \color{black}%
+	\else \color{vorange}%
+	\fi\fi\fi
+}
+\makeatother
+
+\usepackage{trace}
+
+\usepackage{subcaption}
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\includegraphics[scale=.4]{Figures/Cover}\\
+			\vspace{1cm}
+			\bf{ \large {Department of Computer Science and Technology} }
+		\end{center}
+		
+		\vspace{4cm}
+		\centering
+		\textbf{\Huge Machine Learning}
+		\vspace{.5cm}
+		
+		{\Large Homework 3}
+
+		\vspace{4cm}
+		
+		\textbf{\LARGE Sahand Sabour}
+		
+		
+		
+		\vspace{0.5cm}
+		
+		{\large 2020280401}
+		
+		
+		\vfill
+		
+	\end{titlepage}
+
+
+	\section{Clustering: Mixture of Multinomials}
+	\subsection{MLE for multinomial}
+	
+	\noindent The likelihood function for this multinomial distribution is given as
+	\begin{equation}
+		P(x|\mu) = \frac{n!}{\prod_{i}x_i!}\prod_{i}\mu^{x_i}_i,\quad i=1, ..., d
+	\end{equation}
+	Taking log from both side of the above equation gives the log-likelihood function
+	\begin{equation}
+		\mathcal{L}(\mu) = log(P(x|\mu)) = log(n!)- log(\prod_{i}x_i!) +log(\prod_{i}\mu^{x_i}_i)
+	\end{equation}
+	This can be considered a Lagrange problem with the constraint $\sum_{i}\mu_i=1$. Hence, the Lagrangian equation can be formulated as
+	\begin{equation}
+		\mathcal{L}(\mu) = log(n!)- log(\prod_{i}x_i!) +log(\prod_{i}\mu^{x_i}_i) - \lambda(\sum_{i}\mu_i-1)
+	\end{equation}
+where $\lambda$ is Lagrangian multiplier, giving
+\begin{equation}
+	\mathcal{L}(\mu) = log(n!)- \sum_{i}log(x_i!) + \sum_{i}{x_i}log(\mu_i) - \lambda(\sum_{i}\mu_i-1)
+\end{equation}
+	Taking the derivative of the equation with respect to $\mu_i$ and setting it to 0 gives
+	\begin{equation}
+		\frac{\partial \mathcal{L}}{\partial \mu_i}= \frac{\sum_{i}x_i}{\sum_{i}\mu_i} - \lambda = 0
+	\end{equation}
+	Hence, we get that
+	\begin{equation}
+		 \lambda= \frac{\sum_{i}x_i}{\sum_{i}\mu_i} = \frac{n}{1} = n
+	\end{equation}
+	Accordingly, we could derive the maximum-likelihood estimator $\mu_i$ as
+	\begin{equation}
+		\mu_i= \frac{x_i}{\lambda} = \frac{x_i}{n},\quad i=1, ..., d
+	\end{equation}
+
+
+	\subsection{EM for mixture of multinomials}
+	
+	\section{PCA}
+	\subsection{Minimum Error Formulation}
+	
+	\section{Deep Generative Models: Class-conditionedVAE}
+
+	
+\end{document}
