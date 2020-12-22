@@ -110,7 +110,41 @@ where $\lambda$ is Lagrangian multiplier, giving
 	\section{PCA}
 	\subsection{Minimum Error Formulation}
 	
-	\section{Deep Generative Models: Class-conditionedVAE}
+	\noindent Assuming that we have a set of complete orthonormal basis $\{\mu_i\}$, where $i\in[1,p]$, we have that $\mu_i^T\mu_j=\delta_{ij}$ and each data point can be represented as $x_n=\sum_{i}a_{ni}\mu_i$. Accordingly, due to orthonormal property, we can get that
+	\begin{equation}
+		a_{ni}=x_n^T\mu_i
+	\end{equation}
+	Inserting this in the data point representation gives
+	\begin{equation}
+		x_n=\sum_{i}(x_n^T\mu_i)\mu_i
+	\end{equation}
+	For this approach, the aim is to formulate PCA as minimizing
+	the mean-squared-error of a low-dimensional approximation of the given basis. Hence, we assume a low-dimensional approximation of the point representation as follows
+	\begin{equation}
+		\widetilde{x}_n=\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i \quad \text{where b is constant for all i}
+	\end{equation}
+	Therefore, the best approximation is to minimize the following error
+	\begin{equation}
+		\underset{ U,z,b}{\min}  J:=\frac{1}{N}\sum_{n=1}^{N}||x_n-\widetilde{x}_n||^2
+	\end{equation}
+	Consequently, we have that
+	\begin{align*}
+		J = \frac{1}{N}\sum_{n=1}^{N}||x_n-\widetilde{x}_n||^2\qquad \qquad \quad\\= \frac{1}{N}\sum_{n=1}^{N} (x_n-\widetilde{x}_n)^T(x_n-\widetilde{x}_n) \quad \\
+		= \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T \widetilde{x}_n + \widetilde{x}_n^T\widetilde{x}_n
+	\end{align*}
+	\noindent Inserting equation 10 in the above equation and replacing $\widetilde{x}_n$ gives
+	\begin{equation*}
+		J = \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T (\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i) + (\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i^T)(\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i)
+	\end{equation*}
+	
+	\noindent Accordingly, for minimizing this error, we calculate the derivative with respect to $z$ and $b$ and set it to 0.
+	
+	\begin{equation}
+		\frac{\delta J}{\delta z_}
+	\end{equation}
+	
+	
+	\section{Deep Generative Models: Class-conditioned VAE}
 
 	
 \end{document}
