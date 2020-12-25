@@ -121,7 +121,7 @@ where $\lambda$ is Lagrangian multiplier, giving
 	For this approach, the aim is to formulate PCA as minimizing
 	the mean-squared-error of a low-dimensional approximation of the given basis. Hence, we assume a low-dimensional approximation of the point representation as follows
 	\begin{equation}
-		\widetilde{x}_n=\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i \quad \text{where b is constant for all i}
+		\widetilde{x}_n=\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i \quad \text{where $b_i$ are constants for all points}
 	\end{equation}
 	Therefore, the best approximation is to minimize the following error
 	\begin{equation}
@@ -133,16 +133,43 @@ where $\lambda$ is Lagrangian multiplier, giving
 		= \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T \widetilde{x}_n + \widetilde{x}_n^T\widetilde{x}_n
 	\end{align*}
 	\noindent Inserting equation 10 in the above equation and replacing $\widetilde{x}_n$ gives
-	\begin{equation*}
-		J = \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T (\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i) + (\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i^T)(\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i)
-	\end{equation*}
+	\begin{align*}
+		J = \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T (\sum_{i}^{d}z_{ni}\mu_i+\sum_{i=d+1}^{p}b_i\mu_i) \\+ (\sum_{i}^{d}z_{ni}\mu_i^T+ 
+		\sum_{i=d+1}^{p}b_i\mu_i^T)(\sum_{i}^{d}z_{ni}\mu_i+\sum_{i=d+1}^{p}b_i\mu_i)
+	\end{align*}
 	
 	\noindent Accordingly, for minimizing this error, we calculate the derivative with respect to $z$ and $b$ and set it to 0.
 	
+	\vspace{-0.3cm}
+	\begin{align*}
+		\frac{\delta J}{\delta z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_i\mu_i^T)\mu_j] = 0 \\ 
+		\frac{\delta J}{\delta z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)] = 0 \qquad \qquad \\ 
+		2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)= 2x_n^T\mu_j \qquad \qquad\qquad \quad\\
+		\sum_{i}^{d}z_{ni}\mu_j^T\mu_i + \sum_{i=d+1}^{p}b_i\mu_j^T\mu_i=  x_n^T\mu_j \qquad \qquad\qquad \quad \\
+		\sum_{i}^{d}z_{ni}\delta ij + \sum_{i=d+1}^{p}b_i\delta ij = z_{ni}+0 = x_n^T\mu_i \qquad \qquad\qquad \quad
+	\end{align*}
+	Giving $z_{ni}= x_n^T\mu_i$ for $i\in [1,d]$. Similarly, we the derivative with respect to b
+
+	\vspace{-0.3cm}
+	\begin{align*}
+		\frac{\delta J}{\delta b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_j\mu_i^T)\mu_j] = 0 \\ 
+		\frac{\delta J}{\delta b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i)] = 0 \qquad \qquad \\ 
+		\sum(\sum_{i}^{d}z_{ni}\mu_j^T\mu_i + \sum_{i=d+1}^{p}b_j\mu_j^T\mu_i)=  \sum x_n^T\mu_j \qquad \qquad\qquad \quad \\
+		\sum b_j= Nb_j =\sum x_n^T\mu_j \quad \text{giving}\quad b_j = \sum \frac{1}{n}x_n^T\mu_j = \bar{x}^Tu_j\qquad\qquad\\
+	\end{align*}
+	Which in turn gives $b_i=\bar{x}^Tu_i$ for $i\in [d+1,p]$. Accordingly, from equation 9, we can get the displacement lines in the orthogonal subspace as follows
 	\begin{equation}
-		\frac{\delta J}{\delta z_}
+		x_n - \widetilde{x}_n = \sum_{i=d+1}^{p}\{(x_n-\bar{x})^T\mu_i\}\mu_i
 	\end{equation}
-	
+	Which produces the following optimization problem for error J
+	\begin{equation}
+		\underset{\mu_j}{min} J \quad \text{where} \quad \mu_i^T\mu_i=1
+	\end{equation}
+	Assuming d=1 (1-dimensional subspace) and p=2 (2-dimensional space), the optimization problem becomes
+	\begin{equation}
+		\underset{\mu_2}{min} J = \mu_2^TS\mu_2 \quad \text{where} \quad \mu_2^T\mu_2=1
+	\end{equation}
+	Which gives $S\mu_2 = \lambda_2 \mu_2$, meaning that $\mu_2$ should be chosen as the eigenvector that corresponds to the smaller eigenvalue. Accordingly, the principal subspace is chosen by the eigenvector of the larger eigenvalue.
 	
 	\section{Deep Generative Models: Class-conditioned VAE}
 
