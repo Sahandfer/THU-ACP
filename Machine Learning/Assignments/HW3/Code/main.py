@@ -1,182 +1,137 @@
-import os
+"""
+Source code for class-conditioned VAE created in ZhuSuan
+Inspired by https://zhusuan.readthedocs.io/en/latest/tutorials/vae.html
+Created by: Sahand Sabour (2020280401)
+"""
+
 import time
 import numpy as np
 import zhusuan as zs
 import tensorflow as tf
-from utils import load_dataset
+from utils import load_dataset, save_image, shuffle
 
-# Encoder (q-net) model
+# Encoder model
 @zs.reuse_variables(scope="encoder")
-def build_encoder(x, z_dim, n_z_per_x, std_noise=0):
+def build_encoder(x, l, z_dim, n_samples):
     bn = zs.BayesianNet()
-    h = tf.layers.dense(tf.cast(x, tf.float32), 500, activation=tf.nn.relu)
+    x_and_t = tf.concat(values=[x, l], axis=1)
+    h = tf.layers.dense(tf.cast(x_and_t, tf.float32), 500, activation=tf.nn.relu)
     h = tf.layers.dense(h, 500, activation=tf.nn.relu)
     z_mean = tf.layers.dense(h, z_dim)
     z_logstd = tf.layers.dense(h, z_dim)
-    # z_logstd = tf.layers.dense(h, z_dim)+std_noise
-    bn.normal("z", z_mean, logstd=z_logstd, group_ndims=1, n_samples=n_z_per_x)
+    bn.normal("z", z_mean, logstd=z_logstd, group_ndims=1, n_samples=n_samples)
+
     return bn
 
 
 # Decoder model
-@zs.meta_bayesian_net(scope="gen", reuse_variables=True)
-def build_decoder(x_dim, z_dim, n, n_particles=1):
+@zs.meta_bayesian_net(scope="decoder", reuse_variables=True)
+def build_decoder(x_dim, l_input, z_dim, n, n_samples=1):
     bn = zs.BayesianNet()
+    # z ~ N(z|0, I)
     z_mean = tf.zeros([n, z_dim])
-    z = bn.normal("z", z_mean, std=1.0, group_ndims=1, n_samples=n_particles)
-    h = tf.layers.dense(z, 500, activation=tf.nn.relu)
+    z = bn.normal("z", z_mean, std=1.0, group_ndims=1, n_samples=n_samples)
+    z_and_t = tf.concat(values=[z, tf.expand_dims(l_input, axis=0)], axis=2)
+    h = tf.layers.dense(z_and_t, 500, activation=tf.nn.relu)
     h = tf.layers.dense(h, 500, activation=tf.nn.relu)
+
     # For generating images
+    # x_logits = f_NN(z)
     x_logits = tf.layers.dense(h, x_dim)
+    # x_mean
     bn.deterministic("x_mean", tf.sigmoid(x_logits))
+    # x ~ Bernoulli(x|sigmoid(x_logits))
     bn.bernoulli("x", x_logits, group_ndims=1)
+
     return bn
 
 
-# def gradient_descent(epochs):
-#     with tf.Session() as sess:
-#         sess.run(tf.global_variables_initializer())
+def run():
+    x_train, l_train = load_dataset()
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
+        # Begin training (inferencing)
+        for epoch in range(1, epochs + 1):
+            time_epoch = -time.time()
+            x_train, l_train = shuffle(x_train, l_train)
+            lbs = []
+            for i in range(iter_num):
+                x_batch = x_train[i * batch_size : (i + 1) * batch_size]
+                l_batch = l_train[i * batch_size : (i + 1) * batch_size]
+                _, lb = sess.run(
+                    [infer_op, lower_bound],
+                    feed_dict={
+                        x_input: x_batch,
+                        l_input: l_batch,
+                        n_samples: 1,
+                        n: batch_size,
+                    },
+                )
+                lbs.append(lb)
+            time_epoch += time.time()
+            print(
+                "Epoch {} ({:.1f}s): Lower bound = {}".format(
+                    epoch, time_epoch, np.mean(lbs)
+                )
+            )
 
-#         for epoch in range(1, epochs + 1):
-#             time_epoch = -time.time()
-#             np.random.shuffle(train_image)
-#             lbs = []
-#             for t in range(iters):
-#                 x_batch = train_image[t * batch_size : (t + 1) * batch_size]
-#                 _, lb = sess.run(
-#                     [infer_op, lower_bound],
-#                     feed_dict={x_input: x_batch, n_particles: 1, n: batch_size},
-#                 )
-#                 lbs.append(lb)
-#             time_epoch += time.time()
-#             print(
-#                 "Epoch {} ({:.1f}s): Lower bound = {}".format(
-#                     epoch, time_epoch, np.mean(lbs)
-#                 )
-#             )
+            # Occasionally generate results for each digit 0-9 (for comparison reason)
+            if (epoch % 25 == 0) or (epoch == 1):
+                labels = np.broadcast_to(np.array([0] * 10), (100, 10)).copy()
+                for i in range(10):
+                    labels[:, i] = 1
+                    images = sess.run(
+                        x_gen, feed_dict={l_input: labels, n: 100, n_samples: 1}
+                    )
+                    name = "results/Epoch{}_Label{}.png".format(epoch, i)
+                    save_image(images, name)
+                    labels[:, i] = 0
 
-#             if epoch % save_freq == 0:
-#                 images = sess.run(x_gen, feed_dict={n: 100, n_particles: 1})
-#                 name = os.path.join(result_path, "vae.epoch.{}.png".format(epoch))
-#                 save_image_collections(images, name)
+
+def main():
+    # Set of globally used variables
+    global x, x_input, x_dim, z_dim, l, l_input, l_dim
+    global epochs, batch_size, iter_num, n, n_samples
+    global encoder, decoder, lower_bound, is_log_likelihood, infer_op, x_gen
+
+    # Load MNIST
+    x_train, l_train = load_dataset()
+
+    # Initialize parameters
+    x_dim = x_train.shape[1]
+    l_dim = l_train.shape[1]
+    z_dim = 40
+    epochs = 1000
+    batch_size = 128
+    iter_num = x_train.shape[0] // batch_size
+
+    # Create necessary placeholders
+    n = tf.compat.v1.placeholder(tf.int32, shape=[], name="n")
+    n_samples = tf.compat.v1.placeholder(tf.int32, shape=[], name="n_particles")
+    x_input = tf.compat.v1.placeholder(tf.float32, shape=[None, x_dim], name="x")
+    x = tf.cast(tf.less(tf.random.uniform(tf.shape(x_input)), x_input), tf.int32)
+    l_input = tf.compat.v1.placeholder(tf.float32, shape=[None, l_dim], name="l")
+    l = tf.cast(tf.less(tf.random.uniform(tf.shape(l_input)), l_input), tf.int32)
+
+    # Create the encoder and decoder models
+    encoder = build_encoder(x, l, z_dim, n_samples)
+    decoder = build_decoder(x_dim, l_input, z_dim, n, n_samples)
+    # Calculate the lower bound and cost for inference
+    lower_bound = zs.variational.elbo(decoder, {"x": x}, variational=encoder, axis=0)
+    cost = tf.reduce_mean(lower_bound.sgvb())
+    lower_bound = tf.reduce_mean(lower_bound)
+    # Calculate log likelihood
+    is_log_likelihood = tf.reduce_mean(
+        zs.is_loglikelihood(decoder, {"x": x}, proposal=encoder, axis=0)
+    )
+    # Inference optimization
+    optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
+    infer_op = optimizer.minimize(cost)
+    bn = decoder.observe()
+    x_gen = tf.reshape(bn["x_mean"], [-1, 28, 28, 1])
+    # Start the model training and generation
+    run()
 
 
 if __name__ == "__main__":
-    train_image, train_label, test_image, test_label = load_dataset()
-    print("loaded dataset")
-
-    x_dim = train_image.shape[1]
-    z_dim = 40
-    n = tf.compat.v1.placeholder(tf.int32, shape=[], name="n")
-    n_particles = tf.compat.v1.placeholder(tf.int32, shape=[], name="n_particles")
-    x_input = tf.compat.v1.placeholder(tf.float32, shape=[None, x_dim], name="x")
-    x = tf.cast(tf.less(tf.random.uniform(tf.shape(x_input)), x_input), tf.int32)
-
-    gen = build_decoder(x_dim, z_dim, n, n_particles)
-    q_net = build_encoder(x_dim, z_dim, n_particles)
-    lower_bound = zs.variational.elbo(gen, {"x": x}, variational=q_net, axis=0)
-    cost = tf.reduce_mean(lower_bound.sgvb())
-    lower_bound = tf.reduce_mean(lower_bound)
-
-    is_log_likelihood = tf.reduce_mean(
-        zs.is_loglikelihood(gen, {"x": x}, proposal=q_net, axis=0)
-    )
-
-    optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
-    infer_op = optimizer.minimize(cost)
-    
-    epochs = 1000
-    batch_size = 128
-    iters = train_image.shape[0] // batch_size
-    test_freq = 100
-    test_batch_size = 400
-    test_iters = test_image.shape[0] // test_batch_size
-    result_path = "results/vae_digits"
-    checkpoints_path = "checkpoints/vae_digits"
-
-    # used to save checkpoints during training
-    saver = tf.train.Saver(max_to_keep=10)
-    save_model_freq = 100
-
-    # run the inference
-    with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
-
-        # restore the model parameters from the latest checkpoint
-        ckpt_file = tf.train.latest_checkpoint(checkpoints_path)
-        begin_epoch = 1
-        if ckpt_file is not None:
-            print('Restoring model from {}...'.format(ckpt_file))
-            begin_epoch = int(ckpt_file.split('.')[-2]) + 1
-            saver.restore(sess, ckpt_file)
-
-        # begin training
-        for epoch in range(begin_epoch, epochs + 1):
-            time_epoch = -time.time()
-            np.random.shuffle(train_image)
-            lbs = []
-            for t in range(iters):
-                x_batch = train_image[t * batch_size:(t + 1) * batch_size]
-                _, lb = sess.run([infer_op, lower_bound],
-                                 feed_dict={x_input: x_batch,
-                                            n_particles: 1,
-                                            n: batch_size})
-                lbs.append(lb)
-            time_epoch += time.time()
-            print("Epoch {} ({:.1f}s): Lower bound = {}".format(
-                epoch, time_epoch, np.mean(lbs)))
-
-            # test marginal log likelihood
-            if epoch % test_freq == 0:
-                time_test = -time.time()
-                test_lbs, test_lls = [], []
-                for t in range(test_iters):
-                    test_x_batch = test_image[t * test_batch_size:
-                                          (t + 1) * test_batch_size]
-                    test_lb = sess.run(lower_bound,
-                                       feed_dict={x: test_x_batch,
-                                                  n_particles: 1,
-                                                  n: test_batch_size})
-                    test_ll = sess.run(is_log_likelihood,
-                                       feed_dict={x: test_x_batch,
-                                                  n_particles: 1000,
-                                                  n: test_batch_size})
-                    test_lbs.append(test_lb)
-                    test_lls.append(test_ll)
-                time_test += time.time()
-                print(">>> TEST ({:.1f}s)".format(time_test))
-                print(">> Test lower bound = {}".format(np.mean(test_lbs)))
-                print('>> Test log likelihood (IS) = {}'.format(
-                    np.mean(test_lls)))
-
-            # save model parameters
-            if epoch % save_model_freq == 0:
-                print('Saving model...')
-                save_path = os.path.join(checkpoints_path,
-                                         "vae.epoch.{}.ckpt".format(epoch))
-                if not os.path.exists(os.path.dirname(save_path)):
-                    os.makedirs(os.path.dirname(save_path))
-                saver.save(sess, save_path)
-                print('Done')
-
-        # random generation of images from latent distribution
-        x_gen = tf.reshape(gen.observe()["x_mean"], [-1, 28, 28, 1])
-        images = sess.run(x_gen, feed_dict={n: 100, n_particles: 1})
-        name = os.path.join(result_path, "random_samples.png")
-        # save_image_collections(images, name)
-
-        # the following code generates 100 samples for each number
-        test_n = [3, 2, 1, 90, 95, 23, 11, 0, 84, 7]
-        # map each digit to a corresponding sample from the test set so we can generate similar digits
-        for i in range(len(test_n)):
-            # get latent distribution from the variational giving as input a fixed sample from the dataset
-            z = q_net.observe(x=np.expand_dims(test_image[test_n[i]], 0))['z']
-            # run the computation graph adding noise to computed variance to get different output samples
-            latent = sess.run(z, feed_dict={x_input: np.expand_dims(test_image[test_n[i]], 0),
-                                            n: 1,
-                                            n_particles: 100})
-            # get the image from the model giving as input the latent distribution z
-            x_gen = tf.reshape(gen.observe(z=latent)["x_mean"], [-1, 28, 28, 1])
-            images = sess.run(x_gen, feed_dict={})
-            name = os.path.join(result_path, "{}.png".format(i))
-            # save_image_collections(images, name)
+    main()
