@@ -7,7 +7,7 @@
 ## :pushpin: To Do 
 To do or not to do, that is the question.
 
-### :skull: Deadlines (5)
+### :skull: Deadlines (4)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
@@ -44,7 +44,7 @@ To do or not to do, that is the question.
 - [x] 10/26 => Project proposal
 - [x] 11/22 => Mid-term report
 - [x] 12/27 => Homework 2
-- [ ] 12/27 => Homework 3
+- [x] 12/27 => Homework 3
 - [ ] 1/10 => Final report and code
 
 

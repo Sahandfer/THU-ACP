@@ -18,6 +18,8 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{array}
+\usepackage{booktabs}
 \definecolor{vgreen}{RGB}{104,180,104}
 \definecolor{vblue}{RGB}{49,49,255}
 \definecolor{vorange}{RGB}{255,143,102}
@@ -119,29 +121,45 @@ where $\lambda$ is Lagrangian multiplier, giving
 		p(d) = \sum_{k=1}^{K}p(d|c_d=k)p(c_d=k) \\
 		p(d) =  \frac{n_d!}{\prod_{w}T_{dw}!}\sum_{k=1}^{K}\pi_k\prod_{w}\mu_{w_k}^{T_{dw}}
 	\end{align*}
+	We have the log likelihood as
+	\begin{equation}
+		log p(\mathcal{D}|\mu, \pi)= \sum_{d=1}^{D}log(\sum_{k=1}^{K}\pi_k\prod_{w}\mu_{w_k}^{T_{dw}})
+	\end{equation}
+	Accordingly, we consider the log likelihood as the below Lagrangian optimization
+	\begin{equation}
+		L = \sum_{d=1}^{D}log(\sum_{k=1}^{K}\pi_k\prod_{w}\mu_{w_k}^{T_{dw}}) + \lambda_1(1- \sum_{k=1}^{K}\sum_{w}\mu_{wk}) + \lambda_2(1- \sum_{k=1}^{K}\pi_k)
+	\end{equation}
+	with the following constraints
+	\begin{align*}
+		\sum_{k=1}^{K}\sum_{w}\mu_{wk} =1 \quad and \quad 
+		\sum_{k=1}^{K}\pi_k = 1
+	\end{align*}
+	and solve it with respect to $\mu_{wk}$ and $\pi_k$.
+	\begin{align*}
+		\frac{\partial L}{\partial \mu_{wk}} = \sum_{d=1}^{D} \frac{\pi_k\prod_{w}\mu_{w_k}^{T_{dw}}T_{dw}}{\sum_{j=1}^{J}\pi_j\prod_{w}\mu_{w_j}^{T_{dw}}} -\lambda_1 = 0 \\
+		\frac{\partial L}{\partial \pi_{k}} =  \sum_{d=1}^{D}
+		\frac{\prod_{w}\mu_{w_k}^{T_{dw}}}
+		{\sum_{j=1}^{J}\pi_j\prod_{w}\mu_{w_j}^{T_{dw}}} -\lambda_2 = 0
+	\end{align*}
 	
 	\noindent \textbf{E-Step:} estimate the responsibilities. 
 	\begin{equation}
-		\gamma (c_{dk}) = \frac{\pi_k\mathcal{N}(d_n|\mu_k, \sum_{k})}{\sum_{j}\pi_j\mathcal{N}(d_n|\mu_j, \sum_{j})}
+		\gamma (c_{dk}) = \frac{\pi_k\prod_{w}\mu_{w_j}^{T_{dw}}}{\sum_{j=1}^{J}\pi_j\prod_{w}\mu_{w_j}^{T_{dw}}}
 	\end{equation}
 
-	\noindent \textbf{M-Step:} re-estimate the parameters. Initially, we have the log likelihood
+	\noindent \textbf{M-Step:} re-estimate the parameters. We have
 	\begin{equation}
-		log p(\mathcal{D}|\theta)= \sum_{k=1}^{K}log(\sum_{j}\pi_j\mathcal{N}(d_j \mu_j))
+		\lambda_1 = \sum_{k=1}^{K}\sum_{d=1}^{D}\gamma (c_{dk})T_{dw} \quad and \quad \lambda_2 = \sum_{k=1}^{K}\sum_{d=1}^{D}\frac{\gamma (c_{dk})}{\pi_k}
 	\end{equation}
-	Accordingly, we need to consider this log likelihood as a Lagrangian optimization problem and solve it with respect to $\pi_k$ and $\mu_k$.
+	Which gives
 	\begin{equation}
-		L = \sum_{k=1}^{K}log(\sum_{j}\pi_j\mathcal{N}(d_j \mu_j)) - \sum_{j}\lambda(\mu_j-1)
-	\end{equation}
-	
-	\begin{equation}
-		\frac{\delta L}{\delta \pi_k}
+		\mu_{wk} = \frac{1}{D_k}\sum_{d=1}^{D} \gamma (c_{dk})T_{dw} \quad and \quad \pi_k = \frac{D_k}{D} 
 	\end{equation}
 		
 	\section{PCA (2 points)}
 	\subsection{Minimum Error Formulation (2 points)}
 	
-	\noindent Assuming that we have a set of complete orthonormal basis $\{\mu_i\}$, where $i\in[1,p]$, we have that $\mu_i^T\mu_j=\delta_{ij}$ and each data point can be represented as $x_n=\sum_{i}a_{ni}\mu_i$. Accordingly, due to orthonormal property, we can get that
+	\noindent Assuming that we have a set of complete orthonormal basis $\{\mu_i\}$, where $i\in[1,p]$, we have that $\mu_i^T\mu_j=\partial_{ij}$ and each data point can be represented as $x_n=\sum_{i}a_{ni}\mu_i$. Accordingly, due to orthonormal property, we can get that
 	\begin{equation}
 		a_{ni}=x_n^T\mu_i
 	\end{equation}
@@ -173,18 +191,18 @@ where $\lambda$ is Lagrangian multiplier, giving
 	
 	\vspace{-0.3cm}
 	\begin{align*}
-		\frac{\delta J}{\delta z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_i\mu_i^T)\mu_j] = 0 \\ 
-		\frac{\delta J}{\delta z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)] = 0 \qquad \qquad \\ 
+		\frac{\partial J}{\partial z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_i\mu_i^T)\mu_j] = 0 \\ 
+		\frac{\partial J}{\partial z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)] = 0 \qquad \qquad \\ 
 		2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)= 2x_n^T\mu_j \qquad \qquad\qquad \quad\\
 		\sum_{i}^{d}z_{ni}\mu_j^T\mu_i + \sum_{i=d+1}^{p}b_i\mu_j^T\mu_i=  x_n^T\mu_j \qquad \qquad\qquad \quad \\
-		\sum_{i}^{d}z_{ni}\delta ij + \sum_{i=d+1}^{p}b_i\delta ij = z_{ni}+0 = x_n^T\mu_i \qquad \qquad\qquad \quad
+		\sum_{i}^{d}z_{ni}\partial ij + \sum_{i=d+1}^{p}b_i\partial ij = z_{ni}+0 = x_n^T\mu_i \qquad \qquad\qquad \quad
 	\end{align*}
 	Giving $z_{ni}= x_n^T\mu_i$ for $i\in [1,d]$. Similarly, we the derivative with respect to b
 
 	\vspace{-0.3cm}
 	\begin{align*}
-		\frac{\delta J}{\delta b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_j\mu_i^T)\mu_j] = 0 \\ 
-		\frac{\delta J}{\delta b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i)] = 0 \qquad \qquad \\ 
+		\frac{\partial J}{\partial b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_j\mu_i^T)\mu_j] = 0 \\ 
+		\frac{\partial J}{\partial b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i)] = 0 \qquad \qquad \\ 
 		\sum(\sum_{i}^{d}z_{ni}\mu_j^T\mu_i + \sum_{i=d+1}^{p}b_j\mu_j^T\mu_i)=  \sum x_n^T\mu_j \qquad \qquad\qquad \quad \\
 		\sum b_j= Nb_j =\sum x_n^T\mu_j \quad \text{giving}\quad b_j = \sum \frac{1}{n}x_n^T\mu_j = \bar{x}^Tu_j\qquad\qquad\\
 	\end{align*}
@@ -228,4 +246,44 @@ where $\lambda$ is Lagrangian multiplier, giving
 		L(\theta, x, l) = E_{p(\epsilon)}[log\frac{p(g(x,l,\epsilon),x;\theta)}{q(g(x,l,\epsilon)|x;\theta)}]- KL(q(z|x, l)||p(z;\theta)) \\
 		L(\theta, x, l) = \frac{1}{L}\sum_{k}logp(x,l|z^{(k)}) +\frac{1}{2}\sum_{i=1}^{j}[1+log\sigma^2-\mu^2-\sigma^2]
 	\end{align*}
+	\noindent The model was trained on the MNIST dataset (one-hot form) and the obtained lower bound values for some epochs are provided in the table below:
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline
+			Epoch & 1& 10& 25& 50& 100\\\hline
+			Lower Bound & -167.45& -97.954& -92.546&-90.108& -88.361\\
+			\hline
+		\end{tabular}
+	\caption{Table of lower bound based on given epoch}
+	\end{table}
+
+	\noindent In addition, the obtained digit generation results are provided in the next page.
+	\newpage
+	\begin{table}
+		\centering
+		\begin{tabular}{cccc}
+			\toprule
+			Digit & Epoch 1 & Epoch 50 & Epoch 100 \\
+			\midrule
+			0 & \includegraphics[width=4cm]{Figures/Epoch1_Label0} & \includegraphics[width=4cm]{Figures/Epoch50_Label0} & \includegraphics[width=4cm]{Figures/Epoch100_Label0}  \\
+			1 & \includegraphics[width=4cm]{Figures/Epoch1_Label1} & \includegraphics[width=4cm]{Figures/Epoch50_Label1} & \includegraphics[width=4cm]{Figures/Epoch100_Label1}  \\
+			2 & \includegraphics[width=4cm]{Figures/Epoch1_Label2} & \includegraphics[width=4cm]{Figures/Epoch50_Label2} & \includegraphics[width=4cm]{Figures/Epoch100_Label2}  \\
+			3 & \includegraphics[width=4cm]{Figures/Epoch1_Label3} & \includegraphics[width=4cm]{Figures/Epoch50_Label3} & \includegraphics[width=4cm]{Figures/Epoch100_Label3}  \\
+			4 & \includegraphics[width=4cm]{Figures/Epoch1_Label4} & \includegraphics[width=4cm]{Figures/Epoch50_Label4} & \includegraphics[width=4cm]{Figures/Epoch100_Label4}
+		\end{tabular}
+	\end{table}
+	\begin{table}
+		\centering
+		\begin{tabular}{cccc}
+			\toprule
+			Digit & Epoch 1 & Epoch 50 & Epoch 100 \\
+			\midrule
+			5 & \includegraphics[width=4cm]{Figures/Epoch1_Label5} & \includegraphics[width=4cm]{Figures/Epoch50_Label5} & \includegraphics[width=4cm]{Figures/Epoch100_Label5}\\
+			6 & \includegraphics[width=4cm]{Figures/Epoch1_Label6} & \includegraphics[width=4cm]{Figures/Epoch50_Label6} & \includegraphics[width=4cm]{Figures/Epoch100_Label6}  \\
+			7 & \includegraphics[width=4cm]{Figures/Epoch1_Label7} & \includegraphics[width=4cm]{Figures/Epoch50_Label7} & \includegraphics[width=4cm]{Figures/Epoch100_Label7}  \\
+			8 & \includegraphics[width=4cm]{Figures/Epoch1_Label8} & \includegraphics[width=4cm]{Figures/Epoch50_Label8} & \includegraphics[width=4cm]{Figures/Epoch100_Label8}  \\
+			9 & \includegraphics[width=4cm]{Figures/Epoch1_Label9} & \includegraphics[width=4cm]{Figures/Epoch50_Label9} & \includegraphics[width=4cm]{Figures/Epoch100_Label9}
+		\end{tabular}
+	\end{table}
 \end{document}
