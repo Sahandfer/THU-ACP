@@ -1,6 +1,6 @@
 # SPM Notes
 
-> These are my notes for the final exam.
+> These are my notes for the Software Process Management 2020 final exam.
 
 ## Process Group Outcomes
 
@@ -229,3 +229,10 @@ A **statement of work** is a description of the work required for the procuremen
 
 ## Lecture 14
 
+PRINCE2 has 4 aspects: processes, themes, principles, environment.
+
+
+
+### End of Review
+
+> I know it's not complete, I couldn't be asked to make full notes for this course.
