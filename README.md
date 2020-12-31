@@ -64,7 +64,7 @@ To do or not to do, that is the question.
 - [x] 11/04 => Mid-term pre
 - [x] 12/15 => Knowledge areas except for triple constraints
 - [x] 12/23 => Sitcom
-- [ ] 12/30 => Open-book exam
+- [x] 12/30 => Open-book exam
 
 #### Upper_intermediate Chinese:
 
