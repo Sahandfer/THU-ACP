@@ -7,7 +7,7 @@
 ## :pushpin: To Do 
 To do or not to do, that is the question.
 
-### :skull: Deadlines (4)
+### :skull: Deadlines (3)
 > DDL让我开心，DDL是我快乐～
 
 #### Combinatorics and Algorithms Design:
