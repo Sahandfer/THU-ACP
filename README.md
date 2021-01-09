@@ -76,4 +76,4 @@ To do or not to do, that is the question.
 #### Chinese Culture and Society:
 
 - [x] 11/17 => Book review
-- [ ] 1/10 => Final paper
+- [x] 1/10 => Final paper
