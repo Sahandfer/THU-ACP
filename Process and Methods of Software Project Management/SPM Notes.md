@@ -12,8 +12,6 @@
 
 ## Lecture 1
 
-Introduction so nothing much...
-
 "Managers do the things right, leaders do the right things"
 
 ## Lecture 2
@@ -93,7 +91,7 @@ The work package is the work defined at the lowest level of the WBS for which co
 
 **Calculations**:
 
-1. UDP (Unadjusted Function Points) = weighted sum of inputs
+1. UFP (Unadjusted Function Points) = weighted sum of inputs
 2. DI (Degree of Influency) = sum of technical complexity factors
 3. FP = UFP*(0.65+0.01 * DI)
 4. LOC (lines of code) = Language factor * FP
