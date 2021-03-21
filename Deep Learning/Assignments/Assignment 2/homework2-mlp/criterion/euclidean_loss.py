@@ -22,7 +22,6 @@ class EuclideanLossLayer():
 		self.logit = logit
 		self.gt = gt
 		self.loss = np.sum((gt-logit)**2, axis=1) / 2
-		self.acc = np.mean(np.sum(np.argmax(logit, axis=1) == np.argmax(gt, axis=1))) / 100
 		self.acc = np.sum(np.argmax(logit, axis=1) == np.argmax(gt, axis=1)) / logit.shape[0]
 	    ############################################################################
 		
