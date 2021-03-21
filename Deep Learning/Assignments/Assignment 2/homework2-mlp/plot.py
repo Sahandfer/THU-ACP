@@ -21,6 +21,7 @@ def plot_loss_and_acc(loss_and_acc_dict):
 	plt.xticks(range(0, maxEpoch + 1, 2))
 	plt.axis([0, maxEpoch, minLoss, maxLoss])
 	plt.show()
+	fig.savefig("loss.png", dpi=300)
 
 
 	maxAcc = min(1, max([max(x[1]) for x in loss_and_acc_dict.values()]) + 0.1)
@@ -37,10 +38,11 @@ def plot_loss_and_acc(loss_and_acc_dict):
 	plt.axis([0, maxEpoch, minAcc, maxAcc])
 	plt.legend()
 	plt.show()
+	fig.savefig("accuracy.png", dpi=300)
 
 
 
 if __name__ == '__main__':
 	loss = [x for x in range(10, 0, -1)]
 	acc = [x / 10. for x in range(0, 10)]
-	plotLossAndAcc({'as': [loss, acc]})
+	plot_loss_and_acc({'as': [loss, acc]})
