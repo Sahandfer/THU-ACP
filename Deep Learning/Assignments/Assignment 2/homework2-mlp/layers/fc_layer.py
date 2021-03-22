@@ -29,8 +29,8 @@ class FCLayer():
 		############################################################################
 	    # TODO: Put your code here
 		# Apply linear transformation(Wx+b) to Input, and return results.
-
-
+		self.Input = Input
+		return Input @ self.W + self.b
 	    ############################################################################
 
 
@@ -39,8 +39,9 @@ class FCLayer():
 		############################################################################
 	    # TODO: Put your code here
 		# Calculate the gradient using the later layer's gradient: delta
-
-
+		self.grad_W = np.transpose(self.Input) @ delta
+		self.grad_b = np.sum(delta, axis=0)
+		return delta @ np.transpose(self.W)
 	    ############################################################################
 
 

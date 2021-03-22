@@ -17,12 +17,14 @@ class EuclideanLossLayer():
 		############################################################################
 	    # TODO: Put your code here
 		# Calculate the average accuracy and loss over the minibatch, and
-		# store in self.accu and self.loss respectively.
+		# store in self.acc and self.loss respectively.
 		# Only return the self.loss, self.accu will be used in solver.py.
-
-
+		self.logit = logit
+		self.gt = gt
+		self.loss = np.sum((gt-logit)**2, axis=1) / 2
+		self.acc = np.sum(np.argmax(logit, axis=1) == np.argmax(gt, axis=1)) / logit.shape[0]
 	    ############################################################################
-
+		
 		return self.loss
 
 	def backward(self):
@@ -30,6 +32,6 @@ class EuclideanLossLayer():
 		############################################################################
 	    # TODO: Put your code here
 		# Calculate and return the gradient (have the same shape as logit)
-
-
+		batch_size = self.logit.shape[0]
+		return (self.logit - self.gt) * (1./batch_size)
 	    ############################################################################
