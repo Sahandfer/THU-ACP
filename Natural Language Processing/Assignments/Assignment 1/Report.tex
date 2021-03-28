@@ -1,0 +1,101 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{inputenc}
+\usepackage{graphicx}
+\usepackage{titletoc} 
+\usepackage{fancyhdr}   
+\usepackage[a4paper,pdftex]{geometry}	
+\usepackage[english]{babel}
+\usepackage{xcolor} 
+\usepackage{enumerate}
+\usepackage{fix-cm} 
+\usepackage[notlof]{tocbibind}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\renewcommand\lstlistingname{Appendix}
+\renewcommand\lstlistlistingname{Appendix}
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+	\edef\@temp{\the\lst@token}%
+	\ifx\@temp\@lbracket \color{black}%
+	\else\ifx\@temp\@rbracket \color{black}%
+	\else\ifx\@temp\@colon \color{black}%
+	\else \color{vorange}%
+	\fi\fi\fi
+}
+\makeatother
+
+\usepackage{trace}
+
+\usepackage{subcaption}
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\includegraphics[scale=.4]{Figures/Cover}\\
+			\vspace{1cm}
+			\bf{ \large {Department of Computer Science and Technology} }
+		\end{center}
+		
+		\vspace{4cm}
+		\centering
+		\textbf{\Huge Natural Language Processing}
+		\vspace{.5cm}
+		
+		{\Large Assignment 2}
+
+		\vspace{4cm}
+		
+		\textbf{\LARGE Sahand Sabour}
+		
+		
+		
+		\vspace{0.5cm}
+		
+		{\large 2020280401}
+		
+		
+		\vfill
+		
+	\end{titlepage}
+
+	\section{Gradient Calculation}
+	Assuming that we are given a predicted word vector $v_c$ for the centerword c in skip-gram, and word prediction is made with the following Softmax function:
+	\begin{equation}
+		y_o = p(o|c) = \frac{exp(u^T_ov_c)}{\sum_{w=1}^{W}exp(u^T_wv_c)}
+	\end{equation}
+	where w denotes the w-th word and $u_w= (w = 1, ..., W)$ are the “output” wordvectors for all words in the vocabulary. In addition, assuming that the cross entropy loss is used, we would have:
+	\begin{equation}
+		\mathcal{L} = - \sum_{w=1}^{W} t_i log(y_i) = - log(p(o|c)) = - log (exp(u^T_ov_c)) + log (\sum_{w=1}^{W}exp(u^T_wv_c))
+	\end{equation}
+	Where t is the label and is either 1 or 0 since the input is one-hot encoded. Therefore, there would only be one element of the sum that is non-zero (for the expected word o). Further simplifying the loss function gives:
+	\begin{equation}
+		\mathcal{L} = - u^T_ov_c + log (\sum_{w=1}^{W}exp(u^T_wv_c))
+	\end{equation}
+	Accordingly, we would derive the gradient from this loss as follows:
+	\begin{equation}
+		\begin{aligned}
+			\frac{\delta \mathcal{L}}{\delta v_c} = -\frac{\delta u^T_ov_c}{\delta v_c} + \frac{\delta log(\sum_{w=1}^{W}exp(u^T_wv_c))}{\delta v_c} \qquad \qquad
+			\\
+			=-u^T_o + (\frac{1}{\sum_{w=1}^{W}exp(u^T_wv_c)})(exp(u^T_wv_c))(u_w^T)\\  =  \sum_{w=1}^{W} p(o|c) u_w^T - u^T_o\qquad \qquad\qquad \qquad \qquad
+		\end{aligned}
+	\end{equation}
+	
+	\section{Word2vec Implementation}
+	
+	\section{Word2vec Improvement}
+
+	
+\end{document}
