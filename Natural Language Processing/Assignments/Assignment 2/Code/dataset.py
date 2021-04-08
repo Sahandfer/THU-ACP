@@ -1,4 +1,5 @@
 import os
+import torch
 import random
 import numpy as np
 from tqdm import tqdm
@@ -63,21 +64,46 @@ class WikipediaCorpus(Dataset):
             for words in tqdm(self.data):
                 for i in range(len(words)):
                     if self.word_to_id.get(words[i], 0):
+                        word_id = self.word_to_id[words[i]]
                         left_words = words[max(i - self.window_size, 0) : i]
+                        left_word_ids = [
+                            self.word_to_id[word]
+                            for word in left_words
+                            if self.word_to_id.get(word, 0)
+                        ]
                         right_words = words[i + 1 : i + 1 + self.window_size]
-                        self.ngrams[words[i]] = left_words + right_words
+                        right_word_ids = [
+                            self.word_to_id[word]
+                            for word in right_words
+                            if self.word_to_id.get(word, 0)
+                        ]
+                        self.ngrams[word_id] = left_word_ids + right_word_ids
             save_pickle(f"{self.cache_dir}/ngrams", self.ngrams)
         print(f"--- Create N-grams ---")
 
-    def get_neg_sample(self):
-        return random.sample(list(self.word_to_id.keys()), self.neg_sample_size)
+    def get_neg_sample(self, targets):
+        num_words = list(self.word_to_id.values())
+        neg_samples = []
+        while len(neg_samples) < self.neg_sample_size:
+            neg_sample = random.sample(num_words, 1)
+            if neg_sample not in targets:
+                print(neg_sample)
+                print(targets)
+                neg_samples.append(neg_sample)
+        return neg_samples
 
     def __len__(self):
         return self.input_len
 
     def __getitem__(self, idx):
-        return self.ngrams[idx]
+        word_pos = idx
+        ctx_pos = self.ngrams[idx]
+        neg_pos = self.get_neg_sample(ctx_pos)
+        return {"center": word_pos, "context": ctx_pos, "neg": neg_pos}
 
     @staticmethod
-    def collate_fn(self, batch):
-        return batch
+    def collate_fn(batch):
+        word_pos = torch.LongTensor([pos["center"] for pos in batch])
+        ctx_pos = torch.LongTensor([pos["context"] for pos in batch])
+        neg_pos = torch.LongTensor([pos["neg"] for pos in batch])
+        return word_pos, ctx_pos, neg_pos
