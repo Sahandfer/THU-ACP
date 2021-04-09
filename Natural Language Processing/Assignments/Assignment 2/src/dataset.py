@@ -5,7 +5,7 @@ import numpy as np
 from tqdm import tqdm
 from gensim import corpora, utils
 from smart_open import open
-from util import load_dict, load_pickle, save_dict, save_pickle
+from src.utils import load_dict, load_pickle, save_dict, save_pickle
 from torch.utils.data import Dataset
 
 
@@ -41,54 +41,59 @@ class WikipediaCorpus(Dataset):
         # Create n-grams
         self.create_ngrams()
         self.input_len = len(self.ngrams)
-        print(f"--- Created dataset -> {self.input_len} words ---")
+        print(
+            f"--- Created dataset -> {len(self.vocab_dict)} words and {self.input_len} ngrams ---"
+        )
 
     def get_vocab_dict(self):
         print(">>> Getting vocabulary dictionary")
         if self.vocab_exists:
-            vocab_dict = load_dict(f"{self.cache_dir}/vocab_dict")
+            vocab_dict = load_dict(self.cache_dir, "vocab_dict")
         else:
             vocab_dict = corpora.Dictionary(self.data)
-            once_ids = [token for token, freq in vocab_dict.cfs.items() if freq == 1]
+            once_ids = [token for token, freq in vocab_dict.cfs.items() if freq < 6]
             vocab_dict.filter_tokens(once_ids)
             vocab_dict.compactify()
-            save_dict(vocab_dict, f"{self.cache_dir}/vocab_dict")
+            save_dict(self.cache_dir, "vocab_dict", vocab_dict)
 
         return vocab_dict
 
     def create_ngrams(self):
         print(">>> Getting N-grams")
-        self.ngrams = load_pickle(f"{self.cache_dir}/ngrams")
+        self.ngrams = load_pickle(self.cache_dir, "ngrams")
         if not self.ngrams:
-            self.ngrams = {}
+            self.ngrams = []
+            idx = 0
+            num_lines = 0
             for words in tqdm(self.data):
+                num_lines += 1
                 for i in range(len(words)):
-                    if self.word_to_id.get(words[i], 0):
+                    if self.word_to_id.get(words[i], -1) > -1:
                         word_id = self.word_to_id[words[i]]
                         left_words = words[max(i - self.window_size, 0) : i]
-                        left_word_ids = [
-                            self.word_to_id[word]
-                            for word in left_words
-                            if self.word_to_id.get(word, 0)
-                        ]
                         right_words = words[i + 1 : i + 1 + self.window_size]
-                        right_word_ids = [
+                        ctx_words = left_words + right_words
+                        ctx_word_ids = [
                             self.word_to_id[word]
-                            for word in right_words
-                            if self.word_to_id.get(word, 0)
+                            for word in ctx_words
+                            if self.word_to_id.get(word, -1) > -1
                         ]
-                        self.ngrams[word_id] = left_word_ids + right_word_ids
-            save_pickle(f"{self.cache_dir}/ngrams", self.ngrams)
-        print(f"--- Create N-grams ---")
+                        ngrams = [[word_id, ctx_id] for ctx_id in ctx_word_ids]
+                        self.ngrams += ngrams
+                        if num_lines >= 500000:
+                            num_lines = 0
+                            save_pickle(self.cache_dir, f"ngrams_{idx}", self.ngrams)
+                            idx += 1
+                            self.ngrams = []
 
-    def get_neg_sample(self, targets):
+            save_pickle(self.cache_dir, "ngrams", self.ngrams)
+
+    def get_neg_sample(self, target):
         num_words = list(self.word_to_id.values())
         neg_samples = []
         while len(neg_samples) < self.neg_sample_size:
             neg_sample = random.sample(num_words, 1)
-            if neg_sample not in targets:
-                print(neg_sample)
-                print(targets)
+            if neg_sample != target:
                 neg_samples.append(neg_sample)
         return neg_samples
 
@@ -96,8 +101,9 @@ class WikipediaCorpus(Dataset):
         return self.input_len
 
     def __getitem__(self, idx):
-        word_pos = idx
-        ctx_pos = self.ngrams[idx]
+        ngram = self.ngrams[idx]
+        word_pos = ngram[0]
+        ctx_pos = ngram[1]
         neg_pos = self.get_neg_sample(ctx_pos)
         return {"center": word_pos, "context": ctx_pos, "neg": neg_pos}
 
