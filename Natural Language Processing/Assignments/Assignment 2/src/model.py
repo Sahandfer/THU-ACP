@@ -33,9 +33,11 @@ class Word2Vec(nn.Module):
         # Similarity score (negative)
         neg_sim_score = torch.bmm(neg_ctx_embed, word_embed.unsqueeze(2))
         neg_sim_score = torch.sum(neg_sim_score, dim=1)
-        target_loss += torch.sum(F.logsigmoid(-neg_sim_score))
+        neg_loss = torch.sum(F.logsigmoid(-neg_sim_score))
 
-        return -target_loss
+        loss = target_loss + neg_loss
+
+        return -loss
 
     def save(self, output_dir, file_name):
         embedding = self.word_embed.weight.data.cpu().numpy()
