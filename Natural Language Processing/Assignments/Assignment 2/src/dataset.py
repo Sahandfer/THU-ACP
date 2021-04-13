@@ -2,6 +2,7 @@ import os
 import math
 import torch
 import random
+import numpy as np
 from tqdm import tqdm
 from gensim import utils
 from smart_open import open
@@ -121,7 +122,7 @@ class VocabularyDict:
         self.word_count = load_pickle(save_dir, "word_count")
         self.word_to_id = load_pickle(save_dir, "word_to_id")
         self.id_to_word = load_pickle(save_dir, "id_to_word")
-        self.neg_samples = load_pickle(save_dir, "neg_samples")
+        self.neg_samples = np.array(load_pickle(save_dir, "neg_samples"))
         print("*** Loaded state ***")
 
 
@@ -152,9 +153,16 @@ class WikipediaCorpus(Dataset):
         neg_samples = samples[self.neg_idx : self.neg_idx + self.neg_sample_size]
         if len(neg_samples) != self.neg_sample_size:
             self.neg_idx = 0
-            neg_samples += samples[
-                self.neg_idx : self.neg_idx + self.neg_sample_size - len(neg_samples)
-            ]
+            neg_samples = np.concatenate(
+                [
+                    neg_samples,
+                    samples[
+                        self.neg_idx : self.neg_idx
+                        + self.neg_sample_size
+                        - len(neg_samples)
+                    ],
+                ]
+            )
         else:
             self.neg_idx += self.neg_sample_size
 
