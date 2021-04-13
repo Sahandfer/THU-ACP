@@ -28,13 +28,13 @@ class Word2Vec(nn.Module):
 
         # Similarity score (target)
         sim_score = torch.sum(torch.mul(word_embed, ctx_embed), dim=1)
-        target_loss = torch.sum(F.logsigmoid(sim_score))
+        target_loss = F.logsigmoid(sim_score)
 
         # Similarity score (negative)
-        neg_sim_score = torch.bmm(neg_ctx_embed, word_embed.unsqueeze(2))
-        neg_sim_score = torch.sum(neg_sim_score, dim=1)
-        neg_loss = torch.sum(F.logsigmoid(-neg_sim_score))
+        neg_sim_score = torch.bmm(neg_ctx_embed, word_embed.unsqueeze(2)).squeeze()
+        neg_loss = torch.sum(F.logsigmoid(-neg_sim_score), dim=1)
 
+        # Total loss
         loss = target_loss + neg_loss
 
         return -loss
