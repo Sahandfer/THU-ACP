@@ -10,8 +10,6 @@ class Args:
     def __init__(self) -> None:
         parser = argparse.ArgumentParser()
 
-        parser.add_argument("--do_train", default=False, action="store_true")
-        parser.add_argument("--do_test", default=False, action="store_true")
         parser.add_argument("--use_cuda", default=False, action="store_true")
         parser.add_argument("--dataset", default="wiki_t.txt", type=str)
         parser.add_argument("--output_dir", default="output", type=str)
@@ -35,8 +33,7 @@ class Args:
 
 
 args = Args().get_args()
-args.device = "cuda" if args.use_cuda else "cpu"
-args.device = torch.device(args.device)
+args.device = torch.device("cuda" if args.use_cuda else "cpu")
 
 
 def main():
@@ -61,11 +58,8 @@ def main():
     model = Word2Vec(vocab_size, args.embedding_size)
     model.to(args.device)
 
-    if args.do_train:
-        train(model, dataset, args)
-
-    if args.do_test:
-        test()
+    # Training the model
+    train(model, dataset, args)
 
 
 if __name__ == "__main__":

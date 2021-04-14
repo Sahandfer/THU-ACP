@@ -23,6 +23,7 @@ class VocabularyDict:
         self.min_discard = min_discard
         self.filename = filename
 
+        # Load cache if available
         if os.path.isdir(self.cache_dir):
             self.load_state()
         else:
@@ -63,6 +64,7 @@ class VocabularyDict:
             else:
                 discarded.append(word)
 
+        # Discard barely frequent words
         for word in discarded:
             self.num_words -= self.word_count[word]
             self.word_count.pop(word, None)
@@ -81,6 +83,7 @@ class VocabularyDict:
             if rand_prob > word_prob:
                 discarded.append(word)
 
+        # Discard words with low probability ratio
         for word in discarded:
             self.num_words -= self.word_count[word]
             self.word_count.pop(word, None)
@@ -91,10 +94,12 @@ class VocabularyDict:
         print("*** Subsampled data ***")
 
     def reset_keys(self):
+        # Reset indexes since some words are removed from the dictionary
         self.id_to_word = {idx: val for idx, val in enumerate(self.id_to_word.values())}
         self.word_to_id = {val: idx for idx, val in self.id_to_word.items()}
 
     def neg_sample(self):
+        # Create the negative sample table
         print(">>> Negative sampling data")
         word_count = self.word_count
         for w in word_count:
@@ -141,14 +146,17 @@ class WikipediaCorpus(Dataset):
         return self.input_len
 
     def __getitem__(self, _):
+        # Read a line from the corpus as a one set of the batch
         line = self.input_file.readline()
         if not line:
             self.input_file.seek(0)
             line = self.input_file.readline()
         words = utils.simple_preprocess(line)
+        # Return all the bigram pairs + negative samples for the line
         return self.create_ngrams(words)
 
     def get_neg_samples(self):
+        # Read consequent negative samples from the table
         samples = self.vocab_dict.neg_samples
         neg_samples = samples[self.neg_idx : self.neg_idx + self.neg_sample_size]
         if len(neg_samples) != self.neg_sample_size:
@@ -179,6 +187,7 @@ class WikipediaCorpus(Dataset):
             word_id = word_ids[i]
             left_words = word_ids[max(i - self.window_size, 0) : i]
             right_words = word_ids[i + 1 : i + 1 + self.window_size]
+            # Words within window size of center words
             ctx_words = left_words + right_words
             neg_samples = self.get_neg_samples()
             neg_sample_ids = [self.vocab_dict.word_to_id[word] for word in neg_samples]

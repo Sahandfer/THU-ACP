@@ -10,12 +10,15 @@ class Word2Vec(nn.Module):
         self.vocab_size = vocab_size
         self.embed_size = embed_size
 
+        # The word embedding
         self.word_embed = nn.Embedding(vocab_size, embed_size, sparse=True)
+        # The context embedding
         self.ctx_embed = nn.Embedding(vocab_size, embed_size, sparse=True)
 
         self.init_weights()
 
     def init_weights(self):
+        # Xavier init
         val_range = 0.5 / self.embed_size
         self.word_embed.weight.data.uniform_(-val_range, val_range)
         self.ctx_embed.weight.data.uniform_(0, 0)
@@ -39,6 +42,7 @@ class Word2Vec(nn.Module):
 
         return -loss
 
+    # Save the embeddings as a pickle
     def save(self, output_dir, file_name):
         embedding = self.word_embed.weight.data.cpu().numpy()
         save_pickle(output_dir, file_name, embedding)

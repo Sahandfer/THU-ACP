@@ -1,13 +1,12 @@
-import pickle
 import torch
-import torch.nn as nn
+import pickle
 import pandas as pd
-from tqdm import tqdm
-from sklearn.decomposition import PCA
+import torch.nn as nn
 import matplotlib.pyplot as plt
-from sklearn.manifold import TSNE
+
+from tqdm import tqdm
 from scipy.stats import spearmanr
-from nltk.metrics.spearman import spearman_correlation as spc
+from sklearn.decomposition import PCA
 
 
 def read_wordsim():
