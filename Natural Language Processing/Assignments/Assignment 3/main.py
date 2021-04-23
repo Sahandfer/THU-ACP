@@ -3,13 +3,16 @@ import re
 import nltk
 import argparse
 import pandas as pd
+import torch.nn as nn
+import torch.optim as optim
+import matplotlib.pyplot as plt
+
 from tqdm import tqdm
+from src.test import test
+from src.train import train
 from torchtext.legacy import data
 from torchtext.vocab import Vectors
-
-from src.model import LSTM
-from src.train import train
-from src.test import test
+from src.model import SentimentClassifier
 
 
 class Args:
@@ -17,11 +20,11 @@ class Args:
         parser = argparse.ArgumentParser()
         parser.add_argument("--batch_size", default=64, type=int)
         parser.add_argument("--num_epochs", default=10, type=int)
-        parser.add_argument("--num_layers", default=2, type=int)
+        parser.add_argument("--num_layers", default=3, type=int)
         parser.add_argument("--hidden_dim", default=512, type=int)
         parser.add_argument("--learning_rate", default=0.001, type=float)
         parser.add_argument("--dropout", default=0.2, type=float)
-        parser.add_argument("--use_embed", default=False, action="store_true")
+        parser.add_argument("--use_glove", default=False, action="store_true")
 
         self.parser = parser
 
@@ -94,19 +97,40 @@ def preprocess_data(args):
     print(f"| # Words: {num_words} --- Embedding Dim: {embed_dim} |")
 
     # Create batch iterators for the datasets
-    train_iter, val_iter, test_iter = data.BucketIterator.splits(
-        (train_set, val_set, test_set), batch_size=args.batch_size
+    train_iter = data.BucketIterator(
+        train_set,
+        batch_size=args.batch_size,
     )
+    val_iter = data.BucketIterator(
+        val_set,
+        batch_size=args.batch_size,
+    )
+    test_iter = data.BucketIterator(
+        test_set,
+        batch_size=args.batch_size,
+    )
+
     print(f">>> Created Batch Iterators with size {args.batch_size}")
 
-    return SENTENCE, train_iter, val_iter, test_iter
+    return SENTENCE, LABEL, train_iter, val_iter, test_iter
 
 
 def main():
     args = Args().get_args()
     if not (os.path.exists("trees/dev.csv")):
         read_data()  # Create CSV files if they don't exists
-    SENTENCE, train_iter, val_iter, test_iter = preprocess_data(args)
+    SENTENCE, LABEL, train_iter, val_iter, test_iter = preprocess_data(args)
+    # Sentiment Classification Model (Bi_LSTM)
+    model = SentimentClassifier(args, SENTENCE, LABEL)
+    # Cross Entropy loss
+    criterion = nn.CrossEntropyLoss()
+    # Adam optimizer
+    optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
+    # Training
+    _, model = train(model, train_iter, val_iter, optimizer, criterion, args.num_epochs)
+    # Testing
+    test(model, test_iter)
+    # Plot the Results
 
 
 if __name__ == "__main__":
