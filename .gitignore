@@ -13,3 +13,10 @@ dataset
 
 # Local History for Visual Studio Code
 .history/
+*.pickle
+*.pyc
+*.txt
+cached
+output
+etc
+data
