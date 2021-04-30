@@ -1,22 +1,26 @@
+import torch.nn.functional as F
 from tqdm import tqdm, trange
 
 
-def validate(model, val_iterator, criterion):
+def validate(model, val_iterator, criterion, use_improved=True):
     val_loss = 0.0
     num_correct, num_total = 0, 0
 
     model.eval()
     for batch in val_iterator:
-        x, l = batch.sentence
-        y = batch.label
-        output = model(x, l)
+        if use_improved:
+            output, y = model(batch)
+        else:
+            x, l = batch.sentence
+            y = batch.label
+            output = model(x, l)
 
         loss = criterion(output, y)
         val_loss += loss.item()
 
         preds = output.argmax(dim=1)
         num_correct += (preds == y).sum()
-        num_total += len(batch)
+        num_total += preds.size()[0]
 
     val_loss = val_loss / len(val_iterator)
     acc = num_correct * 100 / num_total
@@ -25,8 +29,15 @@ def validate(model, val_iterator, criterion):
     return val_loss
 
 
-def train(model, train_iterator, val_iterator, optimizer, criterion, max_epoch):
-    loss_and_acc_dict = {}
+def train(
+    model,
+    train_iterator,
+    val_iterator,
+    optimizer,
+    criterion,
+    max_epoch,
+    use_improved=True,
+):
     best_model = None
     best_loss = 10
     prev_loss = 0
@@ -37,9 +48,12 @@ def train(model, train_iterator, val_iterator, optimizer, criterion, max_epoch):
 
         model.train()
         for batch in tqdm(train_iterator):
-            x, l = batch.sentence
-            y = batch.label
-            output = model(x, l)
+            if use_improved:
+                output, y = model(batch)
+            else:
+                x, l = batch.sentence
+                y = batch.label
+                output = model(x, l)
 
             optimizer.zero_grad()
             loss = criterion(output, y)
@@ -48,7 +62,7 @@ def train(model, train_iterator, val_iterator, optimizer, criterion, max_epoch):
 
             preds = output.argmax(dim=1)
             num_correct += (preds == y).sum()
-            num_total += len(batch)
+            num_total += preds.size()[0]
 
             train_loss += loss.item()
 
@@ -57,7 +71,7 @@ def train(model, train_iterator, val_iterator, optimizer, criterion, max_epoch):
 
         print(f"\n Epoch {e+1} --> Training Loss: {train_loss} | Accuracy: {acc}%\n")
 
-        val_loss = validate(model, val_iterator, criterion)
+        val_loss = validate(model, val_iterator, criterion, use_improved)
 
         if val_loss > prev_loss and prev_loss != 0:
             prev_loss = val_loss
@@ -73,6 +87,4 @@ def train(model, train_iterator, val_iterator, optimizer, criterion, max_epoch):
             best_loss = val_loss
             best_model = model
 
-        loss_and_acc_dict[e] = [train_loss, acc]
-
-    return loss_and_acc_dict, best_model
+    return best_model

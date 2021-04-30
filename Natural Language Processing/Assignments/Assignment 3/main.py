@@ -5,14 +5,14 @@ import argparse
 import pandas as pd
 import torch.nn as nn
 import torch.optim as optim
-import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 from src.test import test
 from src.train import train
 from torchtext.legacy import data
 from torchtext.vocab import Vectors
-from src.model import SentimentClassifier
+from src.model import BiLSTM, LSTMTree
+from nltk.tree import ParentedTree as PT
 
 
 class Args:
@@ -20,11 +20,12 @@ class Args:
         parser = argparse.ArgumentParser()
         parser.add_argument("--batch_size", default=64, type=int)
         parser.add_argument("--num_epochs", default=10, type=int)
-        parser.add_argument("--num_layers", default=3, type=int)
-        parser.add_argument("--hidden_dim", default=512, type=int)
+        parser.add_argument("--num_layers", default=1, type=int)
+        parser.add_argument("--hidden_dim", default=300, type=int)
         parser.add_argument("--learning_rate", default=0.001, type=float)
         parser.add_argument("--dropout", default=0.2, type=float)
         parser.add_argument("--use_glove", default=False, action="store_true")
+        parser.add_argument("--use_improved", default=False, action="store_true")
 
         self.parser = parser
 
@@ -115,22 +116,58 @@ def preprocess_data(args):
     return SENTENCE, LABEL, train_iter, val_iter, test_iter
 
 
+def get_trees(vocab_dict):
+    data_dir = "trees/"
+    files = ["train.txt", "dev.txt", "test.txt"]
+    trees_list = []
+    for file in files:
+        trees = []
+        for line in tqdm(open(data_dir + file)):
+            tree = PT.fromstring(line)
+            trees.append(tree)
+
+        for tree in trees:
+            for leaf in tree.treepositions("leaves"):
+                val = vocab_dict.get(tree[leaf], -1)
+                tree[leaf] = val if val != -1 else 0
+            for subtree in tree.subtrees():
+                subtree.set_label(int(subtree.label()))
+
+        trees_list.append(trees)
+
+    return trees_list
+
+
 def main():
     args = Args().get_args()
     if not (os.path.exists("trees/dev.csv")):
         read_data()  # Create CSV files if they don't exists
     SENTENCE, LABEL, train_iter, val_iter, test_iter = preprocess_data(args)
     # Sentiment Classification Model (Bi_LSTM)
-    model = SentimentClassifier(args, SENTENCE, LABEL)
+    if args.use_improved:
+        # Read the Sentiment Trees
+        train_iter, val_iter, test_iter = get_trees(SENTENCE.vocab.stoi)
+        # The Tree LSTM model
+        model = LSTMTree(args, SENTENCE, LABEL)
+    else:
+        # The Bidirectional LSTM model
+        model = BiLSTM(args, SENTENCE, LABEL)
     # Cross Entropy loss
     criterion = nn.CrossEntropyLoss()
     # Adam optimizer
     optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
     # Training
-    _, model = train(model, train_iter, val_iter, optimizer, criterion, args.num_epochs)
+    _, model = train(
+        model,
+        train_iter,
+        val_iter,
+        optimizer,
+        criterion,
+        args.num_epochs,
+        args.use_improved,
+    )
     # Testing
-    test(model, test_iter)
-    # Plot the Results
+    test(model, test_iter, args.use_improved)
 
 
 if __name__ == "__main__":
