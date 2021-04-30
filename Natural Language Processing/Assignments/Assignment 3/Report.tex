@@ -142,9 +142,37 @@
 \vspace{-0.3cm}
 	\noindent In the above table, None for the embedding section means that the no pre-trained word embeddings were used and the embedding weights for the vocabulary were initialized randomly. Based on the obtained results, it can be observed that with the addition of dropout and number of hidden layers, increase in the hidden dimension, and using pre-trained embeddings, the model's performance increases; the effect of using GloVE in the performance is the most noticeable. 
 	
+	\vspace{-0.5cm}
 	\section{Improved Version}
+	\vspace{-0.2cm}
+	The model proposed by \cite{TaiSM15} is implemented as the improved version for this assignment. They propose a Tree LSTM model that is able to outperform the simple LSTM model on the sentiment classification task by utilizing the word and phrase information of sentiment trees.
 
-
+	\vspace{-0.4cm}
 	\subsection{Methodology}
+	Similar to LSTM units, the unit j in this architecture has an input gate $i_j$, output gate $o_j$, cell state $c_j$, and hidden state $h_j$. However, the gating vectors and memory cells are updated based on the values of their children. Accordingly, each unit j has a separate forget gate $f_{jk}$ for each children k of its children. The authors claim that this allows the model to utilize information from the children, which is beneficial for word-level or phrase-level sentiment classification. The calculations for this architecture, given an input $x_j$ to a unit (node) j with C(j) children, are provided respectively below:
+	\vspace{-0.2cm}
+	\begin{equation}
+		\begin{aligned}
+			h_j = \sum_{k\in C(j)}h_k \qquad \quad \\
+			i_j = \sigma(W^ix_j+U^ih_j+b^i) \\
+			o_j = \sigma(W^ox_j+U^oh_j+b^o)\\
+			f_{jk} = \sigma(W^fx_j+U^fh_k+b^f) \\
+			u_j = tanh(W^ux_j+U^uh_j+b^u) \\
+			c_j = i_j \cdot u_j + \sum_{k\in C(j)}f_{jk} \cdot c_k\\
+			\hat{h}_j = o_j \cdot tanh(c_j)\quad
+		\end{aligned}
+	\end{equation}
+	The above naming conventions are followed when writing the code for this implementation to ensure easier understanding and material consistency.
+	
+	\subsection{Training}
+	First, the nltk library was utilized to parse the trees in the SST dataset and create the training, validation, and testing sets. However, instead of batch of inputs, one tree at a time was fed to the model. In addition, since the data had a tree structure, the labels were extracted during the training, where child nodes are explored and therefore, the labels are not directly available after parsing. The models are trained for maximum of 10 epochs, with learning rate of 0.001. An early stoppage condition, which states that the model has overfitted if the validation results don't improve for 2 epochs, is also implemented. The model's hidden dimension is set to 300 with a dropout ratio of 0.2. GloVE word vectors are used as they were shown to boost the performance.
+	
+	\vspace{-0.2cm}
+	\subsection{Evaluation}
+	The models' accuracy on the sentiment classification is calculated based on the test set of trees. The model was able to achieve 76.75\% accuracy, which may be due to an unknown issue in the way accuracy is calculated. However, since at the time of writing this report, no issues were found, this value is reported as the obtained testing accuracy for this implementation, which is a considerable improvement in comparison to the base version.
+	
+	
+	\bibliographystyle{plain}
+	\bibliography{ref}
 	
 \end{document}
