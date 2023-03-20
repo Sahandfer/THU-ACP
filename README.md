@@ -5,6 +5,7 @@
 <h3 align="center">
 <p>自强不息，厚德载物
 </h3>
+
 ## Master's
 
 ### Semester 1
@@ -34,15 +35,15 @@
 ### Semester 2
 
 - Web Information Retrieval 
-
+- Human Computer Interaction
 
 
 ## Citation
 
-    @misc{Sabour2022,
+    @misc{Sabour2023,
         author       = {Sahand Sabour},
-        title        = {{Tsinghua Advanced Computing (2020-26y)}},
-        year         = 2022,
+        title        = {{Tsinghua Advanced Computing (2020-26)}},
+        year         = 2023,
         publisher    = {Github},
         url          = {https://github.com/Sahandfer/Tsinghua}
         }
