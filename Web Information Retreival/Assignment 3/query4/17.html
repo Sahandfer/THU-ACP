@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],window.addEventListener("pageshow",e=>{this.persisted=e.persisted}),window.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(e){if(document.hidden){e._triggerListener();return}this.triggerEvents.forEach(t=>window.addEventListener(t,e.userEventHandler,{passive:!0})),window.addEventListener("touchstart",e.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",e.touchStartHandler),document.addEventListener("visibilitychange",e.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(e=>window.removeEventListener(e,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(e){"HTML"!==e.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),e.target.addEventListener("click",this.clickHandler),this._renameDOMAttribute(e.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(e){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),e.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(e){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(e){e.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this.interceptedClicks.push(e),e.preventDefault(),e.stopPropagation(),e.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(e=>{e.target.dispatchEvent(new MouseEvent("click",{view:e.view,bubbles:!0,cancelable:!0}))})}_waitForPendingClicks(){return new Promise(e=>{this._isClickPending?this._pendingClickFinished=e:e()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(e,t,i){e.hasAttribute&&e.hasAttribute(t)&&(event.target.setAttribute(i,event.target.getAttribute(t)),event.target.removeAttribute(t))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let e=[];document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(t=>{if(t.hasAttribute("src")){let i=new URL(t.src).origin;i!==location.origin&&e.push({src:i,crossOrigin:t.crossOrigin||"module"===t.getAttribute("data-rocket-type")})}}),e=[...new Map(e.map(e=>[JSON.stringify(e),e])).values()],this._batchInjectResourceHints(e,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._triggerWindowLoad()}catch(e){console.error(e)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{e.hasAttribute("data-rocket-src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)})}async _transformScript(e){return await this._littleBreath(),new Promise(t=>{function i(){e.setAttribute("data-rocket-status","executed"),t()}function r(){e.setAttribute("data-rocket-status","failed"),t()}try{let n=e.getAttribute("data-rocket-type"),s=e.getAttribute("data-rocket-src");if(n?(e.type=n,e.removeAttribute("data-rocket-type")):e.removeAttribute("type"),e.addEventListener("load",i),e.addEventListener("error",r),s)e.src=s,e.removeAttribute("data-rocket-src");else if(navigator.userAgent.indexOf("Firefox/")>0){var a=document.createElement("script");[...e.attributes].forEach(e=>{"type"!==e.nodeName&&a.setAttribute("data-rocket-type"===e.nodeName?"type":e.nodeName,e.nodeValue)}),a.text=e.text,e.parentNode.replaceChild(a,e),i()}else e.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(e.text)))}catch(o){r()}})}async _loadScriptsFromList(e){let t=e.shift();return t&&t.isConnected?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(e,t){var i=document.createDocumentFragment();e.forEach(e=>{let r=e.getAttribute&&e.getAttribute("data-rocket-src")||e.src;if(r){let n=document.createElement("link");n.href=r,n.rel=t,"preconnect"!==t&&(n.as="script"),e.getAttribute&&"module"===e.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),e.crossOrigin&&(n.crossOrigin=e.crossOrigin),e.integrity&&(n.integrity=e.integrity),i.appendChild(n),this.trash.push(n)}}),document.head.appendChild(i)}_delayEventListeners(e){let t={};function i(e,i){!function e(i){!t[i]&&(t[i]={originalFunctions:{add:i.addEventListener,remove:i.removeEventListener},eventsToRewrite:[]},i.addEventListener=function(){arguments[0]=r(arguments[0]),t[i].originalFunctions.add.apply(i,arguments)},i.removeEventListener=function(){arguments[0]=r(arguments[0]),t[i].originalFunctions.remove.apply(i,arguments)});function r(e){return t[i].eventsToRewrite.indexOf(e)>=0?"rocket-"+e:e}}(e),t[e].eventsToRewrite.push(i)}function r(e,t){let i=e[t];Object.defineProperty(e,t,{get:()=>i||function(){},set(r){e["rocket"+t]=i=r}})}i(document,"DOMContentLoaded"),i(window,"DOMContentLoaded"),i(window,"load"),i(window,"pageshow"),i(document,"readystatechange"),r(document,"onreadystatechange"),r(window,"onload"),r(window,"onpageshow")}_delayJQueryReady(e){let t;function i(i){if(i&&i.fn&&!e.allJQueries.includes(i)){i.fn.ready=i.fn.init.prototype.ready=function(t){return e.domReadyFired?t.bind(document)(i):document.addEventListener("rocket-DOMContentLoaded",()=>t.bind(document)(i)),i([])};let r=i.fn.on;i.fn.on=i.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map(e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]})}return r.apply(this,arguments),this},e.allJQueries.push(i)}t=i}i(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>t,set(e){i(e)}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(e=>e(window).trigger("rocket-jquery-load")),await this._littleBreath();let e=new Event("rocket-pageshow");e.persisted=this.persisted,window.dispatchEvent(e),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}_handleDocumentWrite(){let e=new Map;document.write=document.writeln=function(t){let i=document.currentScript;i||console.error("WPRocket unable to document.write this: "+t);let r=document.createRange(),n=i.parentElement,s=e.get(i);void 0===s&&(s=i.nextSibling,e.set(i,s));let a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(e=>setTimeout(e)):new Promise(e=>requestAnimationFrame(e))}_emptyTrash(){this.trash.forEach(e=>e.remove())}static run(){let e=new RocketLazyLoadScripts;e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.tlbranson.com/xmlrpc.php">
+
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v20.2 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>2 Ways to Read Game of Thrones Books in Order by George</title><link rel="stylesheet" href="https://www.tlbranson.com/wp-content/cache/min/1/80291f18c7ca588772bf8bf80c8fc13f.css" media="all" data-minify="1" />
+	<meta name="description" content="You&#039;ve watched the show and now you want to read the books. There are 2 ways to read George RR Martin&#039;s Game of Thrones books in order" />
+	<link rel="canonical" href="https://www.tlbranson.com/game-of-thrones-books-in-order/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="2 Ways to Read Game of Thrones Books in Order by George" />
+	<meta property="og:description" content="You&#039;ve watched the show and now you want to read the books. There are 2 ways to read George RR Martin&#039;s Game of Thrones books in order" />
+	<meta property="og:url" content="https://www.tlbranson.com/game-of-thrones-books-in-order/" />
+	<meta property="og:site_name" content="T.L. Branson" />
+	<meta property="article:published_time" content="2021-10-17T16:11:06+00:00" />
+	<meta property="article:modified_time" content="2023-01-10T18:31:05+00:00" />
+	<meta property="og:image" content="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg" />
+	<meta property="og:image:width" content="1566" />
+	<meta property="og:image:height" content="936" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="author" content="Josh Oyetade" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@authortlbranson" />
+	<meta name="twitter:site" content="@com" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Josh Oyetade" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="8 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#article","isPartOf":{"@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/"},"author":{"name":"Josh Oyetade","@id":"https://www.tlbranson.com/#/schema/person/5cd7c3fe75539daa4b5e00b932092915"},"headline":"2 Ways to Read Game of Thrones Books in Order | George R.R. Martin","datePublished":"2021-10-17T16:11:06+00:00","dateModified":"2023-01-10T18:31:05+00:00","mainEntityOfPage":{"@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/"},"wordCount":1398,"commentCount":14,"publisher":{"@id":"https://www.tlbranson.com/#/schema/person/72ce4995ccbf000d8239ee0504439e95"},"image":{"@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#primaryimage"},"thumbnailUrl":"https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg","articleSection":["Books in Order","Fantasy"],"inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://www.tlbranson.com/game-of-thrones-books-in-order/#respond"]}]},{"@type":"WebPage","@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/","url":"https://www.tlbranson.com/game-of-thrones-books-in-order/","name":"2 Ways to Read Game of Thrones Books in Order by George","isPartOf":{"@id":"https://www.tlbranson.com/#website"},"primaryImageOfPage":{"@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#primaryimage"},"image":{"@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#primaryimage"},"thumbnailUrl":"https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg","datePublished":"2021-10-17T16:11:06+00:00","dateModified":"2023-01-10T18:31:05+00:00","description":"You've watched the show and now you want to read the books. There are 2 ways to read George RR Martin's Game of Thrones books in order","breadcrumb":{"@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.tlbranson.com/game-of-thrones-books-in-order/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#primaryimage","url":"https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg","contentUrl":"https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg","width":1566,"height":936,"caption":"Game of Thrones Books in Order"},{"@type":"BreadcrumbList","@id":"https://www.tlbranson.com/game-of-thrones-books-in-order/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.tlbranson.com/"},{"@type":"ListItem","position":2,"name":"2 Ways to Read Game of Thrones Books in Order | George R.R. Martin"}]},{"@type":"WebSite","@id":"https://www.tlbranson.com/#website","url":"https://www.tlbranson.com/","name":"T.L. Branson","description":"Book Blog and Resource Center","publisher":{"@id":"https://www.tlbranson.com/#/schema/person/72ce4995ccbf000d8239ee0504439e95"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.tlbranson.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":["Person","Organization"],"@id":"https://www.tlbranson.com/#/schema/person/72ce4995ccbf000d8239ee0504439e95","name":"T.L. Branson","image":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.tlbranson.com/#/schema/person/image/","url":"https://www.tlbranson.com/wp-content/uploads/2020/04/cropped-Dragon-Icon-1.png","contentUrl":"https://www.tlbranson.com/wp-content/uploads/2020/04/cropped-Dragon-Icon-1.png","width":512,"height":512,"caption":"T.L. Branson"},"logo":{"@id":"https://www.tlbranson.com/#/schema/person/image/"},"sameAs":["https://twitter.com/traver.freeman@gmail.com"]},{"@type":"Person","@id":"https://www.tlbranson.com/#/schema/person/5cd7c3fe75539daa4b5e00b932092915","name":"Josh Oyetade","image":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.tlbranson.com/#/schema/person/image/","url":"https://secure.gravatar.com/avatar/819b48b6b0bc6ba7a645a8fad66d37be?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/819b48b6b0bc6ba7a645a8fad66d37be?s=96&d=mm&r=g","caption":"Josh Oyetade"}}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//scripts.mediavine.com' />
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//i0.wp.com' />
+<link rel='dns-prefetch' href='//b2125522.smushcdn.com' />
+
+<link href='https://i0.wp.com' rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="T.L. Branson &raquo; Feed" href="https://www.tlbranson.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="T.L. Branson &raquo; Comments Feed" href="https://www.tlbranson.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="T.L. Branson &raquo; 2 Ways to Read Game of Thrones Books in Order | George R.R. Martin Comments Feed" href="https://www.tlbranson.com/game-of-thrones-books-in-order/feed/" />
+
+
+<style id='wp-block-library-inline-css' type='text/css'>
+.has-text-align-justify{text-align:justify;}
+</style>
+
+
+
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+
+<!--[if lte IE 9]>
+<link rel='stylesheet' id='sydney-ie9-css' href='https://www.tlbranson.com/wp-content/themes/sydney/css/ie9.css?ver=6.1.1' type='text/css' media='all' />
+<![endif]-->
+
+
+<style id='sydney-style-min-inline-css' type='text/css'>
+.woocommerce ul.products li.product{text-align:center;}html{scroll-behavior:smooth;}.header-image{background-size:cover;}.header-image{height:380px;}.sydney_contact_info_widget span{fill:#d65050;}.go-top:hover svg{stroke:#d65050;}.site-header.float-header{background-color:rgba(0,0,0,0.9);}@media only screen and (max-width:1024px){.site-header{background-color:#000000;}}#mainnav ul li a,#mainnav ul li::before{color:#ffffff}#mainnav .sub-menu li a{color:#e5e5e5}#mainnav .sub-menu li a{background:#1c1c1c}.text-slider .maintitle,.text-slider .subtitle{color:#ffffff}body{color:#4c4c4c}#secondary{background-color:#ffffff}#secondary,#secondary a{color:#737C8C}.btn-menu .sydney-svg-icon{fill:#ffffff}#mainnav ul li a:hover,.main-header #mainnav .menu > li > a:hover{color:#d65050}.overlay{background-color:#000000}.page-wrap{padding-top:83px;}.page-wrap{padding-bottom:100px;}.slide-inner{display:none;}.slide-inner.text-slider-stopped{display:block;}@media only screen and (max-width:1025px){.mobile-slide{display:block;}.slide-item{background-image:none !important;}.header-slider{}.slide-item{height:auto !important;}.slide-inner{min-height:initial;}}.go-top.show{border-radius:2px;bottom:10px;}.go-top.position-right{right:20px;}.go-top.position-left{left:20px;}.go-top{background-color:;}.go-top:hover{background-color:;}.go-top{color:;}.go-top svg{stroke:;}.go-top:hover{color:;}.go-top:hover svg{stroke:;}.go-top .sydney-svg-icon,.go-top .sydney-svg-icon svg{width:16px;height:16px;}.go-top{padding:15px;}.site-info{border-top:0;}.footer-widgets-grid{gap:30px;}@media (min-width:992px){.footer-widgets-grid{padding-top:95px;padding-bottom:95px;}}@media (min-width:576px) and (max-width:991px){.footer-widgets-grid{padding-top:60px;padding-bottom:60px;}}@media (max-width:575px){.footer-widgets-grid{padding-top:60px;padding-bottom:60px;}}@media (min-width:992px){.sidebar-column .widget .widget-title{font-size:22px;}}@media (min-width:576px) and (max-width:991px){.sidebar-column .widget .widget-title{font-size:22px;}}@media (max-width:575px){.sidebar-column .widget .widget-title{font-size:22px;}}.footer-widgets{background-color:;}.sidebar-column .widget .widget-title{color:;}.sidebar-column .widget h1,.sidebar-column .widget h2,.sidebar-column .widget h3,.sidebar-column .widget h4,.sidebar-column .widget h5,.sidebar-column .widget h6{color:;}.sidebar-column .widget{color:;}.sidebar-column .widget a{color:;}.sidebar-column .widget a:hover{color:;}.site-footer{background-color:;}.site-info,.site-info a{color:;}.site-info .sydney-svg-icon svg{fill:;}.site-info{padding-top:20px;padding-bottom:20px;}@media (min-width:992px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{padding-top:12px;padding-bottom:12px;}}@media (min-width:576px) and (max-width:991px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{padding-top:12px;padding-bottom:12px;}}@media (max-width:575px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{padding-top:12px;padding-bottom:12px;}}@media (min-width:992px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{padding-left:35px;padding-right:35px;}}@media (min-width:576px) and (max-width:991px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{padding-left:35px;padding-right:35px;}}@media (max-width:575px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{padding-left:35px;padding-right:35px;}}button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{border-radius:0;}@media (min-width:992px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{font-size:14px;}}@media (min-width:576px) and (max-width:991px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{font-size:14px;}}@media (max-width:575px){button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{font-size:14px;}}button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{text-transform:uppercase;}button,div.wpforms-container-full .wpforms-form input[type=submit],div.wpforms-container-full .wpforms-form button[type=submit],div.wpforms-container-full .wpforms-form .wpforms-page-button,.roll-button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{background-color:;}button:hover,div.wpforms-container-full .wpforms-form input[type=submit]:hover,div.wpforms-container-full .wpforms-form button[type=submit]:hover,div.wpforms-container-full .wpforms-form .wpforms-page-button:hover,.roll-button:hover,a.button:hover,.wp-block-button__link:hover,input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover{background-color:;}button,div.wpforms-container-full .wpforms-form input[type=submit],div.wpforms-container-full .wpforms-form button[type=submit],div.wpforms-container-full .wpforms-form .wpforms-page-button,.checkout-button.button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{color:;}button:hover,div.wpforms-container-full .wpforms-form input[type=submit]:hover,div.wpforms-container-full .wpforms-form button[type=submit]:hover,div.wpforms-container-full .wpforms-form .wpforms-page-button:hover,.roll-button:hover,a.button:hover,.wp-block-button__link:hover,input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover{color:;}.is-style-outline .wp-block-button__link,div.wpforms-container-full .wpforms-form input[type=submit],div.wpforms-container-full .wpforms-form button[type=submit],div.wpforms-container-full .wpforms-form .wpforms-page-button,.roll-button,.wp-block-button__link.is-style-outline,button,a.button,.wp-block-button__link,input[type="button"],input[type="reset"],input[type="submit"]{border-color:;}button:hover,div.wpforms-container-full .wpforms-form input[type=submit]:hover,div.wpforms-container-full .wpforms-form button[type=submit]:hover,div.wpforms-container-full .wpforms-form .wpforms-page-button:hover,.roll-button:hover,a.button:hover,.wp-block-button__link:hover,input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover{border-color:;}.posts-layout .list-image{width:30%;}.posts-layout .list-content{width:70%;}.content-area:not(.layout4):not(.layout6) .posts-layout .entry-thumb{margin:0 0 24px 0;}.layout4 .entry-thumb,.layout6 .entry-thumb{margin:0 24px 0 0;}.layout6 article:nth-of-type(even) .list-image .entry-thumb{margin:0 0 0 24px;}.posts-layout .entry-header{margin-bottom:24px;}.posts-layout .entry-meta.below-excerpt{margin:15px 0 0;}.posts-layout .entry-meta.above-title{margin:0 0 15px;}.single .entry-header .entry-title{color:;}.single .entry-header .entry-meta,.single .entry-header .entry-meta a{color:;}@media (min-width:992px){.single .entry-meta{font-size:12px;}}@media (min-width:576px) and (max-width:991px){.single .entry-meta{font-size:12px;}}@media (max-width:575px){.single .entry-meta{font-size:12px;}}@media (min-width:992px){.single .entry-header .entry-title{font-size:48px;}}@media (min-width:576px) and (max-width:991px){.single .entry-header .entry-title{font-size:32px;}}@media (max-width:575px){.single .entry-header .entry-title{font-size:32px;}}.posts-layout .entry-post{color:#233452;}.posts-layout .entry-title a{color:#00102E;}.posts-layout .author,.posts-layout .entry-meta a{color:#737C8C;}@media (min-width:992px){.posts-layout .entry-post{font-size:16px;}}@media (min-width:576px) and (max-width:991px){.posts-layout .entry-post{font-size:16px;}}@media (max-width:575px){.posts-layout .entry-post{font-size:16px;}}@media (min-width:992px){.posts-layout .entry-meta{font-size:12px;}}@media (min-width:576px) and (max-width:991px){.posts-layout .entry-meta{font-size:12px;}}@media (max-width:575px){.posts-layout .entry-meta{font-size:12px;}}@media (min-width:992px){.posts-layout .entry-title{font-size:32px;}}@media (min-width:576px) and (max-width:991px){.posts-layout .entry-title{font-size:32px;}}@media (max-width:575px){.posts-layout .entry-title{font-size:32px;}}.single .entry-header{margin-bottom:40px;}.single .entry-thumb{margin-bottom:40px;}.single .entry-meta-above{margin-bottom:24px;}.single .entry-meta-below{margin-top:24px;}@media (min-width:992px){.custom-logo-link img{max-width:180px;}}@media (min-width:576px) and (max-width:991px){.custom-logo-link img{max-width:100px;}}@media (max-width:575px){.custom-logo-link img{max-width:100px;}}.main-header,.bottom-header-row{border-bottom:0 solid rgba(255,255,255,0.1);}.header_layout_3,.header_layout_4,.header_layout_5{border-bottom:1px solid rgba(255,255,255,0.1);}.main-header,.header-search-form{background-color:;}.main-header.sticky-active{background-color:;}.main-header .site-title a,.main-header .site-description,.main-header #mainnav .menu > li > a,#mainnav .nav-menu > li > a,.main-header .header-contact a{color:;}.main-header .sydney-svg-icon svg,.main-header .dropdown-symbol .sydney-svg-icon svg{fill:;}.sticky-active .main-header .site-title a,.sticky-active .main-header .site-description,.sticky-active .main-header #mainnav .menu > li > a,.sticky-active .main-header .header-contact a,.sticky-active .main-header .logout-link,.sticky-active .main-header .html-item,.sticky-active .main-header .sydney-login-toggle{color:;}.sticky-active .main-header .sydney-svg-icon svg,.sticky-active .main-header .dropdown-symbol .sydney-svg-icon svg{fill:;}.bottom-header-row{background-color:;}.bottom-header-row,.bottom-header-row .header-contact a,.bottom-header-row #mainnav .menu > li > a{color:;}.bottom-header-row #mainnav .menu > li > a:hover{color:;}.bottom-header-row .header-item svg,.dropdown-symbol .sydney-svg-icon svg{fill:;}.main-header .main-header-inner,.main-header .top-header-row{padding-top:15px;padding-bottom:15px;}.bottom-header-inner{padding-top:15px;padding-bottom:15px;}.bottom-header-row #mainnav ul ul li,.main-header #mainnav ul ul li{background-color:;}.bottom-header-row #mainnav ul ul li a,.bottom-header-row #mainnav ul ul li:hover a,.main-header #mainnav ul ul li:hover a,.main-header #mainnav ul ul li a{color:;}.bottom-header-row #mainnav ul ul li svg,.main-header #mainnav ul ul li svg{fill:;}.main-header-cart .count-number{color:;}.main-header-cart .widget_shopping_cart .widgettitle:after,.main-header-cart .widget_shopping_cart .woocommerce-mini-cart__buttons:before{background-color:rgba(33,33,33,0.9);}.sydney-offcanvas-menu .mainnav ul li{text-align:left;}.sydney-offcanvas-menu .mainnav a{padding:10px 0;}#masthead-mobile{background-color:;}#masthead-mobile .site-description,#masthead-mobile a:not(.button){color:;}#masthead-mobile svg{fill:;}.mobile-header{padding-top:15px;padding-bottom:15px;}.sydney-offcanvas-menu{background-color:;}.sydney-offcanvas-menu,.sydney-offcanvas-menu #mainnav a:not(.button),.sydney-offcanvas-menu a:not(.button){color:;}.sydney-offcanvas-menu svg,.sydney-offcanvas-menu .dropdown-symbol .sydney-svg-icon svg{fill:;}@media (min-width:992px){.site-logo{max-height:100px;}}@media (min-width:576px) and (max-width:991px){.site-logo{max-height:100px;}}@media (max-width:575px){.site-logo{max-height:100px;}}.site-title a,.site-title a:visited,.main-header .site-title a,.main-header .site-title a:visited{color:#ffffff}.site-description,.main-header .site-description{color:#ffffff}@media (min-width:992px){.site-title{font-size:32px;}}@media (min-width:576px) and (max-width:991px){.site-title{font-size:24px;}}@media (max-width:575px){.site-title{font-size:20px;}}@media (min-width:992px){.site-description{font-size:16px;}}@media (min-width:576px) and (max-width:991px){.site-description{font-size:16px;}}@media (max-width:575px){.site-description{font-size:16px;}}h1,h2,h3,h4,h5,h6,.site-title{text-decoration:;text-transform:;font-style:;line-height:1.2;letter-spacing:px;}@media (min-width:992px){h1:not(.site-title){font-size:52px;}}@media (min-width:576px) and (max-width:991px){h1:not(.site-title){font-size:42px;}}@media (max-width:575px){h1:not(.site-title){font-size:32px;}}@media (min-width:992px){h2{font-size:42px;}}@media (min-width:576px) and (max-width:991px){h2{font-size:32px;}}@media (max-width:575px){h2{font-size:28px;}}@media (min-width:992px){h3{font-size:32px;}}@media (min-width:576px) and (max-width:991px){h3{font-size:26px;}}@media (max-width:575px){h3{font-size:24px;}}@media (min-width:992px){h4{font-size:24px;}}@media (min-width:576px) and (max-width:991px){h4{font-size:22px;}}@media (max-width:575px){h4{font-size:22px;}}@media (min-width:992px){h5{font-size:20px;}}@media (min-width:576px) and (max-width:991px){h5{font-size:20px;}}@media (max-width:575px){h5{font-size:20px;}}@media (min-width:992px){h6{font-size:18px;}}@media (min-width:576px) and (max-width:991px){h6{font-size:16px;}}@media (max-width:575px){h6{font-size:20px;}}p,.posts-layout .entry-post{text-decoration:}body,.posts-layout .entry-post{text-transform:;font-style:;line-height:1.68;letter-spacing:px;}@media (min-width:992px){body{font-size:18px;}}@media (min-width:576px) and (max-width:991px){body{font-size:18px;}}@media (max-width:575px){body{font-size:18px;}}@media (min-width:992px){.woocommerce div.product .product-gallery-summary .entry-title{font-size:32px;}}@media (min-width:576px) and (max-width:991px){.woocommerce div.product .product-gallery-summary .entry-title{font-size:32px;}}@media (max-width:575px){.woocommerce div.product .product-gallery-summary .entry-title{font-size:32px;}}@media (min-width:992px){.woocommerce div.product .product-gallery-summary .price .amount{font-size:24px;}}@media (min-width:576px) and (max-width:991px){.woocommerce div.product .product-gallery-summary .price .amount{font-size:24px;}}@media (max-width:575px){.woocommerce div.product .product-gallery-summary .price .amount{font-size:24px;}}.woocommerce ul.products li.product .col-md-7 > *,.woocommerce ul.products li.product .col-md-8 > *,.woocommerce ul.products li.product > *{margin-bottom:12px;}.wc-block-grid__product-onsale,span.onsale{border-radius:0;top:20px!important;left:20px!important;}.wc-block-grid__product-onsale,.products span.onsale{left:auto!important;right:20px;}.wc-block-grid__product-onsale,span.onsale{color:;}.wc-block-grid__product-onsale,span.onsale{background-color:;}ul.wc-block-grid__products li.wc-block-grid__product .wc-block-grid__product-title,ul.wc-block-grid__products li.wc-block-grid__product .woocommerce-loop-product__title,ul.wc-block-grid__products li.product .wc-block-grid__product-title,ul.wc-block-grid__products li.product .woocommerce-loop-product__title,ul.products li.wc-block-grid__product .wc-block-grid__product-title,ul.products li.wc-block-grid__product .woocommerce-loop-product__title,ul.products li.product .wc-block-grid__product-title,ul.products li.product .woocommerce-loop-product__title,ul.products li.product .woocommerce-loop-category__title,.woocommerce-loop-product__title .botiga-wc-loop-product__title{color:;}a.wc-forward:not(.checkout-button){color:;}a.wc-forward:not(.checkout-button):hover{color:;}.woocommerce-pagination li .page-numbers:hover{color:;}.woocommerce-sorting-wrapper{border-color:rgba(33,33,33,0.9);}ul.products li.product-category .woocommerce-loop-category__title{text-align:center;}ul.products li.product-category > a,ul.products li.product-category > a > img{border-radius:0;}.entry-content a:not(.button){color:;}.entry-content a:not(.button):hover{color:;}h1{color:;}h2{color:;}h3{color:;}h4{color:;}h5{color:;}h6{color:;}div.wpforms-container-full .wpforms-form input[type=date],div.wpforms-container-full .wpforms-form input[type=datetime],div.wpforms-container-full .wpforms-form input[type=datetime-local],div.wpforms-container-full .wpforms-form input[type=email],div.wpforms-container-full .wpforms-form input[type=month],div.wpforms-container-full .wpforms-form input[type=number],div.wpforms-container-full .wpforms-form input[type=password],div.wpforms-container-full .wpforms-form input[type=range],div.wpforms-container-full .wpforms-form input[type=search],div.wpforms-container-full .wpforms-form input[type=tel],div.wpforms-container-full .wpforms-form input[type=text],div.wpforms-container-full .wpforms-form input[type=time],div.wpforms-container-full .wpforms-form input[type=url],div.wpforms-container-full .wpforms-form input[type=week],div.wpforms-container-full .wpforms-form select,div.wpforms-container-full .wpforms-form textarea,input[type="text"],input[type="email"],input[type="url"],input[type="password"],input[type="search"],input[type="number"],input[type="tel"],input[type="range"],input[type="date"],input[type="month"],input[type="week"],input[type="time"],input[type="datetime"],input[type="datetime-local"],input[type="color"],textarea,select,.woocommerce .select2-container .select2-selection--single,.woocommerce-page .select2-container .select2-selection--single,input[type="text"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="search"]:focus,input[type="number"]:focus,input[type="tel"]:focus,input[type="range"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="color"]:focus,textarea:focus,select:focus,.woocommerce .select2-container .select2-selection--single:focus,.woocommerce-page .select2-container .select2-selection--single:focus,.select2-container--default .select2-selection--single .select2-selection__rendered,.wp-block-search .wp-block-search__input,.wp-block-search .wp-block-search__input:focus{color:;}div.wpforms-container-full .wpforms-form input[type=date],div.wpforms-container-full .wpforms-form input[type=datetime],div.wpforms-container-full .wpforms-form input[type=datetime-local],div.wpforms-container-full .wpforms-form input[type=email],div.wpforms-container-full .wpforms-form input[type=month],div.wpforms-container-full .wpforms-form input[type=number],div.wpforms-container-full .wpforms-form input[type=password],div.wpforms-container-full .wpforms-form input[type=range],div.wpforms-container-full .wpforms-form input[type=search],div.wpforms-container-full .wpforms-form input[type=tel],div.wpforms-container-full .wpforms-form input[type=text],div.wpforms-container-full .wpforms-form input[type=time],div.wpforms-container-full .wpforms-form input[type=url],div.wpforms-container-full .wpforms-form input[type=week],div.wpforms-container-full .wpforms-form select,div.wpforms-container-full .wpforms-form textarea,input[type="text"],input[type="email"],input[type="url"],input[type="password"],input[type="search"],input[type="number"],input[type="tel"],input[type="range"],input[type="date"],input[type="month"],input[type="week"],input[type="time"],input[type="datetime"],input[type="datetime-local"],input[type="color"],textarea,select,.woocommerce .select2-container .select2-selection--single,.woocommerce-page .select2-container .select2-selection--single,.woocommerce-cart .woocommerce-cart-form .actions .coupon input[type="text"]{background-color:;}div.wpforms-container-full .wpforms-form input[type=date],div.wpforms-container-full .wpforms-form input[type=datetime],div.wpforms-container-full .wpforms-form input[type=datetime-local],div.wpforms-container-full .wpforms-form input[type=email],div.wpforms-container-full .wpforms-form input[type=month],div.wpforms-container-full .wpforms-form input[type=number],div.wpforms-container-full .wpforms-form input[type=password],div.wpforms-container-full .wpforms-form input[type=range],div.wpforms-container-full .wpforms-form input[type=search],div.wpforms-container-full .wpforms-form input[type=tel],div.wpforms-container-full .wpforms-form input[type=text],div.wpforms-container-full .wpforms-form input[type=time],div.wpforms-container-full .wpforms-form input[type=url],div.wpforms-container-full .wpforms-form input[type=week],div.wpforms-container-full .wpforms-form select,div.wpforms-container-full .wpforms-form textarea,input[type="text"],input[type="email"],input[type="url"],input[type="password"],input[type="search"],input[type="number"],input[type="tel"],input[type="range"],input[type="date"],input[type="month"],input[type="week"],input[type="time"],input[type="datetime"],input[type="datetime-local"],input[type="color"],textarea,select,.woocommerce .select2-container .select2-selection--single,.woocommerce-page .select2-container .select2-selection--single,.woocommerce-account fieldset,.woocommerce-account .woocommerce-form-login,.woocommerce-account .woocommerce-form-register,.woocommerce-cart .woocommerce-cart-form .actions .coupon input[type="text"],.wp-block-search .wp-block-search__input{border-color:;}input::placeholder{color:;opacity:1;}input:-ms-input-placeholder{color:;}input::-ms-input-placeholder{color:;}
+</style>
+<style id='rocket-lazyload-inline-css' type='text/css'>
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player:focus-within{outline: 2px solid currentColor;outline-offset: 5px;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:100%;width:100%;left:0;top:0;position:absolute;background:url(https://i0.wp.com/tlbranson.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat center;background-color: transparent !important;cursor:pointer;border:none;}
+</style>
+
+<script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" id="mv-script-wrapper-js" data-pmdelayedscript="https://scripts.mediavine.com/tags/tl-branson.js?ver=6.1.1" data-no-optimize="1" data-no-defer="1" data-no-minify="1" data-rocketlazyloadscript="1"></script>
+
+<!-- Google Analytics snippet added by Site Kit -->
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://www.googletagmanager.com/gtag/js?id=UA-103801438-1' id='google_gtagjs-js' async></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='google_gtagjs-js-after'>
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag('set', 'linker', {"domains":["www.tlbranson.com"]} );
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "UA-103801438-1", {"anonymize_ip":true});
+</script>
+
+<!-- End Google Analytics snippet added by Site Kit -->
+<link rel="https://api.w.org/" href="https://www.tlbranson.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.tlbranson.com/wp-json/wp/v2/posts/20337" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.tlbranson.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.tlbranson.com/wp-includes/wlwmanifest.xml" />
+<link rel='shortlink' href='https://www.tlbranson.com/?p=20337' />
+<link rel="alternate" type="application/json+oembed" href="https://www.tlbranson.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.tlbranson.com%2Fgame-of-thrones-books-in-order%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.tlbranson.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.tlbranson.com%2Fgame-of-thrones-books-in-order%2F&#038;format=xml" />
+<meta name="generator" content="Site Kit by Google 1.95.0" /><!-- Global site tag (gtag.js) - Google Ads: 739439561 --> <script type="rocketlazyloadscript" async data-rocket-src="https://www.googletagmanager.com/gtag/js?id=AW-739439561"></script> <script type="rocketlazyloadscript"> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-739439561'); </script> 
+<!-- Event snippet for Website traffic conversion page --> <script type="rocketlazyloadscript"> gtag('event', 'conversion', {'send_to': 'AW-739439561/sDPvCKuKrssBEMnny-AC'}); </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebSite",
+  "name": "T. L. Branson",
+  "url": "https://www.tlbranson.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.tlbranson.com/{search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>	<style>img#wpstats{display:none}</style>
+			<style type="text/css">
+		.header-image {
+			background-image: url(https://i0.wp.com/tlbranson.com/wp-content/uploads/2023/02/2023-0216-WebSite-header-1920x520-copy.jpg);
+			display: block;
+		}
+		@media only screen and (max-width: 1024px) {
+			.header-inner {
+				display: block;
+			}
+			.header-image {
+				background-image: none;
+				height: auto !important;
+			}		
+		}
+	</style>
+	<link rel="icon" href="https://i0.wp.com/tlbranson.com/wp-content/uploads/2020/04/cropped-Dragon-Icon-1-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://i0.wp.com/tlbranson.com/wp-content/uploads/2020/04/cropped-Dragon-Icon-1-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://i0.wp.com/tlbranson.com/wp-content/uploads/2020/04/cropped-Dragon-Icon-1-180x180.png" />
+<meta name="msapplication-TileImage" content="https://i0.wp.com/tlbranson.com/wp-content/uploads/2020/04/cropped-Dragon-Icon-1-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			/* Mediavine Sidebar Fix */
+@media only screen and (min-width: 1200px) {
+   #primary.content-area {
+       max-width: calc(100% - 362px);
+   }
+   #secondary.widget-area {
+       min-width: 362px;
+   }
+}
+
+/* Mediavine Mobile Fix */
+@media only screen and (max-width: 399px) {
+        .row{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+    .container.content-wrapper{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    }
+    .content-area.col-md-9{
+    padding-left: 0px !important;
+    padding-right:0px !important;
+    }
+    }
+
+/* Mediavine Back to Top CSS */
+body.mediavine-video__has-sticky .go-top.show
+{
+   bottom: 300px !important;
+}
+body.adhesion:not(.mediavine-video__has-sticky) .go-top.show
+ {
+   bottom: 120px !important;
+}
+
+p { 
+font-size:20px; 
+} 		</style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript></head>
+
+<body data-rsssl=1 class="post-template-default single single-post postid-20337 single-format-standard group-blog menu-inline" >
+
+<span id="toptarget"></span>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg>
+
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		
+
+				<header id="masthead" class="site-header" role="banner" >
+				<div class="header-wrap">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-4 col-sm-8 col-xs-12">
+																					
+								<a href="https://www.tlbranson.com/" title="T.L. Branson"><img width="150" height="40" class="site-logo" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2020/12/TL-Logo-2.png" alt="T.L. Branson"  /></a>
+																						</div>
+							<div class="col-md-8 col-sm-4 col-xs-12">
+								<div class="btn-menu" aria-expanded="false" ><span class="screen-reader-text">Toggle menu</span><i class="sydney-svg-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" /></svg></i></div>
+								<nav id="mainnav" class="mainnav" role="navigation"  >
+									<div class="menu-submenu-container"><ul id="menu-submenu" class="menu"><li id="menu-item-1501" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-1501"><a href="https://www.tlbranson.com/category/lists/">Fantasy Book Lists</a>
+<ul class="sub-menu">
+	<li id="menu-item-32625" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-32625"><a href="https://www.tlbranson.com/ya-fantasy-releases-2023/">90+ Fantasy Releases of 2023</a></li>
+	<li id="menu-item-31171" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-31171"><a href="https://www.tlbranson.com/best-ya-fantasy-books/">Top 30 Best YA Fantasy Books</a></li>
+	<li id="menu-item-22639" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-22639"><a href="https://www.tlbranson.com/enemies-to-lovers-books/">Top 25 Enemies to Lovers Books</a></li>
+	<li id="menu-item-2538" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-2538"><a href="https://www.tlbranson.com/top-10-best-ya-fantasy-book-boyfriends/">Top 10 Book Boyfriends</a></li>
+	<li id="menu-item-2855" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2855"><a href="https://www.tlbranson.com/best-litrpg-books/">160+ Best LitRPG Books You Need to Read Right Now</a></li>
+	<li id="menu-item-1766" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1766"><a href="https://www.tlbranson.com/25-free-fantasy-short-stories/">25 Fantasy Short Stories</a></li>
+</ul>
+</li>
+<li id="menu-item-3332" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-3332"><a href="https://www.tlbranson.com/category/hot-topics/">Hot Topics</a>
+<ul class="sub-menu">
+	<li id="menu-item-3333" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-3333"><a href="https://www.tlbranson.com/what-is-kindle-unlimited/">Is Kindle Unlimited worth it?</a></li>
+	<li id="menu-item-3334" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-3334"><a href="https://www.tlbranson.com/how-much-does-audible-cost/">Is Audible worth it?</a></li>
+	<li id="menu-item-3335" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-3335"><a href="https://www.tlbranson.com/do-audiobooks-count-as-reading/">Do audiobooks count as reading?</a></li>
+</ul>
+</li>
+<li id="menu-item-381" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-381"><a href="https://www.tlbranson.com/category/reviews/">Book Reviews</a></li>
+<li id="menu-item-22642" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-22642"><a href="https://www.tlbranson.com/category/books-in-order/">Books in Order by Genre</a>
+<ul class="sub-menu">
+	<li id="menu-item-29563" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29563"><a href="https://www.tlbranson.com/category/adventure/">Adventure</a></li>
+	<li id="menu-item-29564" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29564"><a href="https://www.tlbranson.com/category/children/">Children</a></li>
+	<li id="menu-item-29565" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29565"><a href="https://www.tlbranson.com/category/christian/">Christian</a></li>
+	<li id="menu-item-29561" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29561"><a href="https://www.tlbranson.com/category/dystopian/">Dystopian</a></li>
+	<li id="menu-item-29557" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-29557"><a href="https://www.tlbranson.com/category/fantasy/">Fantasy</a></li>
+	<li id="menu-item-29566" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29566"><a href="https://www.tlbranson.com/category/historical-fiction/">Historical Fiction</a></li>
+	<li id="menu-item-29562" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29562"><a href="https://www.tlbranson.com/category/horror/">Horror</a></li>
+	<li id="menu-item-29558" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29558"><a href="https://www.tlbranson.com/category/mystery/">Mystery</a></li>
+	<li id="menu-item-29560" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29560"><a href="https://www.tlbranson.com/category/romance/">Romance</a></li>
+	<li id="menu-item-29567" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29567"><a href="https://www.tlbranson.com/category/science-fiction/">Science Fiction</a></li>
+	<li id="menu-item-29559" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29559"><a href="https://www.tlbranson.com/category/thriller/">Thriller</a></li>
+</ul>
+</li>
+<li id="menu-item-373" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-373"><a href="https://www.tlbranson.com/bio/">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-1604" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1604"><a href="https://www.tlbranson.com/bio/">Bio</a></li>
+	<li id="menu-item-375" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-375"><a href="https://www.tlbranson.com/contact/">Contact</a></li>
+	<li id="menu-item-1045" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1045"><a href="https://www.tlbranson.com/privacy-policy/">Privacy Policy</a></li>
+</ul>
+</li>
+</ul></div>								</nav><!-- #site-navigation -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</header><!-- #masthead -->
+			
+	
+	<div class="sydney-hero-area">
+				<div class="header-image">
+																			</div>
+		
+			</div>
+
+	
+	<div id="content" class="page-wrap">
+		<div class="content-wrapper container">
+			<div class="row">	
+	
+	
+	
+	<div id="primary" class="content-area sidebar-right col-md-9 container-normal">
+
+		
+		<main id="main" class="post-wrap" role="main">
+
+		
+			
+
+<article id="post-20337" class="post-20337 post type-post status-publish format-standard has-post-thumbnail hentry category-books-in-order category-fantasy mv-content-wrapper">
+	<div class="content-inner">
+	
+	
+		<header class="entry-header">
+		
+		<h1 class="title-post entry-title" >2 Ways to Read Game of Thrones Books in Order | George R.R. Martin</h1>
+					<div class="entry-meta entry-meta-below delimiter-dot"><span class="byline"><span class="author vcard">By  <a class="url fn n" href="https://www.tlbranson.com/author/josh-oyetade/">Josh Oyetade</a></span></span><span class="posted-on"><a href="https://www.tlbranson.com/game-of-thrones-books-in-order/" rel="bookmark"><time class="entry-date published" datetime="2021-10-17T08:11:06-07:00">October 17, 2021</time><time class="updated" datetime="2023-01-10T10:31:05-08:00" >January 10, 2023</time></a></span><span class="cat-links"><a href="https://www.tlbranson.com/category/books-in-order/" rel="category tag">Books in Order</a>, <a href="https://www.tlbranson.com/category/fantasy/" rel="category tag">Fantasy</a></span></div>			</header><!-- .entry-header -->
+	
+					<div class="entry-thumb ">
+			<img width="1566" height="936" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201566%20936'%3E%3C/svg%3E" class="attachment-large-thumb size-large-thumb wp-post-image" alt="Game of Thrones Books in Order" decoding="async" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-230x137.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-300x179.jpg?lossy=1&amp;strip=1&amp;webp=1 300w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-350x209.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-480x287.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg?size=702x420&amp;lossy=1&amp;strip=1&amp;webp=1 702w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-768x459.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-920x550.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-1024x612.jpg?lossy=1&amp;strip=1&amp;webp=1 1024w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg?size=1170x699&amp;lossy=1&amp;strip=1&amp;webp=1 1170w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-1536x918.jpg?lossy=1&amp;strip=1&amp;webp=1 1536w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1566w" data-lazy-sizes="(max-width: 1566px) 100vw, 1566px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg" /><noscript><img width="1566" height="936" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg" class="attachment-large-thumb size-large-thumb wp-post-image" alt="Game of Thrones Books in Order" decoding="async" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-230x137.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-300x179.jpg?lossy=1&amp;strip=1&amp;webp=1 300w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-350x209.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-480x287.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg?size=702x420&amp;lossy=1&amp;strip=1&amp;webp=1 702w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-768x459.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-920x550.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-1024x612.jpg?lossy=1&amp;strip=1&amp;webp=1 1024w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg?size=1170x699&amp;lossy=1&amp;strip=1&amp;webp=1 1170w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin-1536x918.jpg?lossy=1&amp;strip=1&amp;webp=1 1536w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-George-RR-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1566w" sizes="(max-width: 1566px) 100vw, 1566px" /></noscript>		</div>
+				
+
+	<div class="entry-content" >
+		
+<p>HBO’s Game of Thrones TV Series was <a href="https://www.thewrap.com/top-shows-hbo-max-game-of-thrones/">one of the top-running shows</a> the network could boast of for years. You&#8217;ve watched the show, now you&#8217;d like to read the books, but where to start? That&#8217;s where this list of the Game of Thrones books in order can help!</p>
+
+
+
+<p>Game of Thrones on HBO is known to everyone who loves fantasy books, films, and TV shows. Fans of this highly-rated TV series know that it is a fantasy adaptation of the series of novels, A Song of Ice and Fire.</p>
+
+
+
+<p>If you’ve ever read a book and watched the film or TV adaptation, I’m sure you will agree with me that they aren’t an exact replica of each other. Very few movies have kept up with up to 80% of descriptions or storylines from the books they are adapted from.</p>
+
+
+
+<p>The HBO Series, Game of Thrones, isn’t any different. Although the TV series captured lots and lots of details in the book, you can only get all of the actual juicy scenes from reading the book series.</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="306" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20306'%3E%3C/svg%3E" alt="Game of Thrones Books in Order" class="wp-image-30283" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-230x69.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-300x90.jpg?lossy=1&amp;strip=1&amp;webp=1 300w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-350x105.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-480x143.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1.jpg?size=702x210&amp;lossy=1&amp;strip=1&amp;webp=1 702w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-768x230.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-920x275.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-1024x306.jpg?lossy=1&amp;strip=1&amp;webp=1 1024w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-1536x459.jpg?lossy=1&amp;strip=1&amp;webp=1 1536w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1.jpg?lossy=1&amp;strip=1&amp;webp=1 1566w" data-lazy-sizes="(max-width: 1024px) 100vw, 1024px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-1024x306.jpg" /><noscript><img decoding="async" width="1024" height="306" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-1024x306.jpg" alt="Game of Thrones Books in Order" class="wp-image-30283" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-230x69.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-300x90.jpg?lossy=1&amp;strip=1&amp;webp=1 300w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-350x105.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-480x143.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1.jpg?size=702x210&amp;lossy=1&amp;strip=1&amp;webp=1 702w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-768x230.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-920x275.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-1024x306.jpg?lossy=1&amp;strip=1&amp;webp=1 1024w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1-1536x459.jpg?lossy=1&amp;strip=1&amp;webp=1 1536w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/Game-of-Thrones-Books-in-Order-1.jpg?lossy=1&amp;strip=1&amp;webp=1 1566w" sizes="(max-width: 1024px) 100vw, 1024px" /></noscript></figure>
+
+
+
+<h2>Summary of A Song of Ice And Fire</h2>
+
+
+
+<p>A Song of Ice and Fire takes place in Essos and Westeros’ fictional continents, where the seasons stretch and last for years, then end at times you can’t predict. The whole story revolves around 9 different families who are in a war for the control of Westeros, Daenerys Targaryen wanting to assume the Iron Throne, and the increase of supernatural Others in the northernmost part of Westeros. </p>
+
+
+
+<p>George R.R. Martins began the first book in the series in 1991 and published it in 1996. He initially envisioned the story as a trilogy.</p>
+
+
+
+<p>Currently, there are 5 novels in the series. However, Game of Thrones isn’t completed. Two more books are still to be released, which the author says won&#8217;t have the ending the TV series did. There are also some novellas in the Game of Thrones world.</p>
+
+
+
+<p>This is where the confusion comes in, so where do you begin to read?</p>
+
+
+
+<h3>House of the Dragon TV Show</h3>
+
+
+
+<p>Though the ending of Games of Thrones left many fans dissatisfied, by the end of its run it was still the <a href="https://time.com/game-of-thrones-2017/">most popular TV show in the world</a>. It&#8217;s no wonder that HBO decided it needed to create more Thrones content.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img decoding="async" width="1024" height="512" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%20512'%3E%3C/svg%3E" alt="House of the Dragon Game of Thrones HBO" class="wp-image-30294" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-230x115.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-300x150.jpg?lossy=1&amp;strip=1&amp;webp=1 300w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-350x175.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-480x240.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO.jpg?size=702x351&amp;lossy=1&amp;strip=1&amp;webp=1 702w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-768x384.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-920x460.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-1024x512.jpg?lossy=1&amp;strip=1&amp;webp=1 1024w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-1536x768.jpg?lossy=1&amp;strip=1&amp;webp=1 1536w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-2048x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 2048w" data-lazy-sizes="(max-width: 1024px) 100vw, 1024px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-1024x512.jpg" /><noscript><img decoding="async" width="1024" height="512" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-1024x512.jpg" alt="House of the Dragon Game of Thrones HBO" class="wp-image-30294" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-230x115.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-300x150.jpg?lossy=1&amp;strip=1&amp;webp=1 300w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-350x175.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-480x240.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO.jpg?size=702x351&amp;lossy=1&amp;strip=1&amp;webp=1 702w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-768x384.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-920x460.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-1024x512.jpg?lossy=1&amp;strip=1&amp;webp=1 1024w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-1536x768.jpg?lossy=1&amp;strip=1&amp;webp=1 1536w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/House-of-the-Dragon-Game-of-Thrones-HBO-2048x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 2048w" sizes="(max-width: 1024px) 100vw, 1024px" /></noscript></figure></div>
+
+
+<p>Enter House of the Dragon, a prequel set 200 years before Game of Thrones that centers on House Targaryen. The show debuted on Sunday, August 21, 2022, and brings back everything you fell in love with A Song of Ice and Fire to begin with.</p>
+
+
+
+<p>It also became HBO’s biggest premiere ever with <a href="https://variety.com/2022/tv/news/house-of-the-dragon-premiere-ratings-viewers-1235343874/" target="_blank" rel="noreferrer noopener">nearly 10 million viewers</a> for the first episode. In comparison, Game of Thrones brought in 4.2 million viewers for its series premiere in 2011.</p>
+
+
+
+<p>Matt Smith stars as Daemon Targaryen and embodies the bitter antagonist brilliantly. Other cast members include Paddy Considine as Viserys I, Emma D’Arcy as Princess Rhaenyra, and Graham McTavish as Ser Harrold Westerling. George R.R. Martin is a co-creator and executive producer of the show.</p>
+
+
+
+<p>Just like its predecessor, it depicts a brutal feud for power full of betrayals and allegiances.</p>
+
+
+
+<p>Thanks to House of the Dragon, even more fans are discovering Westeros for the very first time.</p>
+
+
+
+<h3>Jon Snow Sequel TV Show in the Works</h3>
+
+
+
+<p>There is also another Game of Thrones spin-off show in the works. Fans of Jon Snow will be happy to hear that he will be the star of this new sequel, with Kit Harington set to reprise his role.</p>
+
+
+
+<p>Harington’s <a href="https://www.tvinsider.com/1060560/game-of-thrones-jon-snow-series-kit-harington/" target="_blank" rel="noreferrer noopener">only comment so far</a> is to say that he knows nothing about it, which is a cheeky nod to an iconic line from the original series. However, George R.R. Martin himself has confirmed the existence of the project on <a href="https://georgerrmartin.com/notablog/2022/06/23/snow-and-other-stuff/" target="_blank" rel="noreferrer noopener">his blog</a>. Martin credits Harington with the idea for the show and for recruiting the creative team, who have not yet been announced.</p>
+
+
+
+<p>The project is still in early stages of development, but will follow Snow’s journey after the conclusion of the eighth season of Game of Thrones. The working title is Snow. While nothing has been green lit yet, the show is in the writing stage as per Martin this summer.</p>
+
+
+
+<p>This new sequel might also give fans some reprieve after the controversial ending to the original series, and offer this creative team an opportunity to right some alleged wrongs.</p>
+
+
+
+<p>In total there are <a href="https://www.hollywoodreporter.com/tv/tv-news/game-of-thrones-jon-snow-spinoff-1235167415/" target="_blank" rel="noreferrer noopener">eight</a> Game of Thrones spin-offs in some stage of development from HBO. In addition to the House of the Dragon prequel and the Jon Snow sequel, there are three live-action prequels and three animated prequels.</p>
+
+
+
+<h2>2 Ways to Read the Game of Thrones Books in Order</h2>
+
+
+
+<h3>A Song of Ice and Fire Novels</h3>
+
+
+
+<p>For the Novels, reading the Game of Thrones books in order is quite simple. There are five published books and two more to come. The books in the main series of these books are:</p>
+
+
+
+<ol>
+<li><a href="https://www.amazon.com/Game-Thrones-Song-Fire-Book/dp/0553573403?_encoding=UTF8&amp;qid=1634502855&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=647bdc408f8739e93076befb6809a1ca&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Game of Thrones</a> (1996)</li>
+
+
+
+<li><a href="https://www.amazon.com/Clash-Kings-Song-Fire-Book/dp/0553579908?pd_rd_w=bLqKz&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=8D60WFRSVG1VM3W1PWVG&amp;pd_rd_r=ad32bee1-2aec-42d0-b7c0-dc42bdfe9945&amp;pd_rd_wg=U3qEy&amp;pd_rd_i=0553579908&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=95fd95b009fed8ba43ae92c111cec77d&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Clash of Kings</a> (1999)</li>
+
+
+
+<li><a href="https://www.amazon.com/Storm-Swords-Song-Fire-Book/dp/055357342X?pd_rd_w=uNBRk&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=T1B2K2HBXKWFZ7X7AD21&amp;pd_rd_r=f0e80267-3e9a-4bc1-bf25-6e8a063ab303&amp;pd_rd_wg=doKEQ&amp;pd_rd_i=055357342X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a967c3ac7ee0931b740691a4e6096777&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Storm of Swords</a> (2000)</li>
+
+
+
+<li><a href="https://www.amazon.com/Feast-Crows-Song-Fire-Thrones/dp/055358202X?pd_rd_w=3BqqL&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=G0A4QER58G2SKDE7W5YT&amp;pd_rd_r=1f9c195d-d821-48fa-8531-31c789b352b9&amp;pd_rd_wg=TTxWg&amp;pd_rd_i=055358202X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2ba2e04980d70ec489ebd4eb1df44e4b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Feast for Crows</a> (2005)</li>
+
+
+
+<li><a href="https://www.amazon.com/Dance-Dragons-Song-Fire-Book/dp/055338595X?pd_rd_w=tvjVF&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=612MJ03G21CCCPJ0473D&amp;pd_rd_r=01f52839-49da-435b-848c-f69d6e8b31ee&amp;pd_rd_wg=PLr3a&amp;pd_rd_i=055338595X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2b3f38f54532ae1db7440452053599de&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Dance with Dragons</a> (2011)</li>
+
+
+
+<li>The Winds of Winter (TBA)</li>
+
+
+
+<li>A Dream of Spring (TBA)</li>
+</ol>
+
+
+
+<h3>Game of Thrones Novellas &amp; Companion Books</h3>
+
+
+
+<p>For the Novellas and Companions Books, there are quite a few books. They were written by G.R.R. Martin to offer an insight into past events in the same set world. These aren’t a necessity to read. However, they give information about past events, giving the story a good background.&nbsp;</p>
+
+
+
+<p>The novellas are 6 in number. They are:</p>
+
+
+
+<ol>
+<li><a href="https://www.amazon.com/Hedge-Knight-Graphic-Novel-Thrones/dp/1477849106?dchild=1&amp;keywords=The+Hedge+Knight&amp;qid=1634503112&amp;s=books&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=12479059016204908ab89efcf6501ab4&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Hedge Knight</a> (1998)</li>
+
+
+
+<li><a href="https://www.amazon.com/Sworn-Sword-Graphic-Novel-Thrones/dp/1477849297?pd_rd_w=fhpln&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=HBRNQJWC0VGXBVFJHZX4&amp;pd_rd_r=b92bb28a-3720-433e-8ced-c914c9a9fd56&amp;pd_rd_wg=94I4C&amp;pd_rd_i=1477849297&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=8b6aa0f1b3f5c2dc666e4298c66ae11e&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Sworn Sword</a> (2003)</li>
+
+
+
+<li><a href="https://www.amazon.com/Mystery-Knight-Graphic-Novel/dp/0345549392?pd_rd_w=qgHjg&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=B67H7P5S5T5N5K48NXDR&amp;pd_rd_r=35468037-b02f-4fcd-806b-cd002ddcf161&amp;pd_rd_wg=Uhy7Q&amp;pd_rd_i=0345549392&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f1ec74af3af6b26cbd1c0a33e15747f2&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Mystery Knight</a> (2010)</li>
+
+
+
+<li><a href="https://www.amazon.com/Dangerous-Women-Outlander-George-Martin-ebook/dp/B00CVMHCJW?dchild=1&amp;keywords=The+Princess+and+the+Queen&amp;qid=1634503165&amp;s=books&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=adc37720e9fb0d41384af537a20dc622&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Princess and the Queen</a> (2013)</li>
+
+
+
+<li><a href="https://www.amazon.com/Rogues-George-R-Martin/dp/0345537262?_encoding=UTF8&amp;qid=1634503259&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=b08e64b410350aa0517618f15dd43b7e&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Rogue Prince</a> (2014)</li>
+
+
+
+<li><a href="https://www.amazon.com/Book-Swords-George-R-Martin/dp/0399593764?_encoding=UTF8&amp;qid=&amp;sr=&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a7d6df4c34c788c6f58e04f32e4c8fcf&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Sons of the Dragon</a> (2017)</li>
+</ol>
+
+
+
+<p>Then there are the Game of Thrones companion books. Some are collections of novellas, while other are illustrated volumes meant to enhance your understanding of the world. They are:</p>
+
+
+
+<ol>
+<li><a href="https://www.amazon.com/Knight-Seven-Kingdoms-Song-Fire/dp/0345533488?_encoding=UTF8&amp;qid=1634503453&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=5e801d8981d9dee8f55ca46901317265&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Knight of Seven Kingdoms</a><br>Collects The Hedge Knight, The Sworn Sword, and The Mystery Knight<br></li>
+
+
+
+<li><a href="https://www.amazon.com/World-Ice-Fire-History-Westeros-ebook/dp/B00EGMGGVK?_encoding=UTF8&amp;qid=1634503495&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=78d9e98ddd7f8443087fda7f9475c864&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The World of Ice and Fire</a><br>An illustrated volume providing an epic history of Westeros.<br></li>
+
+
+
+<li><a href="https://www.amazon.com/Fire-Blood-Song-Ice/dp/0593357531?_encoding=UTF8&amp;qid=1634501896&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f5d63665a307e91d4385d58c75efe86b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">Fire and Blood</a> <br>A prequel that serves as the inspiration for the forthcoming HBO series <em>House of the Dragon</em>.</li>
+</ol>
+
+
+
+<h2>#1 Game of Thrones Books in Order by Publication</h2>
+
+
+
+<p>There are two ways you can read the Game of Thrones books in order if you&#8217;d like to read everything available. The first is publication order.</p>
+
+
+
+<ol>
+<li><a href="https://www.amazon.com/Game-Thrones-Song-Fire-Book/dp/0553573403?_encoding=UTF8&amp;qid=1634502855&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=647bdc408f8739e93076befb6809a1ca&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Game of Thrones</a> (1996)</li>
+
+
+
+<li><a href="https://www.amazon.com/Hedge-Knight-Graphic-Novel-Thrones/dp/1477849106?dchild=1&amp;keywords=The+Hedge+Knight&amp;qid=1634503112&amp;s=books&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=12479059016204908ab89efcf6501ab4&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Hedge Knight</a> (1998)</li>
+
+
+
+<li><a href="https://www.amazon.com/Clash-Kings-Song-Fire-Book/dp/0553579908?pd_rd_w=bLqKz&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=8D60WFRSVG1VM3W1PWVG&amp;pd_rd_r=ad32bee1-2aec-42d0-b7c0-dc42bdfe9945&amp;pd_rd_wg=U3qEy&amp;pd_rd_i=0553579908&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=95fd95b009fed8ba43ae92c111cec77d&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Clash of Kings</a> (1999)</li>
+
+
+
+<li><a href="https://www.amazon.com/Storm-Swords-Song-Fire-Book/dp/055357342X?pd_rd_w=uNBRk&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=T1B2K2HBXKWFZ7X7AD21&amp;pd_rd_r=f0e80267-3e9a-4bc1-bf25-6e8a063ab303&amp;pd_rd_wg=doKEQ&amp;pd_rd_i=055357342X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a967c3ac7ee0931b740691a4e6096777&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Storm of Swords</a> (2000)</li>
+
+
+
+<li><a href="https://www.amazon.com/Sworn-Sword-Graphic-Novel-Thrones/dp/1477849297?pd_rd_w=fhpln&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=HBRNQJWC0VGXBVFJHZX4&amp;pd_rd_r=b92bb28a-3720-433e-8ced-c914c9a9fd56&amp;pd_rd_wg=94I4C&amp;pd_rd_i=1477849297&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=8b6aa0f1b3f5c2dc666e4298c66ae11e&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Sworn Sword</a> (2003)</li>
+
+
+
+<li><a href="https://www.amazon.com/Feast-Crows-Song-Fire-Thrones/dp/055358202X?pd_rd_w=3BqqL&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=G0A4QER58G2SKDE7W5YT&amp;pd_rd_r=1f9c195d-d821-48fa-8531-31c789b352b9&amp;pd_rd_wg=TTxWg&amp;pd_rd_i=055358202X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2ba2e04980d70ec489ebd4eb1df44e4b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Feast for Crows</a> (2005)</li>
+
+
+
+<li><a href="https://www.amazon.com/Mystery-Knight-Graphic-Novel/dp/0345549392?pd_rd_w=qgHjg&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=B67H7P5S5T5N5K48NXDR&amp;pd_rd_r=35468037-b02f-4fcd-806b-cd002ddcf161&amp;pd_rd_wg=Uhy7Q&amp;pd_rd_i=0345549392&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f1ec74af3af6b26cbd1c0a33e15747f2&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Mystery Knight</a> (2010)</li>
+
+
+
+<li><a href="https://www.amazon.com/Dance-Dragons-Song-Fire-Book/dp/055338595X?pd_rd_w=tvjVF&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=612MJ03G21CCCPJ0473D&amp;pd_rd_r=01f52839-49da-435b-848c-f69d6e8b31ee&amp;pd_rd_wg=PLr3a&amp;pd_rd_i=055338595X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2b3f38f54532ae1db7440452053599de&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Dance with Dragons</a> (2011)</li>
+
+
+
+<li><a href="https://www.amazon.com/Dangerous-Women-Outlander-George-Martin-ebook/dp/B00CVMHCJW?dchild=1&amp;keywords=The+Princess+and+the+Queen&amp;qid=1634503165&amp;s=books&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=adc37720e9fb0d41384af537a20dc622&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Princess and the Queen</a> (2013)</li>
+
+
+
+<li><a href="https://www.amazon.com/Rogues-George-R-Martin/dp/0345537262?_encoding=UTF8&amp;qid=1634503259&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=b08e64b410350aa0517618f15dd43b7e&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Rogue Prince</a> (2014)</li>
+
+
+
+<li><a href="https://www.amazon.com/Book-Swords-George-R-Martin/dp/0399593764?_encoding=UTF8&amp;qid=&amp;sr=&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a7d6df4c34c788c6f58e04f32e4c8fcf&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Sons of the Dragon</a> (2017)</li>
+
+
+
+<li><a href="https://www.amazon.com/Fire-Blood-Song-Ice/dp/0593357531?_encoding=UTF8&amp;qid=1634501896&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f5d63665a307e91d4385d58c75efe86b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">Fire and Blood</a> (2018)</li>
+
+
+
+<li>The Winds of Winter (TBA)</li>
+
+
+
+<li>A Dream of Spring (TBA)</li>
+</ol>
+
+
+
+<h2>#2 Game of Thrones Books in Chronological Order</h2>
+
+
+
+<p>Despite the order in which these books were written and published, they are all set in past and present times that don’t follow the publication order. So, if you would like to start from the very beginning of how it all started, this would be how to read it. A word of caution, this reading order should only be done as a reread of Game of Thrones.</p>
+
+
+
+<p>Here’s the list of George R.R. Martin&#8217;s books in chronological order.</p>
+
+
+
+<ol>
+<li><a href="https://www.amazon.com/Fire-Blood-Song-Ice/dp/0593357531?_encoding=UTF8&amp;qid=1634501896&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f5d63665a307e91d4385d58c75efe86b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">Fire and Blood</a> (Companion)</li>
+
+
+
+<li><a href="https://www.amazon.com/Book-Swords-George-R-Martin/dp/0399593764?_encoding=UTF8&amp;qid=&amp;sr=&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a7d6df4c34c788c6f58e04f32e4c8fcf&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Sons of the Dragon</a>&nbsp;(Novella)</li>
+
+
+
+<li><a href="https://www.amazon.com/Rogues-George-R-Martin/dp/0345537262?_encoding=UTF8&amp;qid=1634503259&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=b08e64b410350aa0517618f15dd43b7e&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Rogue Prince</a> (Novella)</li>
+
+
+
+<li><a href="https://www.amazon.com/Dangerous-Women-Outlander-George-Martin-ebook/dp/B00CVMHCJW?dchild=1&amp;keywords=The+Princess+and+the+Queen&amp;qid=1634503165&amp;s=books&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=adc37720e9fb0d41384af537a20dc622&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Princess and the Queen</a> (Novella)</li>
+
+
+
+<li><a href="https://www.amazon.com/Hedge-Knight-Graphic-Novel-Thrones/dp/1477849106?dchild=1&amp;keywords=The+Hedge+Knight&amp;qid=1634503112&amp;s=books&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=12479059016204908ab89efcf6501ab4&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Hedge Knight</a> (Novella)</li>
+
+
+
+<li><a href="https://www.amazon.com/Sworn-Sword-Graphic-Novel-Thrones/dp/1477849297?pd_rd_w=fhpln&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=HBRNQJWC0VGXBVFJHZX4&amp;pd_rd_r=b92bb28a-3720-433e-8ced-c914c9a9fd56&amp;pd_rd_wg=94I4C&amp;pd_rd_i=1477849297&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=8b6aa0f1b3f5c2dc666e4298c66ae11e&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Sworn Sword</a> (Novella)</li>
+
+
+
+<li><a href="https://www.amazon.com/Mystery-Knight-Graphic-Novel/dp/0345549392?pd_rd_w=qgHjg&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=B67H7P5S5T5N5K48NXDR&amp;pd_rd_r=35468037-b02f-4fcd-806b-cd002ddcf161&amp;pd_rd_wg=Uhy7Q&amp;pd_rd_i=0345549392&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f1ec74af3af6b26cbd1c0a33e15747f2&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">The Mystery Knight</a> (Novella)</li>
+
+
+
+<li><a href="https://www.amazon.com/Game-Thrones-Song-Fire-Book/dp/0553573403?_encoding=UTF8&amp;qid=1634502855&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=647bdc408f8739e93076befb6809a1ca&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Game of Thrones</a> (Book 1)</li>
+
+
+
+<li><a href="https://www.amazon.com/Clash-Kings-Song-Fire-Book/dp/0553579908?pd_rd_w=bLqKz&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=8D60WFRSVG1VM3W1PWVG&amp;pd_rd_r=ad32bee1-2aec-42d0-b7c0-dc42bdfe9945&amp;pd_rd_wg=U3qEy&amp;pd_rd_i=0553579908&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=95fd95b009fed8ba43ae92c111cec77d&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Clash of Kings</a> (Book 2)</li>
+
+
+
+<li><a href="https://www.amazon.com/Storm-Swords-Song-Fire-Book/dp/055357342X?pd_rd_w=uNBRk&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=T1B2K2HBXKWFZ7X7AD21&amp;pd_rd_r=f0e80267-3e9a-4bc1-bf25-6e8a063ab303&amp;pd_rd_wg=doKEQ&amp;pd_rd_i=055357342X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a967c3ac7ee0931b740691a4e6096777&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Storm of Swords</a> (Book 3)</li>
+
+
+
+<li><a href="https://www.amazon.com/Feast-Crows-Song-Fire-Thrones/dp/055358202X?pd_rd_w=3BqqL&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=G0A4QER58G2SKDE7W5YT&amp;pd_rd_r=1f9c195d-d821-48fa-8531-31c789b352b9&amp;pd_rd_wg=TTxWg&amp;pd_rd_i=055358202X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2ba2e04980d70ec489ebd4eb1df44e4b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Feast for Crows</a> (Book 4)</li>
+
+
+
+<li><a href="https://www.amazon.com/Dance-Dragons-Song-Fire-Book/dp/055338595X?pd_rd_w=tvjVF&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=612MJ03G21CCCPJ0473D&amp;pd_rd_r=01f52839-49da-435b-848c-f69d6e8b31ee&amp;pd_rd_wg=PLr3a&amp;pd_rd_i=055338595X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2b3f38f54532ae1db7440452053599de&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow">A Dance with Dragons</a> (Book 5)</li>
+
+
+
+<li>The Winds of Winter (Book 6 &#8211; TBA)</li>
+
+
+
+<li>A Dream of Spring (Book 7 &#8211; TBA)</li>
+</ol>
+
+
+
+<p>So, there you have it. Those are the two possible ways you can read the Game of Thrones books in order.</p>
+
+
+
+<h2>Game of Thrones Books</h2>
+
+
+
+<h4 class="has-text-align-center"><strong>1. A Game of Thrones</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><a href="https://www.amazon.com/Game-Thrones-Song-Fire-Book/dp/0553573403?_encoding=UTF8&amp;qid=1634502855&amp;sr=1-2&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=647bdc408f8739e93076befb6809a1ca&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="382" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20382'%3E%3C/svg%3E" alt="Game of Thrones, A Song of Ice and Fire, George RR Martin" class="wp-image-30288" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-197x300.jpg?lossy=1&amp;strip=1&amp;webp=1 197w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-230x351.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-350x534.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-480x733.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-671x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 671w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-768x1172.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-920x1404.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 933w" data-lazy-sizes="(max-width: 671px) 100vw, 671px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-671x1024.jpg" /><noscript><img width="250" height="382" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-671x1024.jpg" alt="Game of Thrones, A Song of Ice and Fire, George RR Martin" class="wp-image-30288" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-197x300.jpg?lossy=1&amp;strip=1&amp;webp=1 197w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-230x351.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-350x534.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-480x733.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-671x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 671w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-768x1172.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin-920x1404.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Game-of-Thrones-by-George-R.R.-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 933w" sizes="(max-width: 671px) 100vw, 671px" /></noscript></a></figure></div>
+
+
+<hr class="wp-block-separator has-css-opacity is-style-wide"/>
+
+
+
+<h4 class="has-text-align-center"><strong>2. A Clash of Kings</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><a href="https://www.amazon.com/Clash-Kings-Song-Fire-Book/dp/0553579908?pd_rd_w=bLqKz&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=8D60WFRSVG1VM3W1PWVG&amp;pd_rd_r=ad32bee1-2aec-42d0-b7c0-dc42bdfe9945&amp;pd_rd_wg=U3qEy&amp;pd_rd_i=0553579908&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=95fd95b009fed8ba43ae92c111cec77d&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="412" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20412'%3E%3C/svg%3E" alt="A Clash of Kings by George RR Martin" class="wp-image-30289" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-182x300.jpg?lossy=1&amp;strip=1&amp;webp=1 182w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-230x378.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-350x576.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-480x790.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-622x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 622w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-768x1264.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-920x1514.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-934x1536.jpg?lossy=1&amp;strip=1&amp;webp=1 934w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-1245x2048.jpg?lossy=1&amp;strip=1&amp;webp=1 1245w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1252w" data-lazy-sizes="(max-width: 622px) 100vw, 622px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-622x1024.jpg" /><noscript><img width="250" height="412" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-622x1024.jpg" alt="A Clash of Kings by George RR Martin" class="wp-image-30289" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-182x300.jpg?lossy=1&amp;strip=1&amp;webp=1 182w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-230x378.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-350x576.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-480x790.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-622x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 622w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-768x1264.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-920x1514.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-934x1536.jpg?lossy=1&amp;strip=1&amp;webp=1 934w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin-1245x2048.jpg?lossy=1&amp;strip=1&amp;webp=1 1245w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Clash-of-Kings-by-George-R.R.-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1252w" sizes="(max-width: 622px) 100vw, 622px" /></noscript></a></figure></div>
+
+
+<hr class="wp-block-separator has-css-opacity is-style-wide"/>
+
+
+
+<h4 class="has-text-align-center"><strong>3. A Storm of Swords</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><a href="https://www.amazon.com/Storm-Swords-Song-Fire-Book/dp/055357342X?pd_rd_w=uNBRk&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=T1B2K2HBXKWFZ7X7AD21&amp;pd_rd_r=f0e80267-3e9a-4bc1-bf25-6e8a063ab303&amp;pd_rd_wg=doKEQ&amp;pd_rd_i=055357342X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=a967c3ac7ee0931b740691a4e6096777&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="382" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20382'%3E%3C/svg%3E" alt="A Storm of Swords, Game of Thrones Books in order, George RR Martin" class="wp-image-30291" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-197x300.jpg?lossy=1&amp;strip=1&amp;webp=1 197w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-230x351.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-350x534.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-480x733.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-671x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 671w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-768x1172.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-920x1404.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-1006x1536.jpg?lossy=1&amp;strip=1&amp;webp=1 1006w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-1342x2048.jpg?lossy=1&amp;strip=1&amp;webp=1 1342w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1677w" data-lazy-sizes="(max-width: 671px) 100vw, 671px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-671x1024.jpg" /><noscript><img width="250" height="382" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-671x1024.jpg" alt="A Storm of Swords, Game of Thrones Books in order, George RR Martin" class="wp-image-30291" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-197x300.jpg?lossy=1&amp;strip=1&amp;webp=1 197w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-230x351.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-350x534.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-480x733.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-671x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 671w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-768x1172.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-920x1404.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-1006x1536.jpg?lossy=1&amp;strip=1&amp;webp=1 1006w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin-1342x2048.jpg?lossy=1&amp;strip=1&amp;webp=1 1342w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Storm-of-Swords-by-George-RR-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1677w" sizes="(max-width: 671px) 100vw, 671px" /></noscript></a></figure></div>
+
+
+<hr class="wp-block-separator has-css-opacity is-style-wide"/>
+
+
+
+<h4 class="has-text-align-center"><strong>4. A Feast for Crows</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><a href="https://www.amazon.com/Feast-Crows-Song-Fire-Thrones/dp/055358202X?pd_rd_w=3BqqL&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=G0A4QER58G2SKDE7W5YT&amp;pd_rd_r=1f9c195d-d821-48fa-8531-31c789b352b9&amp;pd_rd_wg=TTxWg&amp;pd_rd_i=055358202X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2ba2e04980d70ec489ebd4eb1df44e4b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="411" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20411'%3E%3C/svg%3E" alt="Game of Thrones, A Feast for Crows by George RR Martin" class="wp-image-30292" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-183x300.jpeg?lossy=1&amp;strip=1&amp;webp=1 183w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-230x378.jpeg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-350x575.jpeg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-480x789.jpeg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-623x1024.jpeg?lossy=1&amp;strip=1&amp;webp=1 623w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-768x1262.jpeg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-920x1512.jpeg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-935x1536.jpeg?lossy=1&amp;strip=1&amp;webp=1 935w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-1246x2048.jpeg?lossy=1&amp;strip=1&amp;webp=1 1246w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin.jpeg?lossy=1&amp;strip=1&amp;webp=1 1256w" data-lazy-sizes="(max-width: 623px) 100vw, 623px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-623x1024.jpeg" /><noscript><img width="250" height="411" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-623x1024.jpeg" alt="Game of Thrones, A Feast for Crows by George RR Martin" class="wp-image-30292" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-183x300.jpeg?lossy=1&amp;strip=1&amp;webp=1 183w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-230x378.jpeg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-350x575.jpeg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-480x789.jpeg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-623x1024.jpeg?lossy=1&amp;strip=1&amp;webp=1 623w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-768x1262.jpeg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-920x1512.jpeg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-935x1536.jpeg?lossy=1&amp;strip=1&amp;webp=1 935w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin-1246x2048.jpeg?lossy=1&amp;strip=1&amp;webp=1 1246w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Feast-for-Crowds-by-George-RR-Martin.jpeg?lossy=1&amp;strip=1&amp;webp=1 1256w" sizes="(max-width: 623px) 100vw, 623px" /></noscript></a></figure></div>
+
+
+<hr class="wp-block-separator has-css-opacity is-style-wide"/>
+
+
+
+<h4 class="has-text-align-center"><strong>5. A Dance with Dragons</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><a href="https://www.amazon.com/Dance-Dragons-Song-Fire-Book/dp/055338595X?pd_rd_w=tvjVF&amp;pf_rd_p=c64372fa-c41c-422e-990d-9e034f73989b&amp;pf_rd_r=612MJ03G21CCCPJ0473D&amp;pd_rd_r=01f52839-49da-435b-848c-f69d6e8b31ee&amp;pd_rd_wg=PLr3a&amp;pd_rd_i=055338595X&amp;psc=1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=2b3f38f54532ae1db7440452053599de&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="380" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20380'%3E%3C/svg%3E" alt="A Dance with Dragons George RR Martin" class="wp-image-30293" data-lazy-srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-197x300.jpg?lossy=1&amp;strip=1&amp;webp=1 197w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-230x349.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-350x532.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-480x729.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-674x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 674w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-768x1167.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-920x1398.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-1011x1536.jpg?lossy=1&amp;strip=1&amp;webp=1 1011w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-1348x2048.jpg?lossy=1&amp;strip=1&amp;webp=1 1348w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1484w" data-lazy-sizes="(max-width: 674px) 100vw, 674px" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-674x1024.jpg" /><noscript><img width="250" height="380" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-674x1024.jpg" alt="A Dance with Dragons George RR Martin" class="wp-image-30293" srcset="https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-197x300.jpg?lossy=1&amp;strip=1&amp;webp=1 197w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-230x349.jpg?lossy=1&amp;strip=1&amp;webp=1 230w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-350x532.jpg?lossy=1&amp;strip=1&amp;webp=1 350w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-480x729.jpg?lossy=1&amp;strip=1&amp;webp=1 480w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-674x1024.jpg?lossy=1&amp;strip=1&amp;webp=1 674w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-768x1167.jpg?lossy=1&amp;strip=1&amp;webp=1 768w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-920x1398.jpg?lossy=1&amp;strip=1&amp;webp=1 920w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-1011x1536.jpg?lossy=1&amp;strip=1&amp;webp=1 1011w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin-1348x2048.jpg?lossy=1&amp;strip=1&amp;webp=1 1348w, https://b2125522.smushcdn.com/2125522/wp-content/uploads/2021/10/A-Dance-with-Dragons-George-RR-Martin.jpg?lossy=1&amp;strip=1&amp;webp=1 1484w" sizes="(max-width: 674px) 100vw, 674px" /></noscript></a></figure></div>
+
+
+<hr class="wp-block-separator has-css-opacity is-style-wide"/>
+
+
+
+<h4 class="has-text-align-center"><strong>A Knight of the Seven Kingdoms</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><a href="https://www.amazon.com/Knight-Seven-Kingdoms-Song-Fire/dp/0345533488?_encoding=UTF8&amp;qid=1634503453&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=5e801d8981d9dee8f55ca46901317265&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="381" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20381'%3E%3C/svg%3E" alt="A Knight of the Seven Kingdoms George RR Martin" class="wp-image-20346" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Knight-of-the-Seven-Kingdoms-by-George-RR-Martin.jpg" /><noscript><img width="250" height="381" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/A-Knight-of-the-Seven-Kingdoms-by-George-RR-Martin.jpg" alt="A Knight of the Seven Kingdoms George RR Martin" class="wp-image-20346" /></noscript></a></figure></div>
+
+
+<p>This novella is set 90 years before the events of A Song of Fire and Ice starts. It includes The Hedge Knight, The Mystery Knight, and The Sworn Sword.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity is-style-wide"/>
+
+
+
+<h4 class="has-text-align-center"><strong>Fire and Blood</strong></h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><a href="https://www.amazon.com/Fire-Blood-Song-Ice/dp/0593357531?_encoding=UTF8&amp;qid=1634501896&amp;sr=1-1&amp;linkCode=ll1&amp;tag=tlbranson-20&amp;linkId=f5d63665a307e91d4385d58c75efe86b&amp;language=en_US&amp;ref_=as_li_ss_tl" rel="sponsored nofollow"><img width="250" height="379" decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20379'%3E%3C/svg%3E" alt="Fire and Blood, George RR Martin, Game of Thrones books in order" class="wp-image-20347" data-lazy-src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Fire-and-Blood-by-George-RR-Martin.jpg" /><noscript><img width="250" height="379" decoding="async" src="https://i0.wp.com/tlbranson.com/wp-content/uploads/2021/10/Fire-and-Blood-by-George-RR-Martin.jpg" alt="Fire and Blood, George RR Martin, Game of Thrones books in order" class="wp-image-20347" /></noscript></a></figure></div>
+
+
+<p>This novella gives a complete history of the House of Targaryen and has an edited version of The Sons of the Dragon.</p>
+
+
+
+<h3>Looking for more books in order?</h3>
+
+
+
+<p>Check out my list of <a href="https://www.tlbranson.com/discworld-reading-order-terry-pratchett/">Terry Pratchett&#8217;s Discworld Reading Order</a>.</p>
+			</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+			</footer><!-- .entry-footer -->
+
+		</div>
+
+</article><!-- #post-## -->
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links clearfix">
+		<div class="nav-previous"><span><svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.19643 0.741072C5.19643 0.660715 5.16071 0.589286 5.10714 0.535715L4.66071 0.0892859C4.60714 0.0357151 4.52679 0 4.45536 0C4.38393 0 4.30357 0.0357151 4.25 0.0892859L0.0892857 4.25C0.0357143 4.30357 0 4.38393 0 4.45536C0 4.52679 0.0357143 4.60714 0.0892857 4.66072L4.25 8.82143C4.30357 8.875 4.38393 8.91072 4.45536 8.91072C4.52679 8.91072 4.60714 8.875 4.66071 8.82143L5.10714 8.375C5.16071 8.32143 5.19643 8.24107 5.19643 8.16964C5.19643 8.09822 5.16071 8.01786 5.10714 7.96429L1.59821 4.45536L5.10714 0.946429C5.16071 0.892858 5.19643 0.8125 5.19643 0.741072Z" fill="#737C8C"/></svg></span><a href="https://www.tlbranson.com/10-books-like-from-blood-and-ash/" rel="prev">10 Books Like From Blood and Ash by Jennifer L. Armentrout</a></div><div class="nav-next"><a href="https://www.tlbranson.com/dune-books-in-order/" rel="next">All 30+ Dune Books in Order | How to Read Frank Herbert&#8217;s Books</a><span><svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.19643 4.45536C5.19643 4.38393 5.16071 4.30357 5.10714 4.25L0.946429 0.0892859C0.892857 0.0357151 0.8125 0 0.741071 0C0.669643 0 0.589286 0.0357151 0.535714 0.0892859L0.0892857 0.535715C0.0357143 0.589286 0 0.669643 0 0.741072C0 0.8125 0.0357143 0.892858 0.0892857 0.946429L3.59821 4.45536L0.0892857 7.96429C0.0357143 8.01786 0 8.09822 0 8.16964C0 8.25 0.0357143 8.32143 0.0892857 8.375L0.535714 8.82143C0.589286 8.875 0.669643 8.91072 0.741071 8.91072C0.8125 8.91072 0.892857 8.875 0.946429 8.82143L5.10714 4.66072C5.16071 4.60714 5.19643 4.52679 5.19643 4.45536Z" fill="#737C8C"/></svg></span></div>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+			
+<div id="comments" class="comments-area">
+
+	
+			<h3 class="comment-title">
+			14 thoughts on &ldquo;<span>2 Ways to Read Game of Thrones Books in Order | George R.R. Martin</span>&rdquo;		</h3>
+
+		
+		<ol class="comments-list">
+					<li id="comment-6795" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-6795" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/45b2426409c5fc22d7acbf0475776af9?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/45b2426409c5fc22d7acbf0475776af9?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/45b2426409c5fc22d7acbf0475776af9?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/45b2426409c5fc22d7acbf0475776af9?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">James Schwebel</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-6795"><time datetime="2022-07-11T07:16:02-07:00">July 11, 2022 at 7:16 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>When will &#8220;The Winds of Winter&#8221; be released?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-6795' data-commentid="6795" data-postid="20337" data-belowelement="div-comment-6795" data-respondelement="respond" data-replyto="Reply to James Schwebel" aria-label='Reply to James Schwebel'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-6800" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-6800" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-6800"><time datetime="2022-07-11T20:25:25-07:00">July 11, 2022 at 8:25 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Sometime in the future, never, who knows?</p>
+<p>It&#8217;s a bit of a sore subject in the fantasy community. There&#8217;s a running joke that George R.R. Martin, Patrick Rothfuss, and Brandon Sanderson have a running agreement to shave every time they publish a book. If you don&#8217;t know what those authors look like, I recommend googling that and you&#8217;ll find the meme. Haha.</p>
+<p>Unfortunately, the fantasy community has been waiting a very long time for the next Game of Thrones book, and it&#8217;s anyone&#8217;s best guess as to when or if it&#8217;ll ever publish.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-6800' data-commentid="6800" data-postid="20337" data-belowelement="div-comment-6800" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-7044" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-7044" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/aa0a012562be2d94dad658bb54671852?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/aa0a012562be2d94dad658bb54671852?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/aa0a012562be2d94dad658bb54671852?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aa0a012562be2d94dad658bb54671852?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn"><a href='http://tl%20branson' rel='external nofollow ugc' class='url'>Heidi Anne Thompson</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7044"><time datetime="2022-08-31T14:32:18-07:00">August 31, 2022 at 2:32 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>hi what about the Dunk and EGG books/stories</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7044' data-commentid="7044" data-postid="20337" data-belowelement="div-comment-7044" data-respondelement="respond" data-replyto="Reply to Heidi Anne Thompson" aria-label='Reply to Heidi Anne Thompson'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-7046" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-7046" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7046"><time datetime="2022-08-31T16:39:40-07:00">August 31, 2022 at 4:39 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>They are listed in the Novella list. The first three books are the Tales of Dunk and Egg trilogy.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7046' data-commentid="7046" data-postid="20337" data-belowelement="div-comment-7046" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-7124" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-7124" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/dc106205858e17569d4211f91a085f38?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/dc106205858e17569d4211f91a085f38?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/dc106205858e17569d4211f91a085f38?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/dc106205858e17569d4211f91a085f38?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">BJ</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7124"><time datetime="2022-09-13T13:23:16-07:00">September 13, 2022 at 1:23 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>&#8220;A word of caution, this reading order should only be done as a reread of Game of Thrones.&#8221;  Please provide some context / explanation for this statement to help newbs better decide.</p>
+<p>Thanks</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7124' data-commentid="7124" data-postid="20337" data-belowelement="div-comment-7124" data-respondelement="respond" data-replyto="Reply to BJ" aria-label='Reply to BJ'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-7125" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-7125" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7125"><time datetime="2022-09-13T15:01:20-07:00">September 13, 2022 at 3:01 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It means that new readers shouldn&#8217;t read the series in Chronological order because of possible spoilers and lack of story foundation in earlier tales before reading at least A Game of Thrones (Book 1). In other words, as I&#8217;ve already written, that reading method is for rereads of the series only. After you&#8217;ve already been through everything once before.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7125' data-commentid="7125" data-postid="20337" data-belowelement="div-comment-7125" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-7417" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-7417" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/c4ce4c123e09a09cda9221dfba8088bc?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/c4ce4c123e09a09cda9221dfba8088bc?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/c4ce4c123e09a09cda9221dfba8088bc?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/c4ce4c123e09a09cda9221dfba8088bc?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">Tayyab</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7417"><time datetime="2022-10-23T11:33:22-07:00">October 23, 2022 at 11:33 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>If someone just wanted to read the book that &#8220;House of the Dragons&#8221; is based on, what book would you recommend?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7417' data-commentid="7417" data-postid="20337" data-belowelement="div-comment-7417" data-respondelement="respond" data-replyto="Reply to Tayyab" aria-label='Reply to Tayyab'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-7419" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-7419" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7419"><time datetime="2022-10-23T12:26:50-07:00">October 23, 2022 at 12:26 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>House of the Dragon is based on George R.R. Martin&#8217;s book, Fire &#038; Blood. It is not a traditional book, but more a history of events. But Fire &#038; Blood is the book you&#8217;ll want to read to understand more about House of the Dragon.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7419' data-commentid="7419" data-postid="20337" data-belowelement="div-comment-7419" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-7424" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-7424" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/788903e8ede30ef315ce30dde0ff1d0e?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/788903e8ede30ef315ce30dde0ff1d0e?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/788903e8ede30ef315ce30dde0ff1d0e?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/788903e8ede30ef315ce30dde0ff1d0e?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">Hayley</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7424"><time datetime="2022-10-24T13:03:29-07:00">October 24, 2022 at 1:03 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi there</p>
+<p>I have watched Game of Thrones on TV around 5 times. I have also watched House of Dragon. Would you still recommend I read Game of Thrones first? I quite fancied reading it chronologically.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7424' data-commentid="7424" data-postid="20337" data-belowelement="div-comment-7424" data-respondelement="respond" data-replyto="Reply to Hayley" aria-label='Reply to Hayley'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-7425" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-7425" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7425"><time datetime="2022-10-24T13:10:00-07:00">October 24, 2022 at 1:10 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I would say chronological order would be okay for you. You&#8217;ve got a good handle on the story. It wouldn&#8217;t make much sense for a newcomer to start chronologically without knowing the basic lore of the world, but with a strong awareness of places, events, and characters, I would say you&#8217;ll be okay.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7425' data-commentid="7425" data-postid="20337" data-belowelement="div-comment-7425" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-7429" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-7429" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/b387b68dfb4eb23e327282e3cd1105b8?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/b387b68dfb4eb23e327282e3cd1105b8?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/b387b68dfb4eb23e327282e3cd1105b8?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/b387b68dfb4eb23e327282e3cd1105b8?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">Cruzy Cruz</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7429"><time datetime="2022-10-25T14:23:37-07:00">October 25, 2022 at 2:23 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi I just finished the TV series House of the Dragon and have watched the entire Game of Thrones series. I have not read any of the books. I want to read what happens after the finale of House of the Dragon. Which book should I pick up? Would it be The Sons of the Dragon? Thanks!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7429' data-commentid="7429" data-postid="20337" data-belowelement="div-comment-7429" data-respondelement="respond" data-replyto="Reply to Cruzy Cruz" aria-label='Reply to Cruzy Cruz'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-7438" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-7438" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-7438"><time datetime="2022-10-26T13:17:17-07:00">October 26, 2022 at 1:17 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Chronologically speaking, Sons of the Dragon is next after Fire &#038; Blood. However, it&#8217;s just a short story, as are all the entries on this list between Fire &#038; Blood and Game of Thrones. Well, the Hedge Knight series is a comic, and a hefty one at 180 pages, but it&#8217;s a comic nonetheless.</p>
+<p>The only books GRRM has written that will fulfill that novel itch are the main Game of Thrones books. Fire &#038; Blood is more of a history book (and what House of the Dragon is based off of), while the remainder are tales here and there.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-7438' data-commentid="7438" data-postid="20337" data-belowelement="div-comment-7438" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-8112" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-8112" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/5f31f8b2cde81a5f5cf2375ac85c6c78?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/5f31f8b2cde81a5f5cf2375ac85c6c78?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/5f31f8b2cde81a5f5cf2375ac85c6c78?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/5f31f8b2cde81a5f5cf2375ac85c6c78?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">Mindy Langlinais</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-8112"><time datetime="2022-12-28T09:53:41-08:00">December 28, 2022 at 9:53 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Having trouble finding The Princess and The Queen,The Rogué Prince and The Sons of the Dragon. Any ideas on where I can purchase them online?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-8112' data-commentid="8112" data-postid="20337" data-belowelement="div-comment-8112" data-respondelement="respond" data-replyto="Reply to Mindy Langlinais" aria-label='Reply to Mindy Langlinais'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-8113" class="comment byuser comment-author-t-l-branson odd alt depth-2">
+			<article id="div-comment-8113" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" data-lazy-srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async' data-lazy-src="https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g"/><noscript><img alt='' src='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/251a5c8890ecc7db0dd597979aeea2d4?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' decoding='async'/></noscript>						<b class="fn">T.L. Branson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.tlbranson.com/game-of-thrones-books-in-order/#comment-8113"><time datetime="2022-12-28T10:02:54-08:00">December 28, 2022 at 10:02 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The links in the article takes you to the book on Amazon to purchase them. They are apart of a fantasy anthology, so the only way to read the individual short story is to purchase the anthology.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-8113' data-commentid="8113" data-postid="20337" data-belowelement="div-comment-8113" data-respondelement="respond" data-replyto="Reply to T.L. Branson" aria-label='Reply to T.L. Branson'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/game-of-thrones-books-in-order/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.tlbranson.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment"><label for="comment">Comment <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" autocomplete="url" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='20337' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="df40de9ea4" /></p><p style="display: none !important;"><label>&#916;<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="180"/><script type="rocketlazyloadscript">document.getElementById( "ak_js_1" ).setAttribute( "value", ( new Date() ).getTime() );</script></p></form>	</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+	
+
+<div id="secondary" class="widget-area col-md-3" role="complementary" >
+	<aside id="block-6" class="widget widget_block widget_search"><form role="search" method="get" action="https://www.tlbranson.com/" class="wp-block-search__button-outside wp-block-search__text-button wp-block-search"><label for="wp-block-search__input-1" class="wp-block-search__label" >Search</label><div class="wp-block-search__inside-wrapper " ><input type="search" id="wp-block-search__input-1" class="wp-block-search__input wp-block-search__input" name="s" value="" placeholder=""  required /><button type="submit" class="wp-block-search__button wp-element-button"  >Search</button></div></form></aside>
+		<aside id="recent-posts-6" class="widget widget_recent_entries">
+		<h3 class="widget-title">Recent Posts</h3>
+		<ul>
+											<li>
+					<a href="https://www.tlbranson.com/kissing-booth-4/">Kissing Booth 4: Everything You Need to Know</a>
+									</li>
+											<li>
+					<a href="https://www.tlbranson.com/miss-julia-books-in-order/">All 20+ Miss Julia Books in Order by Ann B. Ross</a>
+									</li>
+											<li>
+					<a href="https://www.tlbranson.com/lucy-foley-books/">All 6+ Lucy Foley Books in Order [Ultimate Guide]</a>
+									</li>
+											<li>
+					<a href="https://www.tlbranson.com/gillian-flynn-books/">Gillian Flynn Books in Order | Everything You Need to Know</a>
+									</li>
+											<li>
+					<a href="https://www.tlbranson.com/dawn-of-the-void-review-phil-tucker/">Dawn of the Void Review by Phil Tucker [Post-Apocalyptic LitRPG]</a>
+									</li>
+					</ul>
+
+		</aside><aside id="block-4" class="widget widget_block widget_text">
+<p>T.L. Branson is a participant in the Amazon Associates Program. All links to Amazon provide me a small commission on qualifying purchases.</p>
+</aside></div><!-- #secondary -->
+			</div>
+		</div>
+	</div><!-- #content -->
+
+	
+	
+		
+	<footer id="colophon" class="site-footer">
+		<div class="container">
+			<div class="site-info">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="sydney-credits">&copy; 2023 T.L. Branson. This site uses affiliate links and receives a small commission on qualifying purchases.</div>					</div>
+					<div class="col-md-6">
+											</div>					
+				</div>
+			</div>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+
+	
+</div><!-- #page -->
+
+<a on="tap:toptarget.scrollTo(duration=200)" class="go-top visibility-all position-right"><i class="sydney-svg-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 15l7-7 7 7" stroke-width="3" stroke-linejoin="round" /></svg></i></a><script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://www.tlbranson.com/wp-content/cache/min/1/wp-content/plugins/jetpack/modules/contact-form/js/form-styles.js?ver=1675876563' id='contact-form-styles-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-browser-checker-js-after'>
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script type='text/javascript' id='rocket-preload-links-js-extra'>
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index\\.php\/)?(.*)wp\\-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/www.tlbranson.com","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-preload-links-js-after'>
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://www.tlbranson.com/wp-content/themes/sydney/js/functions.min.js?ver=20221115' id='sydney-functions-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://www.tlbranson.com/wp-includes/js/comment-reply.min.js?ver=6.1.1' id='comment-reply-js' defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://www.tlbranson.com/wp-content/cache/min/1/wp-content/plugins/page-links-to/dist/new-tab.js?ver=1651789647' id='page-links-to-js' defer></script>
+<script type="rocketlazyloadscript" data-minify="1" defer data-rocket-type='text/javascript' data-rocket-src='https://www.tlbranson.com/wp-content/cache/min/1/wp-content/plugins/akismet/_inc/akismet-frontend.js?ver=1659459771' id='akismet-frontend-js'></script>
+	<script type="rocketlazyloadscript">
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+		<script src='https://stats.wp.com/e-202309.js' defer></script>
+	<script>
+		_stq = window._stq || [];
+		_stq.push([ 'view', {v:'ext',blog:'133436661',post:'20337',tz:'-8',srv:'www.tlbranson.com',j:'1:11.8.4'} ]);
+		_stq.push([ 'clickTrackerInit', '133436661', '20337' ]);
+	</script><script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.tlbranson.com/wp-content/plugins/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script><script>function lazyLoadThumb(e){var t='<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<button class="play" aria-label="play Youtube video"></button>';return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.parentNode.dataset.query.length?'':'&'+this.parentNode.dataset.query;e.setAttribute("src",t.replace("ID",this.parentNode.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.parentNode.replaceChild(e,this.parentNode)}document.addEventListener("DOMContentLoaded",function(){var e,t,p,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id),a[t].appendChild(e),p=e.querySelector('.play'),p.onclick=lazyLoadYoutubeIframe});</script>
+<script type="text/javascript" id="perfmatters-delayed-scripts-js">const perfmattersUserInteractions=["keydown","mousemove","wheel","touchmove","touchstart","touchend"];perfmattersUserInteractions.forEach(function(event){window.addEventListener(event,pmTriggerDelayedScripts,{passive:!0})});function pmTriggerDelayedScripts(){pmLoadDelayedScripts();perfmattersUserInteractions.forEach(function(event){window.removeEventListener(event, pmTriggerDelayedScripts,{passive:!0});});}function pmLoadDelayedScripts(){document.querySelectorAll("script[data-pmdelayedscript]").forEach(function(elem){elem.setAttribute("src",elem.getAttribute("data-pmdelayedscript"));});}</script></body>
+</html>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->

@@ -1,0 +1,762 @@
+<!DOCTYPE "xmlns:xsl='http://www.w3.org/1999/XSL/Transform'">
+<!--Get Meta Data starts-->
+<!--Get Meta Data ends-->
+<html xmlns:java_code="xalan://gov.nasa.build.Utils2">
+ <head>
+  <meta content="text/html; charset=ascii" http-equiv="Content-Type"/>
+  <!--Meta Data starts-->
+  <!--SYSTEM DEFINED METADATA-->
+  <meta content="IE=7" http-equiv="X-UA-Compatible"/>
+  <meta content="64212" name="CMS Document Id"/>
+  <meta content="NASA - Measuring the Distance" name="dc.title"/>
+  <meta content="text/html" name="dc.format"/>
+  <meta content="2008-02-20" name="dc.date.modified"/>
+  <meta content="en" name="dc.language"/>
+  <meta content="Brian Dunbar" name="dc.publisher"/>
+  <meta content="eTouch Digital Asset Management(CMS)" name="dc.publisher.tool"/>
+  <meta content="To compare the planets Earth and Mars and to demonstrate the distance between the two planets." name="dc.description"/>
+  <meta content="http://www.nasa.gov/audience/foreducators/k-4/features/F_Measuring_the_Distance_Student_Pages.html" name="dc.identifier"/>
+  <!--USER DEFINED METADATA-->
+  <meta content="Science, Mathematics, Technology, Mars, educational activities, Space Shuttle, International Space Station,nitrogen dioxide,oxygen,planets,students,sun" name="dc.subject"/>
+  <meta content="Difficult" name="dc.type.difficulty"/>
+  <meta content="NASAexplores, Bonnie McClain : HQ, and Mayra Montrose : HQ, Dan Stillman : IGES" name="dc.contributor"/>
+  <meta content="Learning Materials.Lesson Plan, Feature" name="dc.type"/>
+  <meta content="Heather Deiss : MSFC" name="dc.creator"/>
+  <meta content="Headquarters (HQ), Jet Propulsion Laboratory (JPL)" name="dc.subject.organization"/>
+  <meta content="Other" name="dc.category"/>
+  <meta content="Teachers.K-4, Teachers.5-8" name="dc.audience.level"/>
+  <meta content="Informal Education, Students, Teachers" name="dc.audience"/>
+  <meta content="Active - high" name="dc.type.interactivitylevel"/>
+  <meta content="Education.Space Science.Solar System and Planets.Earth, Education.Space Science.Solar System and Planets.Mars" name="dc.subject.discipline"/>
+  <!--Meta Data ends-->
+  <title>
+   NASA - 
+Measuring the Distance
+  </title>
+  <!--Standard Include starts-->
+  <script language="javascript" src="/js/196918main_browser_message.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   /**
+	 *  Browser Detect Class
+	 */
+	function detectBrowserClass(modern){
+		var nBrowser = navigator.appName;
+		var nVersion = navigator.appVersion;
+		var nAgent = navigator.userAgent;
+		this.version;
+		this.browser;
+		this.os;
+		this.modern = (typeof modern == 'object') == true ? modern:0;
+		if(nVersion.indexOf('Windows') !=-1){
+		     this.os = 'win';
+		}else{
+		    this.os = (nVersion.indexOf('Macintosh') !=-1) == true ? 'mac':'other';
+		}
+		if (nAgent.indexOf('Opera') !=-1){
+		    var strIndex = nAgent.indexOf('Opera');
+		    this.version = nAgent.substring((strIndex + 6), (strIndex + 9));
+		    this.browser = 'opera';
+		}
+		else if (nAgent.indexOf('Firefox') !=-1){
+		    var strIndex = nAgent.indexOf('Firefox');
+		    this.version = nAgent.substring((strIndex + 8), (strIndex + 11));
+		    this.browser = 'firefox';
+		}
+		else if(nAgent.indexOf('MSIE') !=-1){
+		    var strIndex = nAgent.indexOf('MSIE');
+		    this.version = nAgent.substring((strIndex + 5), (strIndex + 8));
+		    this.browser = 'ie';
+		}
+		else if (nAgent.indexOf('Safari') !=-1){
+		     if (nAgent.indexOf('Version') !=-1){
+		          var strIndex = nAgent.indexOf('Version')
+		          this.version = nAgent.substring((strIndex + 8), (strIndex + 11))
+		     }else{
+		          this.version = 2;
+		     }
+		this.browser = 'safari';
+		}
+		else if (nAgent.indexOf('Netscape') !=-1){
+		     var strIndex = nAgent.indexOf('Netscape');
+		     this.version = nAgent.substring((strIndex + 9), (strIndex + 12));
+		     this.browser = 'netscape';
+		}else{
+		     this.browser = nBrowser.toLowerCase();
+		     this.version = null;
+		}
+		this.whichBrowser = function (){ return this.browser; }
+		this.whichVersion = function (){ return this.version; }
+		this.whichOS = function (){	return this.os; }
+		this.getInfo = function (){
+		     var info = "Browser name: " + nBrowser + "<br />" +
+		     "Browser version: "+ nVersion + "<br />" +
+		     "User Agent: " + nAgent;
+		      return info;
+		}
+		this.modernBrowser = function (){
+		     var isModern = false;
+		     if(typeof(this.modern[this.browser])=='number' || this.version === null){
+		     isModern = ( this.modern[this.browser] <= this.version || this.version === null ) == true ? true :0;
+		}
+		return isModern;
+		}
+		}
+		// Instantiate browser detect
+		var detectBrowser = new detectBrowserClass({
+		      'opera': 9,
+		      'safari': 2,
+		      'firefox': 1.5,
+		      'ie': 6
+		});			
+                                /* Support legacy browsers*/
+		if(detectBrowser.modernBrowser() == true){
+                                     var css = '<link href="/css/207071main_allpages.css" rel="stylesheet" type="text/css" />';
+                                 if(detectBrowser.whichBrowser()=='firefox'){
+			 css= css + '<link href="/css/207947main_etouch_firefox.css" rel="stylesheet" type="text/css" />';
+			 }
+
+
+		document.write(css);
+		}else{
+		document.write(legacyMsg);
+		}
+  </script>
+  <link href="/css/207072main_allmodules.css" rel="stylesheet" type="text/css"/>
+  <script language="javascript" src="/templateimages/redesign/browser/js/conditionalBrowser.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191731main_prototype.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191696main_builder.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191704main_effects.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191701main_dragdrop.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191738main_slider.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191739main_sound.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191698main_controls.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/194940main_RoundedMorph.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191745main_transitions.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191713main_global.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191734main_ScrollRegion.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191730main_PrettyCounter.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191737main_SkinnedSelect.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/257141main_SkinnedSelectsearch.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191695main_Blinds.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/194933main_FloatingInfoClass.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191742main_Tabs.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/191702main_DropDownMenu.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/194938main_may-common_rd.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/4564main_index.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/196917main_flash_rd.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/207384main_club2_detailpage.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/tvschedule/js/tvsked.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="http://www.nasa.gov/templateimages/redesign/flash_player/js/swfobject.js" type="text/javascript">
+  </script>
+  <script language="javascript" src="/js/196887main_externalsource_header.js" type="text/javascript">
+  </script>
+ </head>
+ <body>
+  <!--No Script Include starts here-->
+  <!--googleoff: snippet-->
+  <noscript>
+   <center>
+    <div class="site_errors">
+     <div class="floatType_site_error_top">
+     </div>
+     <div class="floatType_site_error">
+      <table summary="layout table">
+       <tr>
+        <td bgcolor="#000000">
+         <font color="#ffffff">
+          <h2>
+           <img alt="" src="/templateimages/redesign/modules/overlay/site_error.gif"/>
+           There's a problem with your browser or settings.
+          </h2>
+         </font>
+         <font color="#ffffff">
+          <p>
+           Your browser or your browser's settings are not supported. To get the 						   best experience possible, please download a compatible browser. If you 						   know your browser is up to date, you should check to ensure that 
+                                                                   javascript is enabled.
+          </p>
+         </font>
+         <p>
+          <a href="/home/How_to_enable_Javascript.html" target="_blank">
+           &#8250; Learn How
+          </a>
+         </p>
+        </td>
+       </tr>
+      </table>
+     </div>
+     <div class="floatType_site_error_bottom">
+     </div>
+    </div>
+   </center>
+  </noscript>
+  <!--googleon: snippet-->
+  <!--No Script Include ends here-->
+  <!--Content Body Starts Here-->
+  <div class="content_body">
+   <!--Top Starts Here -->
+   <div class="top">
+    <script language="javascript" src="/js/194928main_ShowRSS.js" type="text/javascript">
+    </script>
+    <input id="curr_rssurl" type="hidden" value=""/>
+    <!-- Skip navigation link -->
+    <div class="skiplink">
+     <a href="#maincontent">
+      Follow this link to skip to the main content
+     </a>
+    </div>
+    <div class="top_header" id="top_header">
+     <div class="header">
+      <h1>
+       <a class="nasa_logo" href="/home/index.html">
+        <span class="hide">
+         NASA - National Aeronautics and Space Administration
+        </span>
+       </a>
+      </h1>
+      <div id="header_form">
+      </div>
+      <script language="javascript" type="text/javascript">
+       var search_list = [   ];
+      </script>
+      <script>
+       createLoginForm();
+      </script>
+      <script>
+       createSearchForm();
+      </script>
+     </div>
+     <div class="dropper 74" id="main-nav">
+      <script type="text/javascript">
+       addMenuSupport();
+      </script>
+     </div>
+    </div>
+    <div class="top_audience">
+     <ul class="audiences_nav">
+      <!-- -->
+      <a id="bctop" name="top">
+      </a>
+      <li>
+       <a href="/home/index.html">
+        NASA Home
+       </a>
+      </li>
+      <li>
+       <span class="light_grey">
+        <b>
+         &gt;
+        </b>
+       </span>
+       <a href="/offices/education/about/index.html">
+        Education
+       </a>
+      </li>
+      <!-- -->
+      <li>
+       <span class="light_grey">
+        <b>
+         &gt;
+        </b>
+       </span>
+       <a href="/audience/foreducators/index.html">
+        For Educators
+       </a>
+      </li>
+      <!-- -->
+      <li>
+       <span class="light_grey">
+        <b>
+         &gt;
+        </b>
+       </span>
+       <a href="/audience/foreducators/k-4/index.html">
+        Grades K-4
+       </a>
+      </li>
+      <!-- -->
+      <li>
+       <span class="light_grey">
+        <b>
+         &gt;
+        </b>
+       </span>
+       <a href="/audience/foreducators/k-4/features/materials_archive_1.html">
+        Featured Materials
+       </a>
+      </li>
+      <!--starting show text-->
+      <li id="right_menu">
+       <ul id="utilities_nav">
+        <li>
+         <span class="hide">
+          <form action="http://mynasa.nasa.gov/portal/util/email/nasa_emailform_2007.jsp" method="post" name="emailForm" target="myNewWin">
+           <input id="url" name="url" type="hidden" value="http://www.nasa.gov/audience/foreducators/k-4/features/F_Measuring_the_Distance_Student_Pages.html"/>
+           <input id="titleUrl" name="titleUrl" type="hidden" value="Measuring the Distance"/>
+           <input id="promoTitle" name="promoTitle" type="hidden" value="Learning More About STS-114"/>
+           <input id="promoDate" name="promoDate" type="hidden" value=""/>
+           <input id="flag" name="flag" type="hidden" value="asan"/>
+           <input id="leaderSentence" name="leaderSentence" type="hidden" value=""/>
+           <input id="documentId" name="documentId" type="hidden" value="64212"/>
+          </form>
+         </span>
+         <a class="icons_black icon_send" href="javascript:submitPopUpEmail();">
+          Send
+         </a>
+        </li>
+        <li>
+         <a class="icons_black icon_print" href="javascript:openPopUpWindowNoMenubar('/audience/foreducators/k-4/features/F_Measuring_the_Distance_Student_Pages_prt.htm')">
+          Print
+         </a>
+        </li>
+        <li>
+         <a class="myOverlayBookmark bookmark bottom null icons_black icon_bookmark" href="">
+          Bookmark
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </div>
+    <!--Top ends Here -->
+   </div>
+   <!--Left Starts Here -->
+   <input id="menu_item_id" name="menu_item_id" type="hidden" value=""/>
+   <div class="left_232" id="left">
+    <script type="text/javascript">
+     var itemIdAndJSFileURL= 'foreducators-k-4_featuredmaterials$/templateimages/redesign/leftnav-htmls/foreducators-k-4_.js';
+		var splitResult = itemIdAndJSFileURL.split("$");
+		  $('menu_item_id').value = splitResult[0];		
+		
+		var url = splitResult[1];
+		var defPage = '/templateimages/redesign/leftnav-htmls/home_.js';
+		if(url == '.js') url = defPage;
+
+                                                         
+ document.write('<script src=' + url + ' type="text/javascript" language="javascript" >' + '</scr' + 'ipt>');
+    </script>
+    <!--Left Ends Here -->
+   </div>
+   <a name="maincontent">
+   </a>
+   <!--Wide Right Starts Here -->
+   <div class="wide_right" id="backtoTop">
+    <!-- Center Banner starts Here-->
+    <!-- Center Banner ends Here-->
+    <!-- Body starts Here-->
+    <div class="box_710_cap">
+     <div class="top_cap_white">
+     </div>
+     <div class="box_710 box_white box_710_white">
+      <div style="clear:both">
+      </div>
+      <h2>
+       Student Features
+      </h2>
+      <div style="clear:both">
+      </div>
+      <div class="text_adjust">
+       <p>
+        Text Size
+       </p>
+       <div>
+        <a class="icons_winter icon_plus" href="javascript:textSizeAdjuster('grow')">
+         Grow Text  Size
+        </a>
+        <a class="icons_winter icon_minus" href="javascript:textSizeAdjuster('shrink')">
+         Shrink Text Size
+        </a>
+       </div>
+       <div class="rating" id="rating_avg">
+        <div id="ratingSiteId" title="2454699100">
+        </div>
+       </div>
+       <script src="http://comments.nasa.gov/ratingresources/js/nasa-rating.js" type="text/javascript">
+       </script>
+      </div>
+      <div style="clear:both">
+      </div>
+      <div class="white_article_wrap_detail text_adjust_me">
+       <div class="default_style_wrap prejs_body_adjust_detail">
+        <!-- Body starts -->
+        <!--Promo date and doctitle starts-->
+        <div style="clear:both">
+        </div>
+        <div class="name_address">
+         <div class="address">
+          <span class="bold">
+           Measuring the Distance
+          </span>
+         </div>
+         <div style="clear:both">
+         </div>
+        </div>
+        <div style="clear:both">
+        </div>
+        <!--Promo date and doctitle ends-->
+        <i>
+         Student Section
+        </i>
+        <hr/>
+        <br/>
+        <br/>
+        <center>
+         <b>
+          Information Page
+         </b>
+         <br/>
+         <br/>
+         <br/>
+         <table align="center" border="1" cellpadding="3" cellspacing="3" width="60%">
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <center>
+             <b>
+              Planets:
+             </b>
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             <b>
+              Earth
+             </b>
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             <b>
+              Mars
+             </b>
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Distance from the Sun*
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             149,600,000 kilometers (km) or 92,900,000 miles
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             227,940,000 km or 141,600,000 miles
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Time it takes to go around the Sun*
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             365.3 days
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             687 days
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Distance across*
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             12,800 km or 7,900 miles
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             6,800 km or 4,200 miles
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Atmosphere
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             Nitrogen Oxygen
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             Carbon Dioxide
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Moons
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             1
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             2
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Rings
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             0
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             0
+            </center>
+           </td>
+          </tr>
+          <tr bgcolor="#CCCCCC">
+           <td width="20%">
+            <br/>
+            <center>
+             <b>
+              Time it takes to rotate*
+             </b>
+            </center>
+            <br/>
+           </td>
+           <td width="20%">
+            <center>
+             24 hours
+            </center>
+           </td>
+           <td width="20%">
+            <center>
+             24 hours
+            </center>
+           </td>
+          </tr>
+         </table>
+         <br/>
+         <br/>
+         * These numbers have been approximated for younger students.
+         <br/>
+         <br/>
+         <br/>
+        </center>
+        <br clear="all"/>
+        <br/>
+        <b>
+         Name: ________________________________
+        </b>
+        <br>
+         <br>
+          <br/>
+          <b>
+           Use the Information Page to fill in the blanks below.
+          </b>
+          <br/>
+          <br/>
+          <br/>
+          <btr>
+          </btr>
+          <b>
+           Mars
+          </b>
+          <br/>
+          <table align="left" border="1" cellpadding="4" cellspacing="0" width="75%">
+           <tr bgcolor="#CCCCCC">
+            <td>
+             <p>
+              <br/>
+              Distance from the Sun ___________________________km
+             </p>
+             <p>
+              Time it takes to go around the Sun ___________________days
+              <br/>
+              <br/>
+              Distance across _________________km
+              <br/>
+              <br/>
+              Atmosphere __________________________________
+              <br/>
+              <br/>
+              Moons ______________
+              <br/>
+              <br/>
+              Rings _______________
+              <br/>
+              <br/>
+              Time it takes to rotate ____________________
+              <br>
+               <br>
+               </br>
+              </br>
+             </p>
+            </td>
+           </tr>
+          </table>
+          <br>
+           <br>
+            <br clear="all"/>
+            <br/>
+            <b>
+             Earth
+            </b>
+            <br>
+             <table align="left" border="1" cellpadding="4" cellspacing="0" width="75%">
+              <tr bgcolor="#CCCCCC">
+               <td>
+                <p>
+                 <br>
+                  Distance from the Sun ___________________________km
+                 </br>
+                </p>
+                <p>
+                 Time it takes to go around the Sun ___________________days
+                 <br/>
+                 <br/>
+                 Distance across _________________km
+                 <br/>
+                 <br/>
+                 Atmosphere __________________________________
+                 <br/>
+                 <br/>
+                 Moons ______________
+                 <br/>
+                 <br/>
+                 Rings _______________
+                 <br/>
+                 <br/>
+                 Time it takes to rotate ____________________
+                 <br>
+                  <br>
+                  </br>
+                 </br>
+                </p>
+               </td>
+              </tr>
+             </table>
+             <br clear="all"/>
+             <br/>
+             <!-- Credits starts -->
+             <!-- Credits ends -->
+             <!-- Body ends -->
+            </br>
+           </br>
+          </br>
+         </br>
+        </br>
+       </div>
+       <!--Related Content Starts Here -->
+       <!--Related Content Ends Here -->
+       <div style="clear:both">
+       </div>
+       <div class="space_div">
+       </div>
+       <div class="back_to_top">
+        <a href="#backtoTop">
+         &#8250;&#160;Back To Top
+        </a>
+       </div>
+       <div class="space_div">
+       </div>
+      </div>
+     </div>
+     <div class="bottom_cap_white">
+     </div>
+     <!-- Body Ends Here-->
+    </div>
+    <!-- Comments section starts Here-->
+    <!-- Comments section ends Here-->
+    <!--Wide Right Ends Here -->
+   </div>
+   <!--Content body ends Here -->
+  </div>
+  <!--Footer Include Here-->
+  <!--Footer Starts Here-->
+  <div id="footer">
+   <script type="text/javascript">
+    createFooterlogo();
+                     createFooterContent('Shelley Canright',
+                                    'April 10, 2009',
+                                    'Brian Dunbar',
+                                   'Contact NASA',
+                                   '/about/contact/index.html',
+                                   '/sitemap/sitemap_nasa.html');
+   </script>
+   <!--Footer Ends Here-->
+  </div>
+  <!--Footer Include ends Here-->
+  <div class="background_layer">
+  </div>
+  <script language="javascript" src="/js/196888main_externalsource_footer.js" type="text/javascript">
+  </script>
+ </body>
+</html>
