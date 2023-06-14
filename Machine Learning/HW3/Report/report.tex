@@ -1,0 +1,289 @@
+ \documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{inputenc}
+\usepackage{graphicx}
+\usepackage{titletoc} 
+\usepackage{fancyhdr}   
+\usepackage[a4paper,pdftex]{geometry}	
+\usepackage[english]{babel}
+\usepackage{xcolor} 
+\usepackage{enumerate}
+\usepackage{fix-cm} 
+\usepackage[notlof]{tocbibind}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{booktabs}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\renewcommand\lstlistingname{Appendix}
+\renewcommand\lstlistlistingname{Appendix}
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+	\edef\@temp{\the\lst@token}%
+	\ifx\@temp\@lbracket \color{black}%
+	\else\ifx\@temp\@rbracket \color{black}%
+	\else\ifx\@temp\@colon \color{black}%
+	\else \color{vorange}%
+	\fi\fi\fi
+}
+\makeatother
+
+\usepackage{trace}
+
+\usepackage{subcaption}
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\includegraphics[scale=.4]{Figures/Cover}\\
+			\vspace{1cm}
+			\bf{ \large {Department of Computer Science and Technology} }
+		\end{center}
+		
+		\vspace{4cm}
+		\centering
+		\textbf{\Huge Machine Learning}
+		\vspace{.5cm}
+		
+		{\Large Homework 3}
+
+		\vspace{4cm}
+		
+		\textbf{\LARGE Sahand Sabour}
+		
+		
+		
+		\vspace{0.5cm}
+		
+		{\large 2020280401}
+		
+		
+		\vfill
+		
+	\end{titlepage}
+
+
+	\section{Clustering: Mixture of Multinomials (2 points)}
+	\subsection{MLE for multinomial (1 point)}
+	
+	\noindent The likelihood function for this multinomial distribution is given as
+	\begin{equation}
+		P(x|\mu) = \frac{n!}{\prod_{i}x_i!}\prod_{i}\mu^{x_i}_i,\quad i=1, ..., d
+	\end{equation}
+	Taking log from both side of the above equation gives the log-likelihood function
+	\begin{equation}
+		\mathcal{L}(\mu) = log(P(x|\mu)) = log(n!)- log(\prod_{i}x_i!) +log(\prod_{i}\mu^{x_i}_i)
+	\end{equation}
+	This can be considered a Lagrange problem with the constraint $\sum_{i}\mu_i=1$. Hence, the Lagrangian equation can be formulated as
+	\begin{equation}
+		\mathcal{L}(\mu) = log(n!)- log(\prod_{i}x_i!) +log(\prod_{i}\mu^{x_i}_i) - \lambda(\sum_{i}\mu_i-1)
+	\end{equation}
+where $\lambda$ is Lagrangian multiplier, giving
+\begin{equation}
+	\mathcal{L}(\mu) = log(n!)- \sum_{i}log(x_i!) + \sum_{i}{x_i}log(\mu_i) - \lambda(\sum_{i}\mu_i-1)
+\end{equation}
+	Taking the derivative of the equation with respect to $\mu_i$ and setting it to 0 gives
+	\begin{equation}
+		\frac{\partial \mathcal{L}}{\partial \mu_i}= \frac{\sum_{i}x_i}{\sum_{i}\mu_i} - \lambda = 0
+	\end{equation}
+	Hence, we get that
+	\begin{equation}
+		 \lambda= \frac{\sum_{i}x_i}{\sum_{i}\mu_i} = \frac{n}{1} = n
+	\end{equation}
+	Accordingly, we could derive the maximum-likelihood estimator $\mu_i$ as
+	\begin{equation}
+		\mu_i= \frac{x_i}{\lambda} = \frac{x_i}{n},\quad i=1, ..., d
+	\end{equation}
+
+
+	\subsection{EM for mixture of multinomials (1 point)}
+	Initially, for each document $d$, a latent topic $c_d$ is generated as follows:
+	\begin{equation}
+		p(c_d=k) = \pi_k\quad where \quad k = 1,2,...,K
+	\end{equation}
+	Accordingly, given a topic $\mu_k$, the bag of words for d is generated:
+	\begin{equation}
+		p(d|c_d=k) = \frac{n_d!}{\prod_{w}T_{dw}!}\prod_{w}\mu_{w_k}^{T_{dw}}\quad where \quad n_d = \sum_{w} T_{dw}
+	\end{equation}
+	Combining the above two equations gives
+	\begin{align*}
+		p(d) = \sum_{k=1}^{K}p(d|c_d=k)p(c_d=k) \\
+		p(d) =  \frac{n_d!}{\prod_{w}T_{dw}!}\sum_{k=1}^{K}\pi_k\prod_{w}\mu_{w_k}^{T_{dw}}
+	\end{align*}
+	We have the log likelihood as
+	\begin{equation}
+		log p(\mathcal{D}|\mu, \pi)= \sum_{d=1}^{D}log(\sum_{k=1}^{K}\pi_k\prod_{w}\mu_{w_k}^{T_{dw}})
+	\end{equation}
+	Accordingly, we consider the log likelihood as the below Lagrangian optimization
+	\begin{equation}
+		L = \sum_{d=1}^{D}log(\sum_{k=1}^{K}\pi_k\prod_{w}\mu_{w_k}^{T_{dw}}) + \lambda_1(1- \sum_{k=1}^{K}\sum_{w}\mu_{wk}) + \lambda_2(1- \sum_{k=1}^{K}\pi_k)
+	\end{equation}
+	with the following constraints
+	\begin{align*}
+		\sum_{k=1}^{K}\sum_{w}\mu_{wk} =1 \quad and \quad 
+		\sum_{k=1}^{K}\pi_k = 1
+	\end{align*}
+	and solve it with respect to $\mu_{wk}$ and $\pi_k$.
+	\begin{align*}
+		\frac{\partial L}{\partial \mu_{wk}} = \sum_{d=1}^{D} \frac{\pi_k\prod_{w}\mu_{w_k}^{T_{dw}}T_{dw}}{\sum_{j=1}^{J}\pi_j\prod_{w}\mu_{w_j}^{T_{dw}}} -\lambda_1 = 0 \\
+		\frac{\partial L}{\partial \pi_{k}} =  \sum_{d=1}^{D}
+		\frac{\prod_{w}\mu_{w_k}^{T_{dw}}}
+		{\sum_{j=1}^{J}\pi_j\prod_{w}\mu_{w_j}^{T_{dw}}} -\lambda_2 = 0
+	\end{align*}
+	
+	\noindent \textbf{E-Step:} estimate the responsibilities. 
+	\begin{equation}
+		\gamma (c_{dk}) = \frac{\pi_k\prod_{w}\mu_{w_j}^{T_{dw}}}{\sum_{j=1}^{J}\pi_j\prod_{w}\mu_{w_j}^{T_{dw}}}
+	\end{equation}
+
+	\noindent \textbf{M-Step:} re-estimate the parameters. We have
+	\begin{equation}
+		\lambda_1 = \sum_{k=1}^{K}\sum_{d=1}^{D}\gamma (c_{dk})T_{dw} \quad and \quad \lambda_2 = \sum_{k=1}^{K}\sum_{d=1}^{D}\frac{\gamma (c_{dk})}{\pi_k}
+	\end{equation}
+	Which gives
+	\begin{equation}
+		\mu_{wk} = \frac{1}{D_k}\sum_{d=1}^{D} \gamma (c_{dk})T_{dw} \quad and \quad \pi_k = \frac{D_k}{D} 
+	\end{equation}
+		
+	\section{PCA (2 points)}
+	\subsection{Minimum Error Formulation (2 points)}
+	
+	\noindent Assuming that we have a set of complete orthonormal basis $\{\mu_i\}$, where $i\in[1,p]$, we have that $\mu_i^T\mu_j=\partial_{ij}$ and each data point can be represented as $x_n=\sum_{i}a_{ni}\mu_i$. Accordingly, due to orthonormal property, we can get that
+	\begin{equation}
+		a_{ni}=x_n^T\mu_i
+	\end{equation}
+	Inserting this in the data point representation gives
+	\begin{equation}
+		x_n=\sum_{i}(x_n^T\mu_i)\mu_i
+	\end{equation}
+	For this approach, the aim is to formulate PCA as minimizing
+	the mean-squared-error of a low-dimensional approximation of the given basis. Hence, we assume a low-dimensional approximation of the point representation as follows
+	\begin{equation}
+		\widetilde{x}_n=\sum_{i}^{d}z_{ni}+\sum_{i=d+1}^{p}b_i\mu_i \quad \text{where $b_i$ are constants for all points}
+	\end{equation}
+	Therefore, the best approximation is to minimize the following error
+	\begin{equation}
+		\underset{ U,z,b}{\min}  J:=\frac{1}{N}\sum_{n=1}^{N}||x_n-\widetilde{x}_n||^2
+	\end{equation}
+	Consequently, we have that
+	\begin{align*}
+		J = \frac{1}{N}\sum_{n=1}^{N}||x_n-\widetilde{x}_n||^2\qquad \qquad \quad\\= \frac{1}{N}\sum_{n=1}^{N} (x_n-\widetilde{x}_n)^T(x_n-\widetilde{x}_n) \quad \\
+		= \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T \widetilde{x}_n + \widetilde{x}_n^T\widetilde{x}_n
+	\end{align*}
+	\noindent Inserting equation 10 in the above equation and replacing $\widetilde{x}_n$ gives
+	\begin{align*}
+		J = \frac{1}{N}\sum_{n=1}^{N} x_n^Tx_n-2x_n^T (\sum_{i}^{d}z_{ni}\mu_i+\sum_{i=d+1}^{p}b_i\mu_i) \\+ (\sum_{i}^{d}z_{ni}\mu_i^T+ 
+		\sum_{i=d+1}^{p}b_i\mu_i^T)(\sum_{i}^{d}z_{ni}\mu_i+\sum_{i=d+1}^{p}b_i\mu_i)
+	\end{align*}
+	
+	\noindent Accordingly, for minimizing this error, we calculate the derivative with respect to $z$ and $b$ and set it to 0.
+	
+	\vspace{-0.3cm}
+	\begin{align*}
+		\frac{\partial J}{\partial z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_i\mu_i^T)\mu_j] = 0 \\ 
+		\frac{\partial J}{\partial z_{nj}} = \frac{1}{n}[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)] = 0 \qquad \qquad \\ 
+		2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_i\mu_i)= 2x_n^T\mu_j \qquad \qquad\qquad \quad\\
+		\sum_{i}^{d}z_{ni}\mu_j^T\mu_i + \sum_{i=d+1}^{p}b_i\mu_j^T\mu_i=  x_n^T\mu_j \qquad \qquad\qquad \quad \\
+		\sum_{i}^{d}z_{ni}\partial ij + \sum_{i=d+1}^{p}b_i\partial ij = z_{ni}+0 = x_n^T\mu_i \qquad \qquad\qquad \quad
+	\end{align*}
+	Giving $z_{ni}= x_n^T\mu_i$ for $i\in [1,d]$. Similarly, we the derivative with respect to b
+
+	\vspace{-0.3cm}
+	\begin{align*}
+		\frac{\partial J}{\partial b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j+\mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i) + (\sum_{i}^{d}z_{ni}\mu_i^T + \sum_{i=d+1}^{p}b_j\mu_i^T)\mu_j] = 0 \\ 
+		\frac{\partial J}{\partial b_{j}} = \frac{1}{n}\sum[ -2x_n^T\mu_j + 2 \mu_j^T(\sum_{i}^{d}z_{ni}\mu_i + \sum_{i=d+1}^{p}b_j\mu_i)] = 0 \qquad \qquad \\ 
+		\sum(\sum_{i}^{d}z_{ni}\mu_j^T\mu_i + \sum_{i=d+1}^{p}b_j\mu_j^T\mu_i)=  \sum x_n^T\mu_j \qquad \qquad\qquad \quad \\
+		\sum b_j= Nb_j =\sum x_n^T\mu_j \quad \text{giving}\quad b_j = \sum \frac{1}{n}x_n^T\mu_j = \bar{x}^Tu_j\qquad\qquad\\
+	\end{align*}
+	Which in turn gives $b_i=\bar{x}^Tu_i$ for $i\in [d+1,p]$. Accordingly, from equation 9, we can get the displacement lines in the orthogonal subspace as follows
+	\begin{equation}
+		x_n - \widetilde{x}_n = \sum_{i=d+1}^{p}\{(x_n-\bar{x})^T\mu_i\}\mu_i
+	\end{equation}
+	Which produces the following optimization problem for error J
+	\begin{equation}
+		\underset{\mu_j}{min} J \quad \text{where} \quad \mu_i^T\mu_i=1
+	\end{equation}
+	Assuming d=1 (1-dimensional subspace) and p=2 (2-dimensional space), the optimization problem becomes
+	\begin{equation}
+		\underset{\mu_2}{min} J = \mu_2^TS\mu_2 \quad \text{where} \quad \mu_2^T\mu_2=1
+	\end{equation}
+	Which gives $S\mu_2 = \lambda_2 \mu_2$, meaning that $\mu_2$ should be chosen as the eigenvector that corresponds to the smaller eigenvalue. Accordingly, the principal subspace is chosen by the eigenvector of the larger eigenvalue.
+	
+	\section{Deep Generative Models: Class-conditioned VAE (5 Points)}
+	In the MNIST dataset, there are 10 possible labels for the samples (0-9). Binarizing the labels with the one-hot encoding method, gives a sequence of 10 digits with one 1 and nine 0s. Hence, there could be 10 locations for the 1; the probability of a label l to be one of the 10 labels L would be p(l = L) = $\frac{1}{10}$ = 0.1. According to the lecture notes, the variational lower bound for the normal case of VAE was obtained as follows:
+	\begin{equation*}
+		L(\theta, x) = E_{q(z|x)}[logp(z,x;\theta)- logq(z|x)]=E_{q(z|x)}[logp(x|z;\theta)]- KL(q(z|x)||p(z;\theta))
+	\end{equation*}
+	However, it can be noticed that the output of this equation is only dependent on the latent variable z and therefore, does not produce any specific results, which is not practical for our case. Hence, we should modify the lower bound to include the label l of the sample we would like to generate likewise. 
+	\begin{equation*}
+		L(\theta, x, l) = E_{q(z|x, l)}[logp(x, l|z;\theta)]- KL(q(z|x, l)||p(z;\theta))
+	\end{equation*}
+	Since $z\sim \mathcal{N}(0, 1)$ for Gaussian,  the KL-divergence is as follows:
+	\begin{equation}
+		- KL(q(z|x, l)||p(z;\theta)) = \frac{1}{2}(1+log\sigma^2-\mu^2-\sigma^2)
+	\end{equation}
+	Consequently, the expected log-likelihood would be
+	\begin{equation}
+		E_{q(z|x, l)}[logp(x, l|z;\theta)] = E_{q(z|x, l)}[-\sum_{j}\frac{1}{2}	log\sigma_j^2+\frac{(x_{ij}-\mu_{xi})^2}{\sigma^2}]
+	\end{equation}
+	Approximating the above equation with Monte Carlo methods gives
+	\begin{equation}
+		E_{q(z|x, l)}[logp(x, l|z;\theta)] \approx \frac{1}{L}\sum_{k}logp(x,l|z^{(k)})\quad\text{where}\quad z^{(k)} \sim q(z|x,l)
+	\end{equation}
+	where $z^{(k)}$ is a random variable, which cannot be used for back-propagation. Hence, by utilizing re-parameterization techniques, we have $z^{(k)} = \mu(x, l)+\sigma(x, l).\epsilon^{(k)} = g(x, l, \epsilon^{(k)})$, where g is a deep neural network. The lower bound becomes
+	\begin{align*}
+		L(\theta, x, l) = E_{p(\epsilon)}[log\frac{p(g(x,l,\epsilon),x;\theta)}{q(g(x,l,\epsilon)|x;\theta)}]- KL(q(z|x, l)||p(z;\theta)) \\
+		L(\theta, x, l) = \frac{1}{L}\sum_{k}logp(x,l|z^{(k)}) +\frac{1}{2}\sum_{i=1}^{j}[1+log\sigma^2-\mu^2-\sigma^2]
+	\end{align*}
+	\noindent The model was trained on the MNIST dataset (one-hot form) and the obtained lower bound values for some epochs are provided in the table below:
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline
+			Epoch & 1& 10& 25& 50& 100\\\hline
+			Lower Bound & -167.45& -97.954& -92.546&-90.108& -88.361\\
+			\hline
+		\end{tabular}
+	\caption{Table of lower bound based on given epoch}
+	\end{table}
+
+	\noindent In addition, the obtained digit generation results are provided in the next page.
+	\newpage
+	\begin{table}
+		\centering
+		\begin{tabular}{cccc}
+			\toprule
+			Digit & Epoch 1 & Epoch 50 & Epoch 100 \\
+			\midrule
+			0 & \includegraphics[width=4cm]{Figures/Epoch1_Label0} & \includegraphics[width=4cm]{Figures/Epoch50_Label0} & \includegraphics[width=4cm]{Figures/Epoch100_Label0}  \\
+			1 & \includegraphics[width=4cm]{Figures/Epoch1_Label1} & \includegraphics[width=4cm]{Figures/Epoch50_Label1} & \includegraphics[width=4cm]{Figures/Epoch100_Label1}  \\
+			2 & \includegraphics[width=4cm]{Figures/Epoch1_Label2} & \includegraphics[width=4cm]{Figures/Epoch50_Label2} & \includegraphics[width=4cm]{Figures/Epoch100_Label2}  \\
+			3 & \includegraphics[width=4cm]{Figures/Epoch1_Label3} & \includegraphics[width=4cm]{Figures/Epoch50_Label3} & \includegraphics[width=4cm]{Figures/Epoch100_Label3}  \\
+			4 & \includegraphics[width=4cm]{Figures/Epoch1_Label4} & \includegraphics[width=4cm]{Figures/Epoch50_Label4} & \includegraphics[width=4cm]{Figures/Epoch100_Label4}
+		\end{tabular}
+	\end{table}
+	\begin{table}
+		\centering
+		\begin{tabular}{cccc}
+			\toprule
+			Digit & Epoch 1 & Epoch 50 & Epoch 100 \\
+			\midrule
+			5 & \includegraphics[width=4cm]{Figures/Epoch1_Label5} & \includegraphics[width=4cm]{Figures/Epoch50_Label5} & \includegraphics[width=4cm]{Figures/Epoch100_Label5}\\
+			6 & \includegraphics[width=4cm]{Figures/Epoch1_Label6} & \includegraphics[width=4cm]{Figures/Epoch50_Label6} & \includegraphics[width=4cm]{Figures/Epoch100_Label6}  \\
+			7 & \includegraphics[width=4cm]{Figures/Epoch1_Label7} & \includegraphics[width=4cm]{Figures/Epoch50_Label7} & \includegraphics[width=4cm]{Figures/Epoch100_Label7}  \\
+			8 & \includegraphics[width=4cm]{Figures/Epoch1_Label8} & \includegraphics[width=4cm]{Figures/Epoch50_Label8} & \includegraphics[width=4cm]{Figures/Epoch100_Label8}  \\
+			9 & \includegraphics[width=4cm]{Figures/Epoch1_Label9} & \includegraphics[width=4cm]{Figures/Epoch50_Label9} & \includegraphics[width=4cm]{Figures/Epoch100_Label9}
+		\end{tabular}
+	\end{table}
+\end{document}
